@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bienvenido al programa de Álvaro Cobos." />
+  <title>Bienvenido al programa | Álvaro Cobos</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root{
+      --bg:#050505;
+      --bg-soft:#0b0b0b;
+      --card:rgba(17,17,17,.72);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f5f5;
+      --muted:#9d9d9d;
+      --orange:#ff5a00;
+      --orange-2:#ff8a3d;
+      --orange-soft:rgba(255,90,0,.14);
+      --radius:22px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 80% 12%,rgba(255,90,0,.12),transparent 28%),
+        radial-gradient(circle at 10% 45%,rgba(255,90,0,.06),transparent 24%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button,a{font:inherit}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+
+    /* Ambient effects */
+    .noise{
+      position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:50;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    }
+    .glow{
+      position:absolute;width:420px;height:420px;border-radius:50%;
+      background:var(--orange);filter:blur(150px);opacity:.08;pointer-events:none;
+    }
+
+    /* Header */
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:40;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(5,5,5,.65);
+      backdrop-filter:blur(18px);
+    }
+    nav{
+      height:76px;display:flex;align-items:center;justify-content:space-between;
+    }
+    .logo{
+      font-size:15px;font-weight:800;letter-spacing:.26em;
+    }
+    .navlinks{display:flex;gap:36px;color:#aaa;font-size:11px;text-transform:uppercase;letter-spacing:.2em}
+    .navlinks a{transition:.3s}
+    .navlinks a:hover{color:#fff}
+    .nav-btn{
+      border:1px solid rgba(255,90,0,.65);padding:12px 18px;border-radius:999px;
+      text-transform:uppercase;font-size:10px;font-weight:700;letter-spacing:.12em;
+      transition:.3s;
+    }
+    .nav-btn:hover{background:var(--orange);box-shadow:0 0 30px rgba(255,90,0,.35)}
+
+    /* Hero */
+    .hero{min-height:850px;display:flex;align-items:center;position:relative;padding-top:76px}
+    .hero-grid{
+      display:grid;grid-template-columns:1.02fr .98fr;gap:30px;align-items:center;
+    }
+    .eyebrow{
+      display:flex;align-items:center;gap:12px;color:var(--orange);
+      font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;margin-bottom:25px;
+    }
+    .eyebrow:before{content:"";width:38px;height:1px;background:var(--orange)}
+    h1{
+      font-size:clamp(58px,7vw,94px);line-height:.92;letter-spacing:-.065em;
+      max-width:700px;margin-bottom:26px;
+    }
+    h1 span{
+      display:block;color:var(--orange);
+      text-shadow:0 0 38px rgba(255,90,0,.22);
+    }
+    .hero-copy{max-width:590px;color:#aaa;font-size:16px;line-height:1.75}
+    .actions{display:flex;gap:12px;margin:28px 0}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:12px;
+      padding:16px 23px;border-radius:13px;border:1px solid rgba(255,255,255,.18);
+      font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      transition:.3s;cursor:pointer;
+    }
+    .btn-primary{
+      background:var(--orange);color:#080808;border-color:var(--orange);
+      box-shadow:0 0 35px rgba(255,90,0,.2);
+    }
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 45px rgba(255,90,0,.4)}
+    .btn-secondary:hover{border-color:var(--orange);color:var(--orange)}
+    .quote{
+      max-width:510px;padding:19px 22px;border:1px solid rgba(255,90,0,.45);
+      border-radius:16px;background:linear-gradient(120deg,rgba(255,90,0,.08),rgba(255,255,255,.02));
+      color:#ddd;line-height:1.5;font-size:13px;
+    }
+    .quote b{color:var(--orange);font-size:28px;margin-right:8px}
+    .quote small{display:block;margin-left:37px;margin-top:6px;color:#777;letter-spacing:.15em;text-transform:uppercase}
+
+    .hero-visual{
+      min-height:650px;position:relative;border-radius:34px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.1);
+      background:
+        linear-gradient(90deg,rgba(5,5,5,.92) 0%,rgba(5,5,5,.35) 55%,rgba(5,5,5,.82) 100%),
+        radial-gradient(ellipse at 70% 35%,rgba(255,90,0,.35),transparent 26%),
+        linear-gradient(145deg,#202020,#090909 60%,#160b06);
+      box-shadow:inset 0 0 100px #000,0 30px 80px rgba(0,0,0,.45);
+    }
+    .hero-visual:before{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(90deg,transparent 0 70%,rgba(255,90,0,.25) 70.5%,transparent 72%),
+        linear-gradient(110deg,transparent 0 58%,rgba(255,90,0,.45) 58.5%,transparent 59.2%);
+      opacity:.55;
+    }
+    .silhouette{
+      position:absolute;right:8%;bottom:0;width:62%;height:90%;
+      background:
+        radial-gradient(ellipse at 52% 17%,#242424 0 9%,transparent 10%),
+        radial-gradient(ellipse at 52% 39%,#171717 0 24%,transparent 25%),
+        radial-gradient(ellipse at 40% 66%,#131313 0 21%,transparent 22%),
+        linear-gradient(100deg,transparent 0 25%,#121212 26% 72%,transparent 73%);
+      filter:contrast(1.15);
+      opacity:.95;
+    }
+    .visual-label{
+      position:absolute;right:24px;top:34%;writing-mode:vertical-rl;
+      color:#8d8d8d;font-size:10px;letter-spacing:.25em;text-transform:uppercase;
+    }
+    .visual-ac{
+      position:absolute;right:28px;bottom:28px;color:var(--orange);
+      font-size:11px;letter-spacing:.25em;font-weight:800;
+    }
+
+    .stats{display:flex;gap:50px;margin-top:35px}
+    .stat strong{font-size:28px;display:block;letter-spacing:-.04em}
+    .stat span{font-size:9px;color:#777;letter-spacing:.12em;text-transform:uppercase}
+
+    /* Sections */
+    section{padding:105px 0;position:relative}
+    .section-head{display:flex;align-items:center;gap:20px;margin-bottom:35px}
+    .section-title{font-size:11px;text-transform:uppercase;letter-spacing:.25em;font-weight:800}
+    .section-line{height:1px;background:var(--line);flex:1}
+    .section-note{font-size:9px;color:#666;letter-spacing:.18em;text-transform:uppercase}
+
+    /* Process */
+    .process{
+      border:1px solid var(--line);border-radius:25px;padding:35px;
+      background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+      overflow:hidden;
+    }
+    .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;position:relative}
+    .steps:before{
+      content:"";position:absolute;top:27px;left:7%;right:7%;height:1px;
+      background:linear-gradient(90deg,var(--orange),rgba(255,255,255,.12),var(--orange));
+      opacity:.6;
+    }
+    .step{text-align:center;position:relative;z-index:1}
+    .step-number{
+      width:56px;height:56px;margin:0 auto 17px;border:1px solid #555;border-radius:50%;
+      display:grid;place-items:center;background:#090909;font-size:12px;font-weight:800;
+      transition:.35s;
+    }
+    .step:first-child .step-number{
+      border-color:var(--orange);box-shadow:0 0 28px rgba(255,90,0,.3);color:var(--orange)
+    }
+    .step:hover .step-number{border-color:var(--orange);color:var(--orange);transform:scale(1.08)}
+    .step h3{font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+    .step p{font-size:11px;line-height:1.55;color:#777;max-width:170px;margin:auto}
+
+    /* Cards */
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+    .card{
+      min-height:210px;padding:25px;border:1px solid var(--line);border-radius:18px;
+      background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+      position:relative;overflow:hidden;transition:.4s;
+    }
+    .card:after{
+      content:"";position:absolute;width:100px;height:100px;right:-45px;bottom:-45px;
+      background:var(--orange);filter:blur(55px);opacity:0;transition:.4s
+    }
+    .card:hover{transform:translateY(-7px);border-color:rgba(255,90,0,.55);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+    .card:hover:after{opacity:.18}
+    .icon{
+      width:42px;height:42px;border:1px solid #555;border-radius:12px;display:grid;place-items:center;
+      margin-bottom:30px;color:var(--orange);font-size:19px
+    }
+    .card h3{font-size:13px;text-transform:uppercase;margin-bottom:9px}
+    .card p{font-size:11px;color:#777;line-height:1.6;max-width:230px}
+    .arrow{
+      position:absolute;right:17px;bottom:17px;width:34px;height:34px;border:1px solid #555;border-radius:50%;
+      display:grid;place-items:center;transition:.3s
+    }
+    .card:hover .arrow{border-color:var(--orange);background:var(--orange);color:#000}
+
+    /* Video */
+    .video-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:stretch}
+    .video-card{
+      border:1px solid var(--line);border-radius:22px;overflow:hidden;
+      background:#0a0a0a;display:grid;grid-template-columns:.9fr 1.1fr;min-height:340px
+    }
+    .video-cover{
+      position:relative;min-height:340px;
+      background:
+        radial-gradient(circle at 50% 30%,rgba(255,255,255,.15),transparent 12%),
+        linear-gradient(135deg,#262626,#0b0b0b 70%);
+    }
+    .play{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:72px;height:72px;border:1px solid rgba(255,90,0,.8);border-radius:50%;
+      display:grid;place-items:center;color:var(--orange);font-size:22px;
+      box-shadow:0 0 35px rgba(255,90,0,.22);background:rgba(0,0,0,.45);
+      backdrop-filter:blur(8px)
+    }
+    .video-info{padding:45px 35px;display:flex;flex-direction:column;justify-content:center}
+    .orange-label{color:var(--orange);font-size:10px;font-weight:800;letter-spacing:.23em;text-transform:uppercase;margin-bottom:15px}
+    .video-info h2{font-size:32px;line-height:1.05;margin-bottom:18px;letter-spacing:-.04em}
+    .video-info p{font-size:13px;color:#888;line-height:1.7;margin-bottom:25px}
+    .side-panel{
+      border:1px solid var(--line);border-radius:22px;padding:35px;
+      background:linear-gradient(145deg,rgba(255,90,0,.07),rgba(255,255,255,.015))
+    }
+    .side-panel blockquote{font-size:24px;line-height:1.25;margin:15px 0 35px;letter-spacing:-.03em}
+    .checklist{display:grid;gap:15px}
+    .check{display:flex;gap:12px;align-items:center;font-size:12px;color:#bbb}
+    .check i{
+      width:22px;height:22px;border-radius:50%;background:var(--orange);color:#080808;
+      display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px
+    }
+
+    /* Support */
+    .support{
+      border:1px solid rgba(255,90,0,.5);border-radius:22px;padding:28px 32px;
+      display:flex;align-items:center;justify-content:space-between;gap:20px;
+      background:linear-gradient(100deg,rgba(255,90,0,.08),rgba(255,255,255,.02));
+      box-shadow:0 0 70px rgba(255,90,0,.06);
+    }
+    .support-copy{display:flex;align-items:center;gap:20px}
+    .wa{
+      width:58px;height:58px;border-radius:16px;background:#f2f2f2;color:#050505;
+      display:grid;place-items:center;font-size:27px
+    }
+    .support h3{font-size:18px;margin:4px 0}
+    .support p{color:#777;font-size:11px}
+
+    /* Final banner */
+    .final{
+      min-height:430px;display:flex;align-items:center;overflow:hidden;
+      background:
+        radial-gradient(circle at 78% 40%,rgba(255,90,0,.23),transparent 24%),
+        linear-gradient(90deg,#050505 0%,#080808 45%,#170a03 100%);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    }
+    .final h2{font-size:clamp(48px,7vw,78px);line-height:.9;letter-spacing:-.06em;max-width:620px}
+    .final h2 span{color:var(--orange)}
+    .final p{max-width:480px;color:#888;line-height:1.7;font-size:13px;margin-top:25px}
+    .mountains{
+      position:absolute;right:-5%;bottom:-15px;width:58%;height:70%;
+      background:linear-gradient(145deg,transparent 25%,#17100c 25% 45%,transparent 45%),
+                 linear-gradient(135deg,transparent 30%,#21110a 30% 52%,transparent 52%);
+      opacity:.75;filter:drop-shadow(0 0 25px rgba(255,90,0,.2));
+      transform:skewX(-8deg)
+    }
+
+    /* Footer */
+    footer{padding:35px 0;border-top:1px solid var(--line)}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .footer-links{display:flex;gap:24px;color:#666;font-size:9px;text-transform:uppercase;letter-spacing:.16em}
+    .footer-copy{color:#444;font-size:9px}
+
+    /* Reveal animations */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .delay-1{transition-delay:.08s}.delay-2{transition-delay:.16s}.delay-3{transition-delay:.24s}.delay-4{transition-delay:.32s}
+    @keyframes pulse{0%,100%{box-shadow:0 0 20px rgba(255,90,0,.15)}50%{box-shadow:0 0 45px rgba(255,90,0,.35)}}
+    .pulse{animation:pulse 2.8s infinite}
+
+    @media(max-width:900px){
+      .navlinks{display:none}
+      .hero-grid,.video-grid{grid-template-columns:1fr}
+      .hero{padding-top:110px}
+      .hero-visual{min-height:520px}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .steps{grid-template-columns:1fr;gap:24px}
+      .steps:before{display:none}
+      .step{text-align:left;display:grid;grid-template-columns:56px 1fr;column-gap:15px;align-items:center}
+      .step-number{grid-row:span 2;margin:0}
+      .step p{margin:0;max-width:none}
+      .process{padding:25px}
+      .support{align-items:flex-start;flex-direction:column}
+      .mountains{width:80%;opacity:.35}
+    }
+
+    @media(max-width:600px){
+      .container{width:min(var(--max),calc(100% - 28px))}
+      .hero{min-height:auto;padding-bottom:70px}
+      h1{font-size:55px}
+      .hero-visual{min-height:430px}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+      .stats{gap:18px;justify-content:space-between}
+      .stat strong{font-size:22px}
+      .cards{grid-template-columns:1fr}
+      .video-card{grid-template-columns:1fr}
+      .video-cover{min-height:260px}
+      .footer-inner{flex-direction:column;align-items:flex-start}
+      .footer-links{flex-wrap:wrap}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">ALVARO COBOS</a>
+        <div class="navlinks">
+          <a href="#proceso">Proceso</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#soporte">Soporte</a>
+        </div>
+        <a class="nav-btn" href="#proceso">Empezar →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="glow" style="left:-180px;top:120px"></div>
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Bienvenido al programa</div>
+          <h1>EL CAMBIO <span>EMPIEZA AQUÍ</span></h1>
+          <p class="hero-copy">
+            Gracias por confiar en mí. A partir de ahora vamos a trabajar juntos
+            para que consigas tu mejor versión, con un sistema claro, simple y efectivo.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary pulse" href="#proceso">Comenzar ahora →</a>
+            <a class="btn btn-secondary" href="#video">◉ Ver vídeo · 1 min</a>
+          </div>
+
+          <div class="quote">
+            <b>“</b> Disciplina hoy, la vida que quieres mañana.
+            <small>Álvaro Cobos</small>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong>+500</strong><span>Personas ayudadas</span></div>
+            <div class="stat"><strong>-20kg</strong><span>En 6 meses</span></div>
+            <div class="stat"><strong>98%</strong><span>Satisfacción</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal delay-2">
+          <div class="silhouette"></div>
+          <div class="visual-label">Una versión más fuerte de ti</div>
+          <div class="visual-ac">AC · DISCIPLINA · RESULTADOS</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-title">Tu proceso paso a paso</div>
+          <div class="section-line"></div>
+          <div class="section-note">Simple · Claro · Efectivo</div>
+        </div>
+
+        <div class="process reveal">
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">01</div>
+              <div><h3>Bienvenida</h3><p>Estás aquí. Vamos a prepararlo todo para que empieces con buen pie.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-number">02</div>
+              <div><h3>Cuestionario</h3><p>Conoceremos tu punto de partida para adaptar todo a ti.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-number">03</div>
+              <div><h3>Plan personalizado</h3><p>Recibirás tu plan de alimentación y entrenamiento a medida.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-number">04</div>
+              <div><h3>Seguimiento</h3><p>Revisiones, ajustes y soporte continuo para que avances.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-number">05</div>
+              <div><h3>Resultados</h3><p>Tu mejor versión, sin atajos y con un sistema que puedas mantener.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-title">Acceso rápido</div>
+          <div class="section-line"></div>
+          <div class="section-note">Todo lo que necesitas, en un solo lugar</div>
+        </div>
+
+        <div class="cards">
+          <a class="card reveal delay-1" href="#">
+            <div class="icon">▤</div>
+            <h3>Cuestionario inicial</h3>
+            <p>Completa tu información para personalizar tu plan.</p>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="card reveal delay-2" href="#">
+            <div class="icon">⌁</div>
+            <h3>Guía de nutrición</h3>
+            <p>Aprende las bases de tu plan de alimentación.</p>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="card reveal delay-3" href="#">
+            <div class="icon">＋</div>
+            <h3>Guía de entrenamiento</h3>
+            <p>Todo lo que necesitas para tus sesiones.</p>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="card reveal delay-4" href="#soporte">
+            <div class="icon">◌</div>
+            <h3>Contacto directo</h3>
+            <p>Cualquier duda, estoy aquí para ayudarte.</p>
+            <div class="arrow">→</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="video">
+      <div class="container">
+        <div class="video-grid">
+          <div class="video-card reveal">
+            <div class="video-cover">
+              <div class="play">▶</div>
+            </div>
+            <div class="video-info">
+              <div class="orange-label">Mensaje de Álvaro</div>
+              <h2>Bienvenido,<br>de verdad.</h2>
+              <p>
+                Te cuento en este vídeo cómo vamos a trabajar, qué puedes esperar
+                y algunos consejos clave para empezar con la mejor mentalidad.
+              </p>
+              <a class="btn btn-secondary" href="#">▶ Ver vídeo · 2 min</a>
+            </div>
+          </div>
+
+          <div class="side-panel reveal delay-2">
+            <div class="orange-label">Recuerda</div>
+            <blockquote>“No se trata de hacerlo perfecto, sino de hacerlo constante.”</blockquote>
+            <div class="checklist">
+              <div class="check"><i>✓</i> Estás en el lugar correcto.</div>
+              <div class="check"><i>✓</i> Cuentas con mi apoyo en todo momento.</div>
+              <div class="check"><i>✓</i> El progreso llega con constancia.</div>
+              <div class="check"><i>✓</i> Tú pones el esfuerzo, yo la estrategia.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="soporte">
+      <div class="container">
+        <div class="support reveal">
+          <div class="support-copy">
+            <div class="wa">◉</div>
+            <div>
+              <div class="orange-label" style="margin-bottom:5px">¿Necesitas ayuda?</div>
+              <h3>Escríbeme directamente por WhatsApp</h3>
+              <p>Resuelvo tus dudas lo antes posible.</p>
+            </div>
+          </div>
+          <a class="btn btn-primary" href="#">Abrir WhatsApp →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="mountains"></div>
+      <div class="container reveal">
+        <div class="orange-label">Más que un programa</div>
+        <h2>UNA VIDA <span>MÁS TUYA</span></h2>
+        <p>
+          Esto no va solo de entrenar o comer bien. Va de construir una vida
+          con más energía, confianza y libertad. Estás en el lugar correcto para conseguirlo.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="logo">ALVARO COBOS</div>
+      <div class="footer-links">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Contacto</a>
+      </div>
+      <div class="footer-copy">© 2026 Álvaro Cobos</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
