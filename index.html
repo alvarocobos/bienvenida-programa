@@ -1854,6 +1854,29 @@
   (function () {
     'use strict';
 
+    /* ---------------------------------------------------------------
+       Empezar siempre por arriba.
+
+       Por defecto el navegador restaura la posición de scroll al recargar
+       o al reabrir la pestaña. En una página tan larga como esta eso deja
+       al cliente tirado a mitad de página, o directamente en el pie.
+       Si la URL trae un ancla (#faq, #app...) sí se respeta: ahí la
+       intención de ir a ese punto es explícita.
+       --------------------------------------------------------------- */
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    function alPrincipio() {
+      if (window.location.hash) return;
+      var raiz = document.documentElement;
+      var previo = raiz.style.scrollBehavior;
+      raiz.style.scrollBehavior = 'auto';   // sin esto se vería el viaje hasta arriba
+      window.scrollTo(0, 0);
+      raiz.style.scrollBehavior = previo;
+    }
+
+    alPrincipio();
+    window.addEventListener('load', alPrincipio);
+
     /* ===============================================================
        ENLACES  ·  ✎ ESTO ES LO ÚNICO QUE TIENES QUE EDITAR
 
