@@ -1,50 +1,68 @@
-# Página de bienvenida · Álvaro Cobos
+# Página de bienvenida · Método F90
 
-Portal de bienvenida para clientes que **acaban de entrar** en la asesoría online.
+Portal de bienvenida para clientes que **acaban de entrar** en la asesoría.
 No es una landing de venta: su único trabajo es que la persona sepa, desde el
 primer segundo, qué tiene que hacer, en qué orden y qué puede esperar.
 
-## Qué contiene
+## Estructura
 
 | Sección | Para qué sirve |
 |---|---|
-| Hero + panel de progreso | Da la bienvenida y muestra los 4 primeros pasos con su estado |
-| Empieza aquí | Los 4 pasos en orden, con tiempo estimado, acción y casilla de «hecho» |
-| Cómo funciona | Qué pasa hoy, en 48 h, la primera semana y cada domingo |
-| Tus herramientas | WhatsApp, cuestionario, app de entrenamiento y guías |
+| Hero | Logo, bienvenida y panel con los 4 primeros pasos y su progreso |
+| Empieza aquí | Los 4 pasos en orden, con tiempo, acción y casilla de «hecho» |
+| Cómo funciona | Hoy, en 48 h, la primera semana, cada viernes y el fin de semana |
+| Tu app | Todo el método vive en Fuelier: descarga para iOS y Android |
+| La comunidad | Acceso a la comunidad privada en Skool |
 | Vídeo de bienvenida | Mensaje personal + recordatorios clave |
-| Cómo trabajamos juntos | Compromiso de ambas partes: qué pone cada uno |
-| Dudas frecuentes | Acordeón con las 7 preguntas de la primera semana |
+| Cómo trabajamos juntos | Compromiso de ambas partes |
+| Dudas frecuentes | Acordeón con 9 preguntas de la primera semana |
 | Soporte | Contacto directo y tiempos de respuesta |
+
+## Cómo se opera la asesoría (lo que refleja la página)
+
+- **Horario de atención:** de lunes a sábado, respuesta en menos de 24 h.
+- **Revisión semanal:** cada viernes, desde la app.
+- **Ajustes:** el fin de semana, para que el lunes esté todo listo.
+- **Plan de nutrición, entrenamiento, revisiones y seguimiento:** todo en la app.
+- **Credenciales de la app:** las envía Álvaro por WhatsApp; el cliente no se registra solo.
 
 ## Cómo personalizarla
 
 Todo es un único archivo estático, `index.html`, sin dependencias ni compilación.
 
-1. Abre `index.html`.
-2. Busca `var ENLACES` (al principio del `<script>`, cerca del final).
-3. Pega tus URLs entre las comillas:
+Los enlaces se configuran en el objeto `ENLACES`, al principio del `<script>`:
 
 ```js
 var ENLACES = {
-  whatsapp:     'https://wa.me/34600000000',
-  cuestionario: 'https://forms.gle/...',
-  video:        'https://youtu.be/...',
-  entrenamiento:'https://...',
-  guias:        'https://...',
-  instagram:    ''   // vacío = el icono se oculta
+  whatsapp:     '',   // ← PENDIENTE: 'https://wa.me/34600000000'
+  cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
+  video:        '',   // ← PENDIENTE: vídeo de bienvenida
+  ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
+  android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
+  comunidad:    'https://www.skool.com/metodo-f90-4470/about',
+  instagram:    'https://www.instagram.com/_alvarotrainer/'
 };
 ```
 
-Los enlaces que dejes vacíos siguen llevando a la sección correspondiente de la
-propia página, así que nunca queda un botón roto.
+Los enlaces ya conocidos están además escritos directamente en el HTML, así que
+funcionan aunque el JavaScript falle. Los que queden vacíos llevan a la sección
+correspondiente de la propia página: nunca queda un botón roto.
 
-Otros datos editables directamente en el texto: el email (`alvarocobos1995@gmail.com`),
-los tiempos de respuesta (`24 h`, `48 h`) y el día del check-in (`domingo`).
-
-Para incrustar el vídeo en la página en lugar de abrirlo fuera, sustituye el
-bloque `<a class="video-frame">` por el `<iframe>` que se indica en el comentario
+Para incrustar el vídeo dentro de la página en vez de abrirlo fuera, sustituye
+el bloque `<a class="video-frame">` por el `<iframe>` que indica el comentario
 que hay justo encima.
+
+## El logo
+
+Está en `assets/`, en dos versiones y dos formatos:
+
+- `logo-f90.webp` / `.png` — lockup completo (hero).
+- `logo-f90-mark.webp` / `.png` — sólo «F90», recortado para que se lea en la
+  cabecera y en el pie, donde el lockup entero quedaría ilegible.
+
+Se generaron a partir de `LOGO F90.png` recortando el fondo de estudio y
+reconstruyendo la transparencia, para que el resplandor cálido se integre con
+el fondo oscuro en lugar de dejar un recuadro gris.
 
 ## Detalles técnicos
 
@@ -55,4 +73,4 @@ que hay justo encima.
   cliente. Si el almacenamiento está bloqueado, la página funciona igual.
 - Accesibilidad: contraste AA en todo el texto, foco visible, navegación por
   teclado, nombres accesibles en todos los controles y soporte de
-  `prefers-reduced-motion`.
+  `prefers-reduced-motion` (todas las animaciones se desactivan).
