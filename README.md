@@ -17,10 +17,10 @@ primer segundo, qué tiene que hacer, en qué orden y qué puede esperar.
 |---|---|
 | Hero | Logo, bienvenida y panel con los 4 primeros pasos y su progreso |
 | Empieza aquí | Los 4 pasos en orden, con tiempo, acción y casilla de «hecho» |
+| Vídeo de bienvenida | Mensaje personal + recordatorios clave. Va justo tras los pasos porque es el paso 1 |
 | Cómo funciona | Hoy, en 48 h, la primera semana, cada viernes y el fin de semana |
 | Tu app | Todo el método vive en Fuelier: descarga para iOS y Android, más un vídeo de cómo se usa |
 | La comunidad | Acceso a la comunidad privada en Skool |
-| Vídeo de bienvenida | Mensaje personal + recordatorios clave |
 | Cómo trabajamos juntos | Compromiso de ambas partes |
 | Dudas frecuentes | Acordeón con 9 preguntas de la primera semana |
 | Soporte | Contacto directo y tiempos de respuesta |
@@ -96,3 +96,7 @@ el fondo oscuro en lugar de dejar un recuadro gris.
 - Accesibilidad: contraste AA en todo el texto, foco visible, navegación por
   teclado, nombres accesibles en todos los controles y soporte de
   `prefers-reduced-motion` (todas las animaciones se desactivan).
+- La página abre siempre por arriba. El script de la cabecera desactiva la
+  restauración de scroll del navegador y limpia el ancla heredada de la visita
+  anterior; tiene que seguir en `<head>`, porque al final del documento el
+  navegador ya ha restaurado la posición y llega tarde.

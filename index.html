@@ -7,6 +7,21 @@
   <meta name="theme-color" content="#0A0908" />
   <meta name="robots" content="noindex, nofollow" />
 
+  <script>
+    /* Esto va en la cabecera a propósito. Si se deja al final del documento,
+       el navegador ya ha restaurado la posición de scroll y llega tarde:
+       en el móvil la página se abría a mitad o directamente en el pie. */
+    (function () {
+      try {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        /* Un ancla heredada de la visita anterior (al tocar "Dudas" o el botón
+           flotante, la URL se queda con #faq o #soporte) haría saltar la página
+           al abrirla. Se limpia antes de que el navegador llegue a leerla. */
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+      } catch (e) { /* navegador antiguo o contexto restringido: se sigue igual */ }
+    })();
+  </script>
+
   <title>Bienvenido al Método F90 | Álvaro Cobos</title>
   <meta name="description" content="Tu punto de partida en el Método F90. Aquí tienes, paso a paso, todo lo que necesitas hacer durante tus primeros días." />
 
@@ -1090,9 +1105,9 @@
   <!-- ==========================================================================
        ✎ CÓMO PERSONALIZAR ESTA PÁGINA
 
-       Todos los enlaces se configuran en UN SOLO SITIO: el bloque «ENLACES»
-       que hay al principio del <script>, casi al final de este archivo.
-       Busca ahí «var ENLACES» y pega tus URLs entre las comillas.
+       Todos los enlaces se configuran en UN SOLO SITIO: el bloque «ENLACES»,
+       casi al final de este archivo. Busca «var ENLACES» y pega tus URLs
+       entre las comillas.
 
        Mientras un enlace siga vacío, el botón lleva a la sección correspondiente
        de esta misma página, así que nunca queda un enlace roto.
@@ -1457,6 +1472,48 @@
       </div>
     </section>
 
+    <!-- ============================== VÍDEO ============================== -->
+    <section class="section" id="video">
+      <div class="container">
+        <div class="video-grid">
+          <article class="video-card reveal">
+            <!-- Si prefieres incrustar el vídeo en la página en vez de abrirlo fuera,
+                 sustituye este <a> por:
+                 <div class="video-frame"><iframe src="https://www.youtube.com/embed/TU_ID"
+                   title="Mensaje de bienvenida" allowfullscreen loading="lazy"></iframe></div> -->
+            <a class="video-frame" href="#video" data-link="video" aria-label="Reproducir el vídeo de bienvenida">
+              <span class="video-badge">
+                <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clock"/></svg>
+                2 min · Míralo antes de empezar
+              </span>
+              <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
+            </a>
+            <div class="video-body">
+              <span class="eyebrow eyebrow--plain">Un mensaje para ti</span>
+              <h2>Antes de nada, escúchame dos minutos</h2>
+              <p>
+                Te cuento cómo vamos a trabajar, qué puedes esperar de mí y las tres cosas que
+                marcan la diferencia entre quien consigue resultados y quien se queda a medias.
+                Es el mejor uso que le puedes dar a los próximos dos minutos.
+              </p>
+            </div>
+          </article>
+
+          <aside class="aside reveal" style="--i:2">
+            <span class="eyebrow eyebrow--plain">Ten esto presente</span>
+            <blockquote>No se trata de hacerlo perfecto, sino de hacerlo constante.</blockquote>
+            <cite>Álvaro Cobos</cite>
+            <ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Estás en el sitio correcto y has tomado una buena decisión.</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> No estás solo: me tienes a un mensaje de distancia.</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Una semana regular no arruina nada. Abandonar, sí.</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Tú pones el esfuerzo, yo pongo la estrategia.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- ========================== CÓMO FUNCIONA ========================== -->
     <section class="section" id="funciona">
       <div class="container">
@@ -1601,48 +1658,6 @@
             <div class="community-row"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg> Recursos, guías y contenido que publico cada semana.</div>
             <div class="community-row"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg> Avances reales, para los días en que te falte chispa.</div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================== VÍDEO ============================== -->
-    <section class="section" id="video">
-      <div class="container">
-        <div class="video-grid">
-          <article class="video-card reveal">
-            <!-- Si prefieres incrustar el vídeo en la página en vez de abrirlo fuera,
-                 sustituye este <a> por:
-                 <div class="video-frame"><iframe src="https://www.youtube.com/embed/TU_ID"
-                   title="Mensaje de bienvenida" allowfullscreen loading="lazy"></iframe></div> -->
-            <a class="video-frame" href="#video" data-link="video" aria-label="Reproducir el vídeo de bienvenida">
-              <span class="video-badge">
-                <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clock"/></svg>
-                2 min · Míralo antes de empezar
-              </span>
-              <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
-            </a>
-            <div class="video-body">
-              <span class="eyebrow eyebrow--plain">Un mensaje para ti</span>
-              <h2>Antes de nada, escúchame dos minutos</h2>
-              <p>
-                Te cuento cómo vamos a trabajar, qué puedes esperar de mí y las tres cosas que
-                marcan la diferencia entre quien consigue resultados y quien se queda a medias.
-                Es el mejor uso que le puedes dar a los próximos dos minutos.
-              </p>
-            </div>
-          </article>
-
-          <aside class="aside reveal" style="--i:2">
-            <span class="eyebrow eyebrow--plain">Ten esto presente</span>
-            <blockquote>No se trata de hacerlo perfecto, sino de hacerlo constante.</blockquote>
-            <cite>Álvaro Cobos</cite>
-            <ul>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Estás en el sitio correcto y has tomado una buena decisión.</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> No estás solo: me tienes a un mensaje de distancia.</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Una semana regular no arruina nada. Abandonar, sí.</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Tú pones el esfuerzo, yo pongo la estrategia.</li>
-            </ul>
-          </aside>
         </div>
       </div>
     </section>
@@ -1884,17 +1899,11 @@
 
     /* ---------------------------------------------------------------
        Empezar siempre por arriba.
-
-       Por defecto el navegador restaura la posición de scroll al recargar
-       o al reabrir la pestaña. En una página tan larga como esta eso deja
-       al cliente tirado a mitad de página, o directamente en el pie.
-       Si la URL trae un ancla (#faq, #app...) sí se respeta: ahí la
-       intención de ir a ese punto es explícita.
+       El grueso del trabajo lo hace el script de la cabecera; esto son
+       los refuerzos, para los momentos en que el navegador recoloca la
+       página después de cargar.
        --------------------------------------------------------------- */
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
     function alPrincipio() {
-      if (window.location.hash) return;
       var raiz = document.documentElement;
       var previo = raiz.style.scrollBehavior;
       raiz.style.scrollBehavior = 'auto';   // sin esto se vería el viaje hasta arriba
@@ -1904,6 +1913,8 @@
 
     alPrincipio();
     window.addEventListener('load', alPrincipio);
+    // Al volver desde otra aplicación, iOS restaura la página tal cual estaba.
+    window.addEventListener('pageshow', function (e) { if (e.persisted) alPrincipio(); });
 
     /* ===============================================================
        ENLACES  ·  ✎ ESTO ES LO ÚNICO QUE TIENES QUE EDITAR
