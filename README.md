@@ -1,5 +1,12 @@
 # Página de bienvenida · Método F90
 
+**En producción:** https://bienvenida.alvarocobos.com
+
+El dominio se configura con el archivo `CNAME` de la raíz más un registro DNS
+`CNAME` de `bienvenida` apuntando a `alvarocobos.github.io`. Si alguna vez
+cambia el dominio, hay que actualizar también las etiquetas `og:url`,
+`og:image` y `twitter:image` de `index.html`: son URL absolutas.
+
 Portal de bienvenida para clientes que **acaban de entrar** en la asesoría.
 No es una landing de venta: su único trabajo es que la persona sepa, desde el
 primer segundo, qué tiene que hacer, en qué orden y qué puede esperar.
