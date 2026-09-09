@@ -45,8 +45,20 @@ var ENLACES = {
 ```
 
 Los enlaces ya conocidos están además escritos directamente en el HTML, así que
-funcionan aunque el JavaScript falle. Los que queden vacíos llevan a la sección
-correspondiente de la propia página: nunca queda un botón roto.
+funcionan aunque el JavaScript falle.
+
+**La página se adapta a lo que esté configurado.** Mientras un enlace siga vacío,
+en vez de dejar un botón muerto se anuncia el estado:
+
+- **Sin `video`:** el reproductor muestra «Disponible muy pronto» y deja de ser
+  pulsable; el paso 1 se marca como pendiente, pierde su casilla y sale del
+  recuento, de forma que el progreso puede llegar igualmente al 100 % con los
+  otros tres pasos.
+- **Sin `whatsapp`:** el bloque de soporte pasa a ofrecer el email como canal
+  principal, en lugar de un botón que promete WhatsApp y abre el correo.
+
+En cuanto se pega la URL, todo vuelve solo a su estado normal. No hay que tocar
+nada más.
 
 Para incrustar el vídeo dentro de la página en vez de abrirlo fuera, sustituye
 el bloque `<a class="video-frame">` por el `<iframe>` que indica el comentario

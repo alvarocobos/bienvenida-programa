@@ -97,6 +97,9 @@
       text-rendering:optimizeLegibility;
       overflow-wrap:break-word;
     }
+    /* Los estilos de autor ganan a la hoja del navegador: sin esto, un
+       display: en una clase deja visible un elemento marcado con [hidden]. */
+    [hidden]{display:none !important}
     a{color:inherit;text-decoration:none}
     button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     ul{list-style:none}
@@ -912,6 +915,24 @@
     .community-row .ico{color:var(--accent-2);flex:none}
 
     /* ==========================================================================
+       ESTADOS PENDIENTES
+       Lo que aún no tiene URL configurada no se muestra roto: se anuncia.
+       ========================================================================== */
+    .is-muted{
+      opacity:.6;pointer-events:none;cursor:default;
+      background:rgba(255,255,255,.03);border-color:var(--line);
+      color:var(--text-3);box-shadow:none;transform:none;
+    }
+    .panel-item.is-pending{opacity:.55;pointer-events:none}
+    .video-frame.is-pending{cursor:default}
+    .video-frame.is-pending .play{display:none}
+    .video-frame.is-pending .video-badge{
+      left:50%;top:50%;transform:translate(-50%,-50%);
+      border-color:var(--accent-22);color:var(--accent-2);background:rgba(10,9,8,.8);
+      font-size:13px;padding:9px 16px;
+    }
+
+    /* ==========================================================================
        MICROINTERACCIONES
        ========================================================================== */
     /* La línea del antetítulo crece al aparecer */
@@ -1278,7 +1299,8 @@
               </div>
               <p>
                 Dos minutos en los que te explico cómo trabajo, qué vamos a hacer cada semana y
-                qué necesito de ti. Empieza por aquí: el resto de pasos se entienden mucho mejor después.
+                qué necesito de ti. <span data-cuando-listo>Empieza por aquí: el resto de pasos se
+                entienden mucho mejor después.</span>
               </p>
               <div class="step-actions">
                 <a class="btn btn--primary" href="#video">
@@ -1856,6 +1878,68 @@
       });
     });
 
+    /* ---------------------------------------------------------------
+       Lo que todavía no tiene URL se anuncia como pendiente en vez de
+       quedarse muerto. En cuanto se rellena arriba, todo vuelve solo.
+       --------------------------------------------------------------- */
+    if (!(ENLACES.video || '').trim()) {
+      var marco = document.querySelector('.video-frame');
+      if (marco) {
+        marco.classList.add('is-pending');
+        marco.removeAttribute('href');
+        marco.setAttribute('aria-label', 'El vídeo de bienvenida estará disponible muy pronto');
+        var chapa = marco.querySelector('.video-badge');
+        if (chapa) chapa.textContent = 'Disponible muy pronto';
+      }
+
+      var paso1 = document.getElementById('paso-1');
+      if (paso1) {
+        var cta = paso1.querySelector('.btn');
+        if (cta) {
+          cta.className = 'btn is-muted';
+          cta.removeAttribute('href');
+          cta.textContent = 'Disponible muy pronto';
+        }
+        // No se puede completar lo que aún no existe: fuera del recuento.
+        var frase = paso1.querySelector('[data-cuando-listo]');
+        if (frase) frase.textContent = 'Te aviso en cuanto esté listo; mientras tanto, sigue con el paso 2.';
+
+        var casilla = paso1.querySelector('[data-check]');
+        if (casilla) {
+          casilla.setAttribute('data-pending', '');
+          var etiqueta = casilla.closest('.done-toggle');
+          if (etiqueta) etiqueta.hidden = true;
+        }
+      }
+
+      var espejo1 = document.querySelector('[data-mirror="1"]');
+      if (espejo1) {
+        espejo1.classList.add('is-pending');
+        var dur = espejo1.querySelector('.dur');
+        if (dur) dur.textContent = 'Muy pronto';
+      }
+    }
+
+    if (!(ENLACES.whatsapp || '').trim()) {
+      // Sin número todavía: el correo pasa a ser el canal principal y se
+      // retira el botón duplicado, en lugar de prometer un WhatsApp que no hay.
+      // Ojo: el botón de WhatsApp ya apunta a mailto como respaldo, así que
+      // hay que excluirlo al buscar el de email o se esconde a sí mismo.
+      var botonWa = document.querySelector('.support-actions [data-link="whatsapp"]');
+      var botonMail = document.querySelector('.support-actions a[href^="mailto:"]:not([data-link])');
+      if (botonWa && botonMail) {
+        botonWa.className = 'btn btn--primary';
+        botonWa.setAttribute('href', botonMail.getAttribute('href'));
+        botonWa.innerHTML = '<svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg> Escríbeme por email';
+        botonMail.hidden = true;
+      }
+      var avatar = document.querySelector('.support-avatar use');
+      if (avatar) {
+        avatar.setAttribute('href', '#i-mail');
+        avatar.parentNode.classList.remove('ico--fill');
+      }
+    }
+
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     /* ---------------------------------------------------------------
@@ -1972,7 +2056,7 @@
        5. Progreso de los primeros pasos (persistente en el dispositivo)
        --------------------------------------------------------------- */
     var STORE = 'ac-bienvenida-pasos-v1';
-    var checkboxes = Array.prototype.slice.call(document.querySelectorAll('[data-check]'));
+    var checkboxes = Array.prototype.slice.call(document.querySelectorAll('[data-check]:not([data-pending])'));
     var mirrors = Array.prototype.slice.call(document.querySelectorAll('[data-mirror]'));
     var panel = document.getElementById('panel');
     var ring = document.getElementById('ring');
