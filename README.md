@@ -18,7 +18,7 @@ primer segundo, qué tiene que hacer, en qué orden y qué puede esperar.
 | Hero | Logo, bienvenida y panel con los 4 primeros pasos y su progreso |
 | Empieza aquí | Los 4 pasos en orden, con tiempo, acción y casilla de «hecho» |
 | Cómo funciona | Hoy, en 48 h, la primera semana, cada viernes y el fin de semana |
-| Tu app | Todo el método vive en Fuelier: descarga para iOS y Android |
+| Tu app | Todo el método vive en Fuelier: descarga para iOS y Android, más un vídeo de cómo se usa |
 | La comunidad | Acceso a la comunidad privada en Skool |
 | Vídeo de bienvenida | Mensaje personal + recordatorios clave |
 | Cómo trabajamos juntos | Compromiso de ambas partes |
@@ -44,6 +44,7 @@ var ENLACES = {
   whatsapp:     '',   // ← PENDIENTE: 'https://wa.me/34600000000'
   cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
   video:        '',   // ← PENDIENTE: vídeo de bienvenida
+  videoApp:     '',   // ← PENDIENTE: vídeo de cómo funciona la app
   ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
   android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
   comunidad:    'https://www.skool.com/metodo-f90-4470/about',
@@ -57,10 +58,12 @@ funcionan aunque el JavaScript falle.
 **La página se adapta a lo que esté configurado.** Mientras un enlace siga vacío,
 en vez de dejar un botón muerto se anuncia el estado:
 
-- **Sin `video`:** el reproductor muestra «Disponible muy pronto» y deja de ser
-  pulsable; el paso 1 se marca como pendiente, pierde su casilla y sale del
-  recuento, de forma que el progreso puede llegar igualmente al 100 % con los
-  otros tres pasos.
+- **Sin `video` o sin `videoApp`:** ese reproductor muestra «Disponible muy
+  pronto» y deja de ser pulsable. Cada uno va por su cuenta: se puede publicar
+  uno y dejar el otro pendiente.
+- **Sin `video`** además: el paso 1 se marca como pendiente, pierde su casilla
+  y sale del recuento, de forma que el progreso puede llegar igualmente al
+  100 % con los otros tres pasos.
 - **Sin `whatsapp`:** el bloque de soporte pasa a ofrecer el email como canal
   principal, en lugar de un botón que promete WhatsApp y abre el correo.
 

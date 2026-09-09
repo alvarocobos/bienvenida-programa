@@ -621,8 +621,15 @@
     }
     @supports (backdrop-filter:blur(1px)){.video-badge{backdrop-filter:blur(10px)}}
     .video-body{padding:clamp(24px,3vw,32px)}
-    .video-body h2{font-size:clamp(24px,2.6vw,30px);margin:14px 0 12px}
+    .video-body h2,.video-body h3{font-size:clamp(22px,2.4vw,28px);margin:14px 0 12px;letter-spacing:-.028em}
     .video-body p{color:var(--text-2);font-size:15.5px;line-height:1.68;max-width:60ch}
+
+    /* Variante horizontal: el vídeo a un lado y el texto al otro. */
+    .video-card--wide{
+      display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+      align-items:center;
+    }
+    .video-card--wide .video-frame{border-bottom:0;border-right:1px solid var(--line)}
 
     .aside{
       display:flex;flex-direction:column;
@@ -1007,6 +1014,8 @@
       .mobile-menu{display:block}
       .pact{grid-template-columns:1fr}
       .feature,.feature--community{grid-template-columns:1fr;gap:28px}
+      .video-card--wide{grid-template-columns:1fr}
+      .video-card--wide .video-frame{border-right:0;border-bottom:1px solid var(--line)}
       .fab{display:inline-flex}
       .support-actions{width:100%}
     }
@@ -1538,6 +1547,25 @@
             </p>
           </div>
         </div>
+
+        <article class="video-card video-card--wide reveal" style="--i:1;margin-top:14px">
+          <a class="video-frame" href="#app" data-link="videoApp" aria-label="Reproducir el vídeo sobre cómo funciona la app">
+            <span class="video-badge">
+              <svg class="ico ico--sm" aria-hidden="true"><use href="#i-play"/></svg>
+              Cómo funciona la app
+            </span>
+            <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
+          </a>
+          <div class="video-body">
+            <span class="eyebrow eyebrow--plain">Te la enseño por dentro</span>
+            <h3>Cómo se usa la app, paso a paso</h3>
+            <p>
+              Dónde está tu plan de nutrición, cómo registrar los entrenamientos y cómo
+              subir tu revisión de los viernes. Con este vídeo no vas a tener que
+              preguntarme dónde está nada.
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1888,6 +1916,7 @@
       whatsapp:     '',   // TU NÚMERO, p. ej. 'https://wa.me/34600000000'
       cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
       video:        '',   // vídeo de bienvenida (YouTube, Vimeo, Loom...)
+      videoApp:     '',   // vídeo explicando cómo funciona la app
       ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
       android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
       comunidad:    'https://www.skool.com/metodo-f90-4470/about',
@@ -1917,16 +1946,18 @@
        Lo que todavía no tiene URL se anuncia como pendiente en vez de
        quedarse muerto. En cuanto se rellena arriba, todo vuelve solo.
        --------------------------------------------------------------- */
-    if (!(ENLACES.video || '').trim()) {
-      var marco = document.querySelector('.video-frame');
-      if (marco) {
-        marco.classList.add('is-pending');
-        marco.removeAttribute('href');
-        marco.setAttribute('aria-label', 'El vídeo de bienvenida estará disponible muy pronto');
-        var chapa = marco.querySelector('.video-badge');
-        if (chapa) chapa.textContent = 'Disponible muy pronto';
-      }
+    // Cada reproductor sin URL se anuncia por su cuenta.
+    Array.prototype.forEach.call(document.querySelectorAll('.video-frame[data-link]'), function (marco) {
+      if ((ENLACES[marco.getAttribute('data-link')] || '').trim()) return;
+      marco.classList.add('is-pending');
+      marco.removeAttribute('href');
+      marco.setAttribute('aria-label', 'Este vídeo estará disponible muy pronto');
+      var chapa = marco.querySelector('.video-badge');
+      if (chapa) chapa.textContent = 'Disponible muy pronto';
+    });
 
+    // El paso 1 depende sólo del vídeo de bienvenida.
+    if (!(ENLACES.video || '').trim()) {
       var paso1 = document.getElementById('paso-1');
       if (paso1) {
         var cta = paso1.querySelector('.btn');
