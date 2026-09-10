@@ -630,6 +630,9 @@
     .support-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
     .support-actions{display:flex;flex-direction:column;gap:10px;min-width:min(100%,230px)}
     .support-actions .btn{width:100%}
+    .support-soon{
+      font-size:12.5px;color:var(--text-3);line-height:1.55;text-align:center;margin-top:2px;
+    }
 
     /* ==========================================================================
        CIERRE
@@ -758,12 +761,8 @@
     .store b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.015em;margin-top:2px}
 
     /* ==========================================================================
-       BLOQUE DESTACADO (APP Y COMUNIDAD)
+       AVISOS
        ========================================================================== */
-    /* Halo que sigue al puntero */
-
-
-
     .note{
       display:flex;gap:11px;padding:14px 15px;border-radius:var(--r-sm);
       border:1px solid var(--accent-22);background:var(--accent-08);
@@ -807,9 +806,6 @@
     }
     .btn--primary:hover::after{animation:sheen .85s var(--ease) 1}
 
-    /* El raíl de la cronología se dibuja al entrar en pantalla */
-    .timeline::before{transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease) .1s}
-
     /* Confirmación al marcar un paso */
     .step-chip::before{
       content:"";position:absolute;inset:-3px;border-radius:inherit;pointer-events:none;
@@ -821,21 +817,9 @@
       100%{opacity:0;transform:scale(1.55)}
     }
 
-    /* Aparición del panel de progreso, algo más elaborada */
-
-    /* Latido lento del punto activo de la cronología */
-    .tl-item:first-child::before{animation:latido 3.4s ease-in-out infinite}
-    @keyframes latido{
-      0%,100%{box-shadow:0 0 0 4px var(--accent-14)}
-      50%{box-shadow:0 0 0 7px rgba(255,90,0,.07)}
-    }
-
     /* ==========================================================================
        RESPONSIVE
        ========================================================================== */
-    @media (max-width:1080px){
-    }
-
     @media (max-width:860px){
       :root{--header-h:66px}
       .nav-links,.nav-actions .btn{display:none}
@@ -875,7 +859,6 @@
     }
 
     @media (max-width:400px){
-      .step-detail{padding:12px 13px}
       .logo--nav{width:58px;height:34px}
     }
 
@@ -1346,15 +1329,21 @@
           </div>
 
           <div class="support-actions">
-            <!-- Sin WhatsApp configurado, este botón cae al email: nunca queda muerto. -->
+            <!-- Si aún no hay número, el JS lo marca como "muy pronto" en vez de
+                 prometer un WhatsApp que no existe. El mailto es la red de
+                 seguridad para el caso de que el JS no llegue a ejecutarse. -->
             <a class="btn btn--primary" href="mailto:alvarocobos1995@gmail.com" data-link="whatsapp">
               <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-              Abrir WhatsApp
+              Escríbeme por WhatsApp
             </a>
             <a class="btn btn--ghost" href="mailto:alvarocobos1995@gmail.com">
               <svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg>
               Escribir un email
             </a>
+            <p class="support-soon" id="waPronto" hidden>
+              Estoy estrenando número de WhatsApp para las asesorías. En cuanto
+              esté, este botón se activa; mientras tanto, escríbeme por email.
+            </p>
           </div>
         </div>
       </div>
@@ -1403,6 +1392,7 @@
 
       <div class="footer-social">
         <a href="https://www.instagram.com/_alvarotrainer/" target="_blank" rel="noopener noreferrer" data-link="instagram" aria-label="Instagram"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+        <a href="#soporte" data-link="whatsapp" aria-label="WhatsApp"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
         <a href="mailto:alvarocobos1995@gmail.com" aria-label="Email"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></a>
       </div>
 
@@ -1516,21 +1506,23 @@
     if (!(ENLACES.whatsapp || '').trim()) {
       // Sin número todavía: el correo pasa a ser el canal principal y se
       // retira el botón duplicado, en lugar de prometer un WhatsApp que no hay.
-      // Ojo: el botón de WhatsApp ya apunta a mailto como respaldo, así que
-      // hay que excluirlo al buscar el de email o se esconde a sí mismo.
+      // El botón de WhatsApp se queda a la vista, anunciado, para que el cliente
+      // sepa que ése va a ser el canal. El email pasa a ser el principal.
+      // Ojo: el de WhatsApp ya apunta a mailto como respaldo, así que hay que
+      // excluirlo al buscar el de email o se esconde a sí mismo.
       var botonWa = document.querySelector('.support-actions [data-link="whatsapp"]');
       var botonMail = document.querySelector('.support-actions a[href^="mailto:"]:not([data-link])');
-      if (botonWa && botonMail) {
-        botonWa.className = 'btn btn--primary';
-        botonWa.setAttribute('href', botonMail.getAttribute('href'));
-        botonWa.innerHTML = '<svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg> Escríbeme por email';
-        botonMail.hidden = true;
+      if (botonWa) {
+        botonWa.className = 'btn is-muted';
+        botonWa.removeAttribute('href');
+        botonWa.innerHTML = '<svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp · muy pronto';
       }
-      var avatar = document.querySelector('.support-avatar use');
-      if (avatar) {
-        avatar.setAttribute('href', '#i-mail');
-        avatar.parentNode.classList.remove('ico--fill');
-      }
+      if (botonMail) botonMail.className = 'btn btn--primary';
+      var aviso = document.getElementById('waPronto');
+      if (aviso) aviso.hidden = false;
+      // En el pie, un icono apagado sería ruido: se retira hasta que haya número.
+      var piePie = document.querySelector('.footer-social [data-link="whatsapp"]');
+      if (piePie) piePie.remove();
     }
 
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
