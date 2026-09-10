@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0A0908" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <script>
+    /* Esto va en la cabecera a propósito. Si se deja al final del documento,
+       el navegador ya ha restaurado la posición de scroll y llega tarde:
+       en el móvil la página se abría a mitad o directamente en el pie. */
+    (function () {
+      try {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        /* Un ancla heredada de la visita anterior (al tocar "Dudas" o el botón
+           flotante, la URL se queda con #faq o #soporte) haría saltar la página
+           al abrirla. Se limpia antes de que el navegador llegue a leerla. */
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+      } catch (e) { /* navegador antiguo o contexto restringido: se sigue igual */ }
+    })();
+  </script>
+
+  <title>Bienvenido al Método F90 | Álvaro Cobos</title>
+  <meta name="description" content="Tu punto de partida en el Método F90. Aquí tienes, paso a paso, todo lo que necesitas hacer durante tus primeros días." />
+
+  <!-- Vista previa al pegar el enlace (WhatsApp, Instagram, etc.).
+       Las URL de abajo tienen que ser absolutas y del dominio real: si algún
+       día cambia el dominio, hay que actualizarlas o el enlace se pega sin imagen. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Método F90" />
+  <meta property="og:title" content="Bienvenido al Método F90" />
+  <meta property="og:description" content="Tu punto de partida en el Método F90. Aquí tienes, paso a paso, todo lo que necesitas hacer durante tus primeros días." />
+  <meta property="og:url" content="https://bienvenida.alvarocobos.com/" />
+  <meta property="og:image" content="https://bienvenida.alvarocobos.com/assets/og-f90.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Método F90" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bienvenido al Método F90" />
+  <meta name="twitter:description" content="Tu punto de partida en el Método F90. Aquí tienes, paso a paso, todo lo que necesitas hacer durante tus primeros días." />
+  <meta name="twitter:image" content="https://bienvenida.alvarocobos.com/assets/og-f90.jpg" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0908'/%3E%3Cpath d='M9 6.5h16.5l-2.1 5.2h-8.6l-.8 3.6h7.2l-2.1 5.1h-6.3L11 26H5.4z' fill='%23FF5A00'/%3E%3C/svg%3E" />
+  <link rel="preload" as="image" href="../assets/logo-f90.webp" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="../assets/logo-f90-mark.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Instrument+Serif:ital@0;1&display=swap" />
+
+  <style>
+    /* ==========================================================================
+       SISTEMA DE DISEÑO
+       ========================================================================== */
+    :root{
+      /* Superficies */
+      --bg:#0A0908;
+      --bg-2:#0D0C0B;
+      --surface:#121110;
+
+      /* Líneas */
+      --line:rgba(255,255,255,.07);
+      --line-2:rgba(255,255,255,.12);
+      --line-3:rgba(255,255,255,.2);
+
+      /* Texto */
+      --text:#F6F3F0;
+      --text-2:#B4ADA5;
+      --text-3:#8B847C;
+      --ink:#0A0908;
+
+      /* Acento */
+      --accent:#FF5A00;
+      --accent-2:#FF8A3D;
+      --accent-08:rgba(255,90,0,.08);
+      --accent-14:rgba(255,90,0,.14);
+      --accent-22:rgba(255,90,0,.22);
+      --accent-45:rgba(255,90,0,.45);
+
+      /* Radios */
+      --r-sm:12px;
+      --r-md:16px;
+      --r-lg:22px;
+      --r-xl:28px;
+
+      /* Métricas */
+      --max:1160px;
+      --gutter:clamp(20px,5vw,40px);
+      --sect:clamp(76px,9vw,128px);
+      --header-h:74px;
+
+      /* Sombras */
+      --sh-2:0 12px 32px -12px rgba(0,0,0,.7);
+      --sh-3:0 28px 60px -24px rgba(0,0,0,.85);
+
+      /* Movimiento */
+      --ease:cubic-bezier(.22,.61,.36,1);
+      --fast:.18s var(--ease);
+      --mid:.32s var(--ease);
+    }
+
+    /* ==========================================================================
+       RESET
+       ========================================================================== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{
+      scroll-behavior:smooth;
+      scroll-padding-top:calc(var(--header-h) + 16px);
+      -webkit-text-size-adjust:100%;
+    }
+    body{
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      font-optical-sizing:auto;
+      font-size:16px;
+      line-height:1.7;
+      color:var(--text);
+      background:var(--bg);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow-wrap:break-word;
+    }
+    /* Los estilos de autor ganan a la hoja del navegador: sin esto, un
+       display: en una clase deja visible un elemento marcado con [hidden]. */
+    [hidden]{display:none !important}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+    ul{list-style:none}
+    img,svg{display:block;max-width:100%}
+    ::selection{background:var(--accent);color:var(--ink)}
+
+    :focus-visible{
+      outline:2px solid var(--accent-2);
+      outline-offset:3px;
+      border-radius:4px;
+    }
+
+    .skip{
+      position:absolute;left:-9999px;top:0;z-index:200;
+      background:var(--accent);color:var(--ink);padding:12px 20px;
+      border-radius:0 0 var(--r-sm) 0;font-weight:600;font-size:14px;
+    }
+    .skip:focus{left:0}
+
+
+    /* ==========================================================================
+       PRIMITIVAS
+       ========================================================================== */
+    .container{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+
+    .ico{
+      width:20px;height:20px;flex:none;
+      fill:none;stroke:currentColor;stroke-width:1.6;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .ico--fill{fill:currentColor;stroke:none}
+    .ico--sm{width:16px;height:16px}
+    .ico--lg{width:24px;height:24px}
+
+    /* Grano ambiental */
+    .grain{
+      position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.028;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Tipografía */
+    h1,h2,h3,h4{font-weight:600;letter-spacing:-.025em;line-height:1.15;text-wrap:balance}
+    h1{
+      font-size:clamp(34px,7.4vw,72px);
+      line-height:1.02;letter-spacing:-.038em;font-weight:600;
+    }
+    h2{font-size:clamp(27px,3.6vw,40px);line-height:1.1;letter-spacing:-.032em}
+    h3{font-size:19px;letter-spacing:-.015em}
+    p{text-wrap:pretty}
+
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--accent-2);
+    }
+    .eyebrow::before{
+      content:"";width:22px;height:1px;background:currentColor;opacity:.6;flex:none;
+    }
+    .eyebrow--plain::before{display:none}
+
+    .lead{color:var(--text-2);font-size:clamp(16px,1.6vw,18px);line-height:1.72}
+
+    /* Secciones */
+    .section{padding-block:var(--sect);position:relative}
+    .section + .section{padding-top:0}
+
+    .section-head{margin-bottom:clamp(34px,4.5vw,54px);max-width:660px}
+    .section-head .eyebrow{margin-bottom:18px}
+    .section-head p{color:var(--text-2);margin-top:16px;font-size:16px;line-height:1.7;max-width:58ch}
+
+    /* Botones */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:50px;padding:0 22px;border-radius:var(--r-sm);
+      border:1px solid var(--line-2);
+      font-size:14.5px;font-weight:600;letter-spacing:-.005em;
+      color:var(--text);background:rgba(255,255,255,.03);
+      transition:background var(--fast),border-color var(--fast),color var(--fast),transform var(--fast),box-shadow var(--fast);
+      cursor:pointer;text-align:center;
+    }
+    .btn .ico{transition:transform var(--mid)}
+    .btn:hover{background:rgba(255,255,255,.07);border-color:var(--line-3)}
+    .btn:hover .ico--arrow{transform:translateX(3px)}
+    .btn:active{transform:translateY(1px)}
+
+    .btn--primary{
+      background:var(--accent);border-color:var(--accent);color:var(--ink);
+      box-shadow:0 8px 26px -12px rgba(255,90,0,.85);
+    }
+    .btn--primary:hover{
+      background:#ff6a1a;border-color:#ff6a1a;color:var(--ink);
+      box-shadow:0 12px 34px -12px rgba(255,90,0,.95);
+      transform:translateY(-1px);
+    }
+    .btn--primary:active{transform:translateY(0)}
+
+    .btn--ghost{background:transparent;border-color:var(--line-2)}
+    .btn--ghost:hover{border-color:var(--accent-45);color:var(--accent-2);background:var(--accent-08)}
+
+    .btn--sm{min-height:42px;padding:0 16px;font-size:13.5px;border-radius:10px}
+
+    /* Enlace de texto */
+
+    /* Píldoras */
+    .pill{
+      display:inline-flex;align-items:center;gap:7px;
+      padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);
+      font-size:12px;font-weight:500;color:var(--text-3);
+      background:rgba(255,255,255,.02);white-space:nowrap;
+    }
+    .pill .ico{width:13px;height:13px;stroke-width:1.8}
+    .pill--accent{color:var(--accent-2);border-color:var(--accent-22);background:var(--accent-08)}
+
+    /* Superficie base de tarjetas */
+
+    /* ==========================================================================
+       CABECERA
+       ========================================================================== */
+    .site-header{
+      position:fixed;top:0;left:0;right:0;z-index:70;
+      background:rgba(10,9,8,.72);
+      border-bottom:1px solid transparent;
+      transition:background var(--mid),border-color var(--mid),box-shadow var(--mid);
+    }
+    @supports (backdrop-filter:blur(1px)){
+      .site-header{background:rgba(10,9,8,.55);backdrop-filter:blur(20px) saturate(140%)}
+    }
+    .site-header.is-scrolled{
+      background:rgba(10,9,8,.86);
+      border-bottom-color:var(--line);
+      box-shadow:0 8px 30px -20px rgba(0,0,0,.9);
+    }
+    @supports (backdrop-filter:blur(1px)){
+      .site-header.is-scrolled{background:rgba(10,9,8,.74)}
+    }
+
+    .progressbar{
+      position:absolute;left:0;bottom:-1px;height:2px;width:100%;
+      background:transparent;pointer-events:none;
+    }
+    .progressbar i{
+      display:block;height:100%;width:var(--p,0%);
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      transition:width .1s linear;
+    }
+
+    .nav{
+      height:var(--header-h);
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+    }
+
+    .nav-links{display:flex;align-items:center;gap:4px}
+    .nav-links a{
+      position:relative;padding:8px 13px;border-radius:8px;
+      font-size:14px;font-weight:500;color:var(--text-3);
+      transition:color var(--fast),background var(--fast);
+    }
+    .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+    .nav-links a.is-active{color:var(--text)}
+    .nav-links a.is-active::after{
+      content:"";position:absolute;left:13px;right:13px;bottom:2px;height:1.5px;
+      background:var(--accent);border-radius:2px;
+    }
+
+    .nav-actions{display:flex;align-items:center;gap:10px}
+
+    .nav-toggle{
+      display:none;width:42px;height:42px;border-radius:10px;
+      border:1px solid var(--line-2);place-items:center;color:var(--text);
+      transition:background var(--fast),border-color var(--fast);
+    }
+    .nav-toggle:hover{background:rgba(255,255,255,.05)}
+    .nav-toggle .ico--close{display:none}
+    .nav-toggle[aria-expanded="true"] .ico--menu{display:none}
+    .nav-toggle[aria-expanded="true"] .ico--close{display:block}
+
+    .mobile-menu{
+      display:none;overflow:hidden;
+      border-top:1px solid var(--line);
+      background:rgba(10,9,8,.96);
+      max-height:0;opacity:0;
+      transition:max-height var(--mid),opacity var(--fast);
+    }
+    .mobile-menu.is-open{max-height:520px;opacity:1}
+    .mobile-menu ul{padding:10px 0 8px}
+    /* Acotado a la lista: si no, pisa los estilos del botón que va debajo. */
+    .mobile-menu ul a{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;font-size:16px;font-weight:500;color:var(--text-2);
+      border-bottom:1px solid var(--line);
+    }
+    .mobile-menu ul a:active{color:var(--text)}
+    .mobile-menu li:last-child a{border-bottom:0}
+    .mobile-menu ul a .ico{color:var(--text-3);width:16px;height:16px}
+    .mobile-menu .btn{width:100%;margin:12px 0 20px}
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero{
+      position:relative;overflow:hidden;
+      padding-top:calc(var(--header-h) + clamp(52px,7vw,88px));
+      padding-bottom:clamp(40px,5vw,72px);
+    }
+    .hero::before{
+      content:"";position:absolute;z-index:0;pointer-events:none;
+      top:-320px;right:-180px;width:760px;height:760px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,90,0,.16),rgba(255,90,0,.05) 42%,transparent 68%);
+      filter:blur(30px);
+    }
+    .hero::after{
+      content:"";position:absolute;z-index:0;pointer-events:none;
+      left:-260px;bottom:-180px;width:520px;height:520px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,90,0,.07),transparent 65%);
+      filter:blur(40px);
+    }
+    .hero .container{position:relative;z-index:1}
+
+    .hero .container{max-width:780px;text-align:center}
+    .hero-intro{display:flex;flex-direction:column;align-items:center}
+    .hero-copy{margin-inline:auto}
+    .hero-actions{justify-content:center}
+
+    .hero h1{margin:22px 0 24px}
+    .hero h1 span{display:block;color:var(--accent)}
+    .hero-copy{max-width:52ch}
+
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+
+    /* Panel de progreso */
+
+
+    .ring{
+      position:relative;width:58px;height:58px;flex:none;
+    }
+    .ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+    .ring circle{fill:none;stroke-width:3.5;stroke-linecap:round}
+    .ring .ring-bg{stroke:rgba(255,255,255,.14)}
+    .ring .ring-fg{
+      stroke:var(--accent);
+      stroke-dasharray:157;
+      stroke-dashoffset:calc(157 - (157 * var(--pct,0) / 100));
+      transition:stroke-dashoffset .6s var(--ease);
+    }
+    .ring b{
+      position:absolute;inset:0;display:grid;place-items:center;
+      font-size:13px;font-weight:600;letter-spacing:-.02em;
+    }
+
+
+
+    .panel-done{
+      display:none;align-items:flex-start;gap:11px;
+      padding:15px 16px;border-radius:var(--r-sm);
+      border:1px solid var(--accent-22);background:var(--accent-08);
+      font-size:13.5px;color:var(--text-2);line-height:1.55;
+    }
+    .panel-done .ico{color:var(--accent);flex:none;margin-top:2px}
+    /* El aviso va justo detrás del progreso, no dentro. */
+    .progress.is-complete + .panel-done{display:flex}
+
+    /* ==========================================================================
+       CABECERA DE PROGRESO
+       Sustituye al panel del hero: una sola pieza, al frente de los pasos,
+       en lugar de repetir los cuatro títulos dos veces.
+       ========================================================================== */
+    .progress{
+      display:flex;align-items:center;gap:15px;
+      max-width:980px;margin-bottom:18px;padding:15px 20px;
+      border:1px solid var(--line);border-radius:var(--r-md);
+      background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01) 60%);
+    }
+    .progress .ring,.progress .ring svg{width:46px;height:46px}
+    .progress-txt{min-width:0}
+    .progress-txt strong{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.012em}
+    .progress-txt span{display:block;font-size:12.5px;color:var(--text-3);margin-top:2px;line-height:1.5}
+
+    /* Lo que puede esperar de mí, en una línea */
+    .promises{display:flex;flex-wrap:wrap;gap:9px;max-width:980px;margin-top:22px}
+
+    /* ==========================================================================
+       PASOS
+       ========================================================================== */
+    .steps{display:grid;gap:14px;max-width:980px}
+
+    .step{
+      position:relative;
+      display:grid;grid-template-columns:64px minmax(0,1fr);gap:clamp(18px,2.5vw,28px);
+      padding:clamp(22px,3vw,30px);
+      border:1px solid var(--line);border-radius:var(--r-lg);
+      background:linear-gradient(160deg,rgba(255,255,255,.042),rgba(255,255,255,.01) 60%);
+      transition:border-color var(--mid),background var(--mid),transform var(--mid),box-shadow var(--mid);
+    }
+    .step::after{
+      content:"";position:absolute;left:0;top:18px;bottom:18px;width:2px;
+      border-radius:0 2px 2px 0;background:var(--accent);
+      opacity:0;transition:opacity var(--mid);
+    }
+    .step:hover{
+      border-color:var(--line-2);
+      background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015) 60%);
+      box-shadow:var(--sh-2);
+    }
+
+    .step-num{
+      width:56px;height:56px;border-radius:16px;flex:none;
+      display:grid;place-items:center;position:relative;
+      border:1px solid var(--line-2);background:rgba(255,255,255,.03);
+      font-size:15px;font-weight:600;letter-spacing:-.02em;color:var(--text-2);
+      transition:all var(--mid);
+    }
+    .step-num span{transition:opacity var(--fast)}
+    .step-num .ico{position:absolute;opacity:0;transform:scale(.6);transition:all var(--mid)}
+    .step:hover .step-num{border-color:var(--accent-45);color:var(--accent-2)}
+
+    .step-head{
+      display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:12px;
+    }
+    .step p{color:var(--text-2);font-size:15.5px;line-height:1.68;max-width:62ch}
+
+
+    .step-actions{
+      display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px;
+    }
+
+    /* Reproductor dentro de un paso: más contenido, sin salir del paso */
+    .step .video-frame{
+      max-width:440px;margin-top:18px;border-radius:var(--r-sm);
+      border:1px solid var(--line);
+    }
+    .step .video-frame .play{width:56px;height:56px}
+    .step .video-frame .play .ico{width:19px;height:19px}
+    .step-media-label{
+      display:block;margin-top:18px;font-size:11px;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);
+    }
+    .step-media-label + .video-frame{margin-top:9px}
+
+    /* Checkbox "hecho" */
+    .done-toggle{
+      display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+      padding:9px 15px 9px 12px;border-radius:10px;
+      border:1px dashed var(--line-2);
+      font-size:13.5px;font-weight:500;color:var(--text-3);
+      transition:all var(--fast);user-select:none;
+    }
+    .done-toggle:hover{border-color:var(--line-3);color:var(--text-2);background:rgba(255,255,255,.03)}
+    .done-toggle input{
+      position:absolute;width:1px;height:1px;margin:-1px;
+      opacity:0;overflow:hidden;clip:rect(0 0 0 0);
+    }
+    .done-toggle .box{
+      width:19px;height:19px;border-radius:6px;flex:none;
+      border:1.5px solid var(--line-3);display:grid;place-items:center;
+      color:transparent;transition:all var(--mid);
+    }
+    .done-toggle .box .ico{width:12px;height:12px;stroke-width:2.6}
+    .done-toggle input:focus-visible + .box{outline:2px solid var(--accent-2);outline-offset:2px}
+
+    .step.is-done{border-color:var(--accent-22);background:linear-gradient(160deg,rgba(255,90,0,.055),rgba(255,255,255,.008) 60%)}
+    .step.is-done::after{opacity:1}
+    .step.is-done .step-num{
+      background:var(--accent);border-color:var(--accent);color:var(--ink);
+    }
+    .step.is-done .step-num span{opacity:0}
+    .step.is-done .step-num .ico{opacity:1;transform:scale(1);color:var(--ink)}
+    .step.is-done .done-toggle{
+      border-style:solid;border-color:var(--accent-45);color:var(--accent-2);background:var(--accent-08);
+    }
+    /* Un paso hecho baja de tono: la vista va sola al siguiente pendiente. */
+    .step.is-done .btn--primary{
+      background:transparent;color:var(--text-2);
+      border-color:var(--line-2);box-shadow:none;
+    }
+    .step.is-done .btn--primary:hover{
+      background:rgba(255,255,255,.06);border-color:var(--line-3);color:var(--text);transform:none;
+    }
+    .step.is-done .done-toggle .box{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+
+
+    /* ==========================================================================
+       CRONOLOGÍA
+       ========================================================================== */
+    /* El raíl termina justo en el centro del último punto */
+
+
+    /* ==========================================================================
+       VÍDEO
+       ========================================================================== */
+    .video-frame{
+      position:relative;aspect-ratio:16/9;width:100%;display:block;
+      background:
+        radial-gradient(circle at 50% 44%,rgba(255,255,255,.09),transparent 46%),
+        linear-gradient(150deg,#211d1a,#0C0B0A 72%);
+      border-bottom:1px solid var(--line);
+      transition:filter var(--mid);
+    }
+    .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-frame:hover{filter:brightness(1.08)}
+    .play{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:74px;height:74px;border-radius:50%;display:grid;place-items:center;
+      color:var(--ink);background:var(--accent);
+      box-shadow:0 14px 40px -12px rgba(255,90,0,.85);
+      transition:transform var(--mid),box-shadow var(--mid);
+    }
+    .play .ico{width:26px;height:26px;margin-left:3px}
+    .video-frame:hover .play{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 18px 50px -12px rgba(255,90,0,.95)}
+    .video-badge{
+      position:absolute;left:16px;top:16px;
+      display:inline-flex;align-items:center;gap:7px;
+      padding:6px 12px;border-radius:999px;
+      background:rgba(10,9,8,.72);border:1px solid var(--line-2);
+      font-size:12px;font-weight:500;color:var(--text-2);white-space:nowrap;
+    }
+    @supports (backdrop-filter:blur(1px)){.video-badge{backdrop-filter:blur(10px)}}
+    .video-body p{color:var(--text-2);font-size:15.5px;line-height:1.68;max-width:60ch}
+
+    /* Variante horizontal: el vídeo a un lado y el texto al otro. */
+
+
+    /* ==========================================================================
+       COMPROMISO
+       ========================================================================== */
+
+    /* ==========================================================================
+       FAQ
+       ========================================================================== */
+    .faq{max-width:880px}
+    .faq-item{border-bottom:1px solid var(--line)}
+    .faq-item:first-child{border-top:1px solid var(--line)}
+    .faq-q{
+      display:flex;align-items:flex-start;gap:16px;width:100%;text-align:left;
+      padding:22px 4px;font-size:16.5px;font-weight:500;line-height:1.45;
+      color:var(--text);letter-spacing:-.012em;
+      transition:color var(--fast);
+    }
+    .faq-q:hover{color:var(--accent-2)}
+    .faq-q .ico{
+      margin-left:auto;flex:none;margin-top:3px;color:var(--text-3);
+      transition:transform var(--mid),color var(--fast);
+    }
+    .faq-q[aria-expanded="true"] .ico{transform:rotate(180deg);color:var(--accent)}
+    .faq-a{
+      display:grid;grid-template-rows:0fr;
+      transition:grid-template-rows var(--mid);
+    }
+    .faq-item.is-open .faq-a{grid-template-rows:1fr}
+    .faq-a > div{overflow:hidden}
+    .faq-a p{
+      color:var(--text-2);font-size:15.5px;line-height:1.72;
+      padding:0 46px 20px 0;max-width:70ch;
+    }
+    .faq-a ul{display:grid;gap:11px;padding:0 46px 24px 0;max-width:70ch}
+    .faq-a li{display:flex;gap:11px;font-size:15px;color:var(--text-2);line-height:1.6}
+    .faq-a li .ico{width:16px;height:16px;flex:none;margin-top:4px;color:var(--accent);stroke-width:2}
+    .faq-a li b{color:var(--text);font-weight:600}
+    .faq-a .cuando{
+      color:var(--accent-2);font-size:11px;font-weight:600;letter-spacing:.14em;
+      text-transform:uppercase;flex:none;width:104px;margin-top:2px;
+    }
+
+    /* ==========================================================================
+       SOPORTE
+       ========================================================================== */
+    .support{
+      position:relative;overflow:hidden;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:clamp(24px,4vw,48px);flex-wrap:wrap;
+      padding:clamp(28px,4vw,44px);
+      border:1px solid var(--accent-22);border-radius:var(--r-xl);
+      background:linear-gradient(120deg,rgba(255,90,0,.1),rgba(255,255,255,.015) 58%);
+      box-shadow:var(--sh-3);
+    }
+    .support::before{
+      content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,90,0,.35),transparent 68%);filter:blur(60px);pointer-events:none;
+    }
+    .support > *{position:relative}
+    .support-main{display:flex;align-items:flex-start;gap:20px;min-width:min(100%,320px);flex:1}
+    .support-avatar{
+      width:56px;height:56px;border-radius:17px;flex:none;
+      display:grid;place-items:center;color:var(--accent-2);
+      border:1px solid var(--accent-45);
+      background:linear-gradient(145deg,rgba(255,90,0,.22),rgba(255,90,0,.04));
+    }
+    .support h2{font-size:clamp(21px,2.4vw,26px);margin-bottom:9px}
+    .support p{color:var(--text-2);font-size:15px;line-height:1.65;max-width:52ch}
+    .support-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .support-actions{display:flex;flex-direction:column;gap:10px;min-width:min(100%,230px)}
+    .support-actions .btn{width:100%}
+
+    /* ==========================================================================
+       CIERRE
+       ========================================================================== */
+    .closing{
+      position:relative;overflow:hidden;
+      padding-block:clamp(88px,11vw,150px);
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg,var(--bg) 0%,#0F0B08 100%);
+    }
+    .closing::before{
+      content:"";position:absolute;left:50%;bottom:-340px;transform:translateX(-50%);
+      width:min(1100px,140vw);height:620px;border-radius:50%;
+      background:radial-gradient(circle,rgba(255,90,0,.2),rgba(255,90,0,.05) 45%,transparent 70%);
+      filter:blur(50px);pointer-events:none;
+    }
+    .closing .container{position:relative;max-width:820px;text-align:center}
+    .closing .eyebrow{margin-bottom:22px}
+    .closing h2{font-size:clamp(32px,5.2vw,58px);letter-spacing:-.04em;line-height:1.05}
+    .closing h2 em{
+      font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;
+      color:var(--accent);letter-spacing:-.01em;
+    }
+    .closing p{color:var(--text-2);font-size:clamp(16px,1.7vw,18px);line-height:1.72;margin:24px auto 0;max-width:56ch}
+    .closing-checks{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 26px;
+      max-width:660px;margin:34px auto 0;text-align:left;
+    }
+    .closing-checks li{display:flex;gap:11px;font-size:14.5px;color:var(--text-2);line-height:1.5}
+    .closing-checks li .ico{
+      width:19px;height:19px;flex:none;margin-top:2px;padding:3px;
+      border-radius:50%;background:var(--accent);color:var(--ink);stroke-width:3;
+    }
+
+    .signature{
+      display:inline-flex;align-items:center;gap:14px;margin-top:38px;
+      font-size:14.5px;color:var(--text-3);
+    }
+    .signature .line{width:34px;height:1px;background:var(--line-3)}
+    .signature b{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:27px;color:var(--text);line-height:1}
+
+    /* El titular de cierre se compone en tres líneas fijas:
+       así la cursiva nunca se parte a mitad de frase. */
+    .closing h2 span,.closing h2 em{display:block}
+
+    /* ==========================================================================
+       PIE
+       ========================================================================== */
+    .site-footer{border-top:1px solid var(--line);padding-block:36px;background:var(--bg)}
+    .footer-inner{
+      display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    }
+    .footer-social{display:flex;gap:8px}
+    .footer-social a{
+      width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+      border:1px solid var(--line);color:var(--text-3);
+      transition:all var(--fast);
+    }
+    .footer-social a:hover{color:var(--text);border-color:var(--line-3);background:rgba(255,255,255,.05)}
+    .footer-copy{color:var(--text-3);font-size:13px}
+
+    /* ==========================================================================
+       BOTÓN FLOTANTE (MÓVIL)
+       ========================================================================== */
+    .fab{
+      display:none;position:fixed;right:16px;z-index:65;
+      bottom:calc(16px + env(safe-area-inset-bottom));
+      align-items:center;gap:9px;height:50px;padding:0 20px;border-radius:999px;
+      background:var(--accent);color:var(--ink);font-size:14.5px;font-weight:600;
+      box-shadow:0 12px 34px -10px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.06);
+      opacity:0;transform:translateY(14px) scale(.94);pointer-events:none;
+      transition:opacity var(--mid),transform var(--mid);
+    }
+    .fab.is-visible{opacity:1;transform:none;pointer-events:auto}
+
+    /* ==========================================================================
+       REVELADO
+       ========================================================================== */
+    .reveal{
+      opacity:0;transform:translateY(18px);
+      transition:opacity .7s var(--ease),transform .7s var(--ease);
+      transition-delay:calc(var(--i,0) * 70ms);
+    }
+    .reveal.is-visible{opacity:1;transform:none}
+
+    /* ==========================================================================
+       LOGO
+       ========================================================================== */
+    .logo-link{display:inline-flex;align-items:center;gap:12px;padding-block:6px}
+    .logo{
+      position:relative;display:block;overflow:hidden;flex:none;
+      -webkit-mask-image:-webkit-radial-gradient(white,black); /* recorta el brillo en Safari */
+    }
+    .logo picture{display:block;width:100%;height:100%}
+    .logo img{display:block;width:100%;height:100%;object-fit:contain}
+
+    .logo--nav{width:70px;height:41px}
+    .logo--hero{width:min(300px,64vw);height:auto;aspect-ratio:760/605;margin-bottom:6px}
+    .logo--foot{width:60px;height:35px}
+
+    /* Destello metálico: recorre el logo al entrar y al pasar por encima */
+    .logo::after{
+      content:"";position:absolute;inset:-20% -60%;pointer-events:none;
+      background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.42) 50%,transparent 58%);
+      transform:translateX(-120%);
+    }
+    .logo--hero.is-lit::after{animation:sheen 1.5s var(--ease) .45s 1}
+    .logo-link:hover .logo::after{animation:sheen 1.1s var(--ease) 1}
+    @keyframes sheen{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+
+
+    /* ==========================================================================
+       BOTONES DE TIENDA
+       ========================================================================== */
+    .stores{display:flex;flex-wrap:wrap;gap:10px}
+    .store{
+      display:inline-flex;align-items:center;gap:11px;
+      min-height:56px;padding:0 20px 0 17px;border-radius:14px;
+      border:1px solid var(--line-2);background:rgba(255,255,255,.04);
+      transition:background var(--fast),border-color var(--fast),transform var(--fast);
+    }
+    .store:hover{background:rgba(255,255,255,.085);border-color:var(--line-3);transform:translateY(-2px)}
+    .store:active{transform:translateY(0)}
+    .store .ico{width:24px;height:24px;color:var(--text)}
+    .store span{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);line-height:1.2}
+    .store b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.015em;margin-top:2px}
+
+    /* ==========================================================================
+       BLOQUE DESTACADO (APP Y COMUNIDAD)
+       ========================================================================== */
+    /* Halo que sigue al puntero */
+
+
+
+    .note{
+      display:flex;gap:11px;padding:14px 15px;border-radius:var(--r-sm);
+      border:1px solid var(--accent-22);background:var(--accent-08);
+      font-size:13.5px;color:var(--text-2);line-height:1.6;
+    }
+    .note .ico{width:16px;height:16px;flex:none;margin-top:3px;color:var(--accent)}
+    .note b{color:var(--text);font-weight:600}
+
+
+    /* ==========================================================================
+       ESTADOS PENDIENTES
+       Lo que aún no tiene URL configurada no se muestra roto: se anuncia.
+       ========================================================================== */
+    .is-muted{
+      opacity:.6;pointer-events:none;cursor:default;
+      background:rgba(255,255,255,.03);border-color:var(--line);
+      color:var(--text-3);box-shadow:none;transform:none;
+    }
+    .panel-item.is-pending{opacity:.55;pointer-events:none}
+    .video-frame.is-pending{cursor:default}
+    .video-frame.is-pending .play{display:none}
+    .video-frame.is-pending .video-badge{
+      left:50%;top:50%;transform:translate(-50%,-50%);
+      border-color:var(--accent-22);color:var(--accent-2);background:rgba(10,9,8,.8);
+      font-size:13px;padding:9px 16px;
+    }
+
+    /* ==========================================================================
+       MICROINTERACCIONES
+       ========================================================================== */
+    /* La línea del antetítulo crece al aparecer */
+    .reveal .eyebrow::before{width:0;transition:width .7s var(--ease) .25s}
+    .reveal.is-visible .eyebrow::before{width:22px}
+
+    /* Barrido de luz en el botón principal */
+    .btn--primary{position:relative;overflow:hidden;isolation:isolate}
+    .btn--primary::after{
+      content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+      background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.38) 50%,transparent 60%);
+      transform:translateX(-110%);
+    }
+    .btn--primary:hover::after{animation:sheen .85s var(--ease) 1}
+
+    /* El raíl de la cronología se dibuja al entrar en pantalla */
+    .timeline::before{transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease) .1s}
+
+    /* Confirmación al marcar un paso */
+    .step-num::before{
+      content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
+      border:1.5px solid var(--accent);opacity:0;
+    }
+    .step.just-done .step-num::before{animation:confirm .75s var(--ease) 1}
+    @keyframes confirm{
+      0%{opacity:.85;transform:scale(1)}
+      100%{opacity:0;transform:scale(1.55)}
+    }
+
+    /* Aparición del panel de progreso, algo más elaborada */
+
+    /* Latido lento del punto activo de la cronología */
+    .tl-item:first-child::before{animation:latido 3.4s ease-in-out infinite}
+    @keyframes latido{
+      0%,100%{box-shadow:0 0 0 4px var(--accent-14)}
+      50%{box-shadow:0 0 0 7px rgba(255,90,0,.07)}
+    }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width:1080px){
+    }
+
+    @media (max-width:860px){
+      :root{--header-h:66px}
+      .nav-links,.nav-actions .btn{display:none}
+      .nav-toggle{display:grid}
+      .mobile-menu{display:block}
+      .fab{display:inline-flex}
+      .support-actions{width:100%}
+    }
+
+    @media (max-width:640px){
+      body{font-size:15.5px}
+      .lead{line-height:1.64}
+      .eyebrow{font-size:10.5px;letter-spacing:.16em}
+      .eyebrow::before{width:16px}
+      .hero{padding-top:calc(var(--header-h) + 40px)}
+      .hero-actions{flex-direction:column;align-items:stretch}
+      .hero-actions .btn{width:100%}
+
+
+      .step{grid-template-columns:1fr;gap:16px;padding:22px 18px}
+      .step-num{width:44px;height:44px;border-radius:13px;font-size:14px}
+      .step-head{margin-bottom:10px}
+      .step-actions{flex-direction:column;align-items:stretch}
+      .step-actions .btn,.step-actions .done-toggle{width:100%;justify-content:center}
+      .step p{font-size:15px}
+
+      .stores{flex-direction:column}
+      .store{width:100%;min-height:58px}
+      .logo--nav{width:62px;height:36px}
+      .faq-q{font-size:15.5px;gap:12px;padding:19px 2px}
+      .faq-a p{padding-right:26px;font-size:15px}
+
+      .support{padding:24px 18px;border-radius:var(--r-lg)}
+      .support-main{gap:15px}
+      .support-avatar{width:46px;height:46px;border-radius:14px}
+      .support-actions{gap:9px}
+
+      .footer-inner{flex-direction:column;align-items:flex-start;gap:18px}
+      .fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
+    }
+
+    @media (max-width:400px){
+      .step-detail{padding:12px 13px}
+      .logo--nav{width:58px;height:34px}
+    }
+
+    /* Accesibilidad: movimiento reducido */
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms !important;animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;scroll-behavior:auto !important;
+      }
+      .reveal{opacity:1;transform:none}
+    }
+
+    @media print{
+      .site-header,.fab,.grain,.mobile-menu{display:none !important}
+      body{background:#fff;color:#000}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==========================================================================
+       ✎ CÓMO PERSONALIZAR ESTA PÁGINA
+
+       Todos los enlaces se configuran en UN SOLO SITIO: el bloque «ENLACES»,
+       casi al final de este archivo. Busca «var ENLACES» y pega tus URLs
+       entre las comillas.
+
+       Mientras un enlace siga vacío, el botón lleva a la sección correspondiente
+       de esta misma página, así que nunca queda un enlace roto.
+
+       El logo está en assets/logo-f90.webp (y .png de reserva). Para cambiarlo,
+       sustituye esos dos archivos manteniendo el nombre.
+
+       El resto de datos que quizá quieras cambiar:
+         · Tu email ......... busca «alvarocobos1995@gmail.com» (2 apariciones)
+         · Tiempos de respuesta y día de revisión ... están en el texto,
+           busca «24 h», «48 h», «lunes a sábado» y «viernes».
+       ========================================================================== -->
+
+  <p style="margin:0;padding:9px 16px;text-align:center;font-size:12.5px;font-weight:600;
+     letter-spacing:.1em;text-transform:uppercase;color:#0A0908;background:#FF5A00;position:relative;z-index:80">
+    Versión de prueba · la página real no ha cambiado
+  </p>
+  <a class="skip" href="#empieza">Saltar a los primeros pasos</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Iconografía: set único, trazo 1.6, rejilla de 24 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6.5 9.5 17 4 11.5"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9.5 12 15.5 18 9.5"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M7.5 4.8 19 12 7.5 19.2z"/></symbol>
+      <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="16.5" rx="2.6"/><path d="M9 2.6h6a.9.9 0 0 1 .9.9v3.2H8.1V3.5a.9.9 0 0 1 .9-.9z"/><path d="M8.4 12.6h7.2M8.4 16.4h4.4"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.8" y="4.8" width="18.4" height="14.4" rx="2.6"/><path d="M3.6 7.4l7.5 5.3a1.6 1.6 0 0 0 1.8 0l7.5-5.3"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9V12l3.2 1.9"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.4" y="5" width="17.2" height="16" rx="2.6"/><path d="M3.4 10h17.2M8.2 2.8v4M15.8 2.8v4"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><circle cx="12" cy="12" r="4.1"/><circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.8 14.3 9 20.5 11.3 14.3 13.6 12 19.8 9.7 13.6 3.5 11.3 9.7 9z"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7.5h16M4 12h16M4 16.5h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8"/></symbol>
+      <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.035 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+      <symbol id="i-play-store" viewBox="0 0 24 24"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm3.199-3.198 2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.093 12zM5.864 2.658 16.802 8.99l-2.303 2.303z"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.1" cy="7.9" r="3.5"/><path d="M2.9 20.1a6.2 6.2 0 0 1 12.4 0"/><path d="M16.1 4.9a3.5 3.5 0 0 1 0 6.6"/><path d="M17.3 14.3a6.2 6.2 0 0 1 3.8 5.8"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.1" y="2.4" width="11.8" height="19.2" rx="2.9"/><path d="M10.5 5.5h3M10.9 18.6h2.2"/></symbol>
+      <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8.3" cy="15.7" r="3.7"/><path d="M10.9 13.1 20 4M17.1 6.9l2.3 2.3M14.8 9.2l2.3 2.3"/></symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.465 3.488"/></symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.1" cy="6.9" r="1.1" fill="currentColor" stroke="none"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============================ CABECERA ============================ -->
+  <header class="site-header" id="header">
+    <div class="container">
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="logo-link" href="#top" aria-label="Método F90 · Volver arriba">
+          <span class="logo logo--nav">
+            <picture>
+              <source srcset="../assets/logo-f90-mark.webp" type="image/webp" />
+              <img src="../assets/logo-f90-mark.png" alt="Método F90" width="420" height="245" decoding="async" />
+            </picture>
+          </span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+          <a href="#empieza">Empieza aquí</a>
+          <a href="#faq">Dudas</a>
+        </div>
+
+        <div class="nav-actions">
+          <a class="btn btn--sm btn--ghost" href="#soporte" data-link="whatsapp">
+            <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            Escríbeme
+          </a>
+          <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
+            <svg class="ico ico--menu" aria-hidden="true"><use href="#i-menu"/></svg>
+            <svg class="ico ico--close" aria-hidden="true"><use href="#i-close"/></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="container">
+        <ul>
+          <li><a href="#empieza">Empieza aquí <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#faq">Dudas y detalles <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#soporte">Escríbeme <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+        <a class="btn btn--primary" href="#soporte" data-link="whatsapp">
+          <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+          Escríbeme por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="progressbar" aria-hidden="true"><i id="scrollProgress"></i></div>
+  </header>
+
+  <main id="top">
+    <!-- ============================== HERO ============================== -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-intro reveal">
+          <span class="logo logo--hero" id="heroLogo">
+            <picture>
+              <source srcset="../assets/logo-f90.webp" type="image/webp" />
+              <img src="../assets/logo-f90.png" alt="Método F90" width="760" height="605" fetchpriority="high" />
+            </picture>
+          </span>
+
+          <span class="eyebrow">Bienvenida · Método F90</span>
+
+          <h1>Ya estás dentro.<span>Empezamos aquí.</span></h1>
+
+          <p class="lead hero-copy">
+            Gracias por confiar en mí. Abajo tienes, en orden, lo único que necesitas
+            hacer ahora. Veinte minutos y tu parte está hecha.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="#empieza">
+              Empezar por el paso 1
+              <svg class="ico ico--sm ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= PASOS ============================= -->
+    <section class="section" id="empieza">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow">Empieza aquí</span>
+          <h2>Haz esto y tu plan se pone en marcha</h2>
+          <p>Hazlos en este orden. Cuando termines, me encargo yo del resto.</p>
+        </header>
+
+        <div class="progress reveal" id="panel">
+          <div class="ring" id="ring" style="--pct:0">
+            <svg viewBox="0 0 58 58" aria-hidden="true">
+              <circle class="ring-bg" cx="29" cy="29" r="25"/>
+              <circle class="ring-fg" cx="29" cy="29" r="25"/>
+            </svg>
+            <b id="ringPct">0%</b>
+          </div>
+          <div class="progress-txt">
+            <strong id="panelCount" role="status" aria-live="polite">0 de 4 completados</strong>
+            <span>Se guarda en este móvil. Puedes cerrar y volver cuando quieras.</span>
+          </div>
+        </div>
+
+        <p class="panel-done" style="max-width:980px;margin:0 0 18px">
+          <svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>
+          <span><strong>Todo listo.</strong> Ya tengo lo que necesito. En menos de 48&nbsp;horas tienes tu plan cargado en la app.</span>
+        </p>
+
+        <div class="steps">
+          <!-- Paso 1 -->
+          <article class="step reveal" id="paso-1" data-step="1">
+            <div class="step-num" aria-hidden="true">
+              <span>01</span>
+              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
+            </div>
+            <div>
+              <div class="step-head">
+                <h3>Mira el vídeo de bienvenida</h3>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 2 min</span>
+              </div>
+              <p>
+                Dos minutos: cómo trabajo, qué vamos a hacer cada semana y qué necesito de ti.
+                <span data-cuando-listo>Empieza por aquí y el resto se entiende solo.</span>
+              </p>
+
+              <a class="video-frame" href="#empieza" data-link="video" aria-label="Reproducir el vídeo de bienvenida">
+                <span class="video-badge">
+                  <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clock"/></svg>
+                  2 min
+                </span>
+                <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
+              </a>
+
+              <div class="step-actions">
+                <label class="done-toggle">
+                  <input type="checkbox" data-check="1" aria-label="Marcar como hecho: ver el vídeo de bienvenida" />
+                  <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+                  Marcar como hecho
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <!-- Paso 2 -->
+          <article class="step reveal" id="paso-2" data-step="2">
+            <div class="step-num" aria-hidden="true">
+              <span>02</span>
+              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
+            </div>
+            <div>
+              <div class="step-head">
+                <h3>Completa el cuestionario</h3>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 10 min</span>
+                <span class="pill pill--accent"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg> El más importante</span>
+              </div>
+              <p>
+                Tu historial, tus horarios, lo que te gusta comer y tu objetivo real.
+                De aquí sale todo tu plan, así que sé sincero: no hay respuestas malas.
+              </p>
+              <div class="step-actions">
+                <a class="btn btn--primary" href="https://forms.gle/TtWAcpyBurS5vMw39" target="_blank" rel="noopener noreferrer" data-link="cuestionario">
+                  <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clipboard"/></svg>
+                  Abrir el cuestionario
+                </a>
+                <label class="done-toggle">
+                  <input type="checkbox" data-check="2" aria-label="Marcar como hecho: completar el cuestionario" />
+                  <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+                  Marcar como hecho
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <!-- Paso 3 -->
+          <article class="step reveal" id="paso-3" data-step="3">
+            <div class="step-num" aria-hidden="true">
+              <span>03</span>
+              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
+            </div>
+            <div>
+              <div class="step-head">
+                <h3>Instala la app y entra</h3>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 5 min</span>
+                <span class="pill pill--accent"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Aquí pasa todo</span>
+              </div>
+              <p>
+                Tu plan, tus entrenos y tus revisiones viven dentro de la app. También subes
+                ahí tus fotos, tus medidas y tu peso.
+              </p>
+
+              <div class="stores" style="margin-top:18px">
+                <a class="store" href="https://apps.apple.com/es/app/fuelier/id6766125388" target="_blank" rel="noopener noreferrer" data-link="ios">
+                  <svg class="ico ico--fill" aria-hidden="true"><use href="#i-apple"/></svg>
+                  <div><span>Descargar en</span><b>App Store</b></div>
+                </a>
+                <a class="store" href="https://play.google.com/store/apps/details?id=com.fuelier.app" target="_blank" rel="noopener noreferrer" data-link="android">
+                  <svg class="ico ico--fill" aria-hidden="true"><use href="#i-play-store"/></svg>
+                  <div><span>Disponible en</span><b>Google Play</b></div>
+                </a>
+              </div>
+
+              <p class="note" style="margin-top:16px">
+                <svg class="ico" aria-hidden="true"><use href="#i-key"/></svg>
+                <span><b>Entra con las credenciales que te mando por WhatsApp.</b> Si no te
+                han llegado, escríbeme y te las paso al momento.</span>
+              </p>
+
+              <span class="step-media-label">Cómo se usa, en vídeo</span>
+              <a class="video-frame" href="#empieza" data-link="videoApp" aria-label="Reproducir el vídeo sobre cómo funciona la app">
+                <span class="video-badge">
+                  <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-play"/></svg>
+                  Cómo funciona la app
+                </span>
+                <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
+              </a>
+
+              <div class="step-actions">
+                <a class="btn" href="#soporte" data-link="whatsapp">
+                  <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+                  Pedirme mis credenciales
+                </a>
+                <label class="done-toggle">
+                  <input type="checkbox" data-check="3" aria-label="Marcar como hecho: instalar la app y entrar" />
+                  <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+                  Marcar como hecho
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <!-- Paso 4 -->
+          <article class="step reveal" id="paso-4" data-step="4">
+            <div class="step-num" aria-hidden="true">
+              <span>04</span>
+              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
+            </div>
+            <div>
+              <div class="step-head">
+                <h3>Entra en la comunidad</h3>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 2 min</span>
+              </div>
+              <p>
+                El resto del equipo F90: dudas ya resueltas, recursos y avances de otros.
+                Está incluida en tu asesoría. Entra y preséntate.
+              </p>
+              <div class="step-actions">
+                <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad">
+                  <svg class="ico ico--sm" aria-hidden="true"><use href="#i-users"/></svg>
+                  Entrar en la comunidad
+                </a>
+                <label class="done-toggle">
+                  <input type="checkbox" data-check="4" aria-label="Marcar como hecho: entrar en la comunidad" />
+                  <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+                  Marcar como hecho
+                </label>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="promises reveal">
+          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> Te respondo en menos de 24 h</span>
+          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Tu plan en la app en 48 h</span>
+          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg> Revisión cada viernes</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= DUDAS Y DETALLES ======================= -->
+    <section class="section" id="faq">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow">Si quieres saber más</span>
+          <h2>Todo lo demás, aquí dentro</h2>
+          <p>Para completar los pasos no te hace falta leer nada de esto. Ábrelo solo si te surge la duda.</p>
+        </header>
+
+        <div class="faq reveal">
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Qué pasa cuando termine estos pasos?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><ul><li><span class="cuando">Hoy</span> <span>Terminas los cuatro pasos de arriba. Desde ahí, la pelota está en mi tejado.</span></li><li><span class="cuando">En 24–48 h</span> <span>Tu plan aparece en la app: nutrición y entrenamiento hechos desde cero con lo que me has contado.</span></li><li><span class="cuando">Primera semana</span> <span>Arrancas. Registras lo que haces en la app y, si algo no encaja, me lo dices y lo ajusto.</span></li><li><span class="cuando">Cada viernes</span> <span>Subes peso, fotos y medidas desde la app, y me cuentas cómo ha ido la semana.</span></li><li><span class="cuando">Fin de semana</span> <span>Reviso tus datos y actualizo tu plan, para que el lunes empieces con todo listo.</span></li></ul></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Cómo trabajamos juntos?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p><b>Mi compromiso contigo:</b></p><ul><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Te respondo en menos de 24 horas, de lunes a sábado.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Tu plan es tuyo: hecho desde cero, nada de plantillas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Reviso tu revisión de cada viernes y actualizo tu plan en la app.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Te explico el porqué de cada decisión, para que aprendas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Si algo no está funcionando, lo cambiamos. Sin dramas.</span></li></ul><p><b>Lo que te pido:</b></p><ul><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Registra en la app lo que comes y entrenas, de verdad.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Haz tu revisión cada viernes, aunque la semana haya ido mal.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Pregunta en cuanto te surja la duda, no la guardes una semana.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Dale al proceso cuatro semanas antes de juzgarlo.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Prioriza la constancia por encima de la perfección. Siempre.</span></li></ul></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Qué voy a encontrar dentro de la app?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><ul><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu plan de nutrición</b>, con tus comidas, cantidades y alternativas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tus entrenamientos</b>, con series, repeticiones y registro de cargas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu revisión de los viernes</b>: peso, fotos y medidas, todo desde ahí.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu progreso</b>, en gráficas, para ver de dónde vienes y hacia dónde vas.</span></li></ul></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Cuándo recibo mi plan?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Entre 24 y 48 horas desde que completas el cuestionario. Te aparece directamente en la app, con la nutrición y el entrenamiento ya montados. Si algún día necesito un poco más para afinar algo, te aviso antes: nunca te voy a dejar esperando sin saber nada.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                No consigo entrar en la app, ¿qué hago?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Las credenciales te las envío yo por WhatsApp, no se crean solas al descargar la app. Si no te han llegado, no las encuentras o no te funcionan, escríbeme y te las paso al momento. No intentes registrarte por tu cuenta: tu perfil ya está creado esperándote.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Y si me surge una duda entre semana?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Escríbeme por WhatsApp cuando quieras, no hace falta esperar al viernes. Respondo de lunes a sábado en menos de 24 horas. Los domingos desconecto, así que si me escribes ese día te contesto el lunes a primera hora.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Necesito gimnasio o puedo entrenar en casa?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>El plan se adapta a lo que tengas. En el cuestionario me dices con qué material cuentas y cuántos días puedes entrenar, y yo lo diseño sobre eso y te lo dejo montado en la app. He sacado resultados con gimnasios completos y con un par de mancuernas en un salón.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Tengo que pesar toda la comida?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Al principio te voy a pedir precisión, porque necesito calibrar bien tu punto de partida, y lo vas registrando en la app. A partir de ahí iremos soltando cuerda poco a poco hasta que sepas comer bien sin báscula. El objetivo final es que no me necesites.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Qué pasa si me salto una comida o un entrenamiento?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Nada. Una desviación no rompe un proceso; abandonarlo sí. Retomas en la siguiente comida o al día siguiente y me lo cuentas en la revisión del viernes sin ningún problema. Prefiero mil veces que me digas la verdad a que me pintes una semana perfecta.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3>
+              <button class="faq-q" aria-expanded="false">
+                ¿Puedo cambiar el día de la revisión?
+                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+            </h3>
+            <div class="faq-a"><div><p>Sí. El viernes es el día estándar porque me da el fin de semana para ajustar tu plan y que el lunes lo tengas listo. Si tu semana funciona mejor con otro día, dímelo y lo fijamos. Lo importante es que sea siempre el mismo, para poder comparar datos con sentido.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= SOPORTE ============================= -->
+    <section class="section" id="soporte">
+      <div class="container">
+        <div class="support reveal">
+          <div class="support-main">
+            <span class="support-avatar" aria-hidden="true"><svg class="ico ico--lg ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+            <div>
+              <h2>¿Te queda alguna duda?</h2>
+              <p>
+                Escríbeme y la resolvemos. Literalmente es mi trabajo, y prefiero contestar
+                diez mensajes hoy a que te quedes parado una semana.
+              </p>
+              <div class="support-meta">
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> Respondo en menos de 24 h</span>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg> Lunes a sábado</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="support-actions">
+            <!-- Sin WhatsApp configurado, este botón cae al email: nunca queda muerto. -->
+            <a class="btn btn--primary" href="mailto:alvarocobos1995@gmail.com" data-link="whatsapp">
+              <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+              Abrir WhatsApp
+            </a>
+            <a class="btn btn--ghost" href="mailto:alvarocobos1995@gmail.com">
+              <svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg>
+              Escribir un email
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CIERRE ============================== -->
+    <section class="closing">
+      <div class="container reveal">
+        <span class="eyebrow eyebrow--plain">Una última cosa</span>
+        <h2>
+          <span>Constancia</span>
+          <em>por encima de</em>
+          <span>perfección</span>
+        </h2>
+        <p>
+          Esto no va solo de entrenar o de comer bien. Va de construir una forma de vivir con más
+          energía, más confianza y menos ruido en la cabeza. No te va a salir perfecto, y no hace
+          falta: solo hace falta que no lo dejes. Del resto me encargo yo.
+        </p>
+        <ul class="closing-checks">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Estás en el sitio correcto y has tomado una buena decisión.</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> No estás solo: me tienes a un mensaje de distancia.</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Una semana regular no arruina nada. Abandonar, sí.</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Tú pones el esfuerzo, yo pongo la estrategia.</li>
+        </ul>
+
+        <p class="signature">
+          <span class="line" aria-hidden="true"></span>
+          <span>Nos vemos dentro,</span>
+          <b>Álvaro</b>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="logo-link" href="#top" aria-label="Método F90 · Volver arriba">
+        <span class="logo logo--foot">
+          <picture>
+            <source srcset="../assets/logo-f90-mark.webp" type="image/webp" />
+            <img src="../assets/logo-f90-mark.png" alt="Método F90" width="420" height="245" loading="lazy" decoding="async" />
+          </picture>
+        </span>
+      </a>
+
+      <div class="footer-social">
+        <a href="https://www.instagram.com/_alvarotrainer/" target="_blank" rel="noopener noreferrer" data-link="instagram" aria-label="Instagram"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+        <a href="mailto:alvarocobos1995@gmail.com" aria-label="Email"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></a>
+      </div>
+
+      <p class="footer-copy">© 2026 Método F90 · Álvaro Cobos · Área privada de clientes</p>
+    </div>
+  </footer>
+
+  <a class="fab" id="fab" href="#soporte" data-link="whatsapp">
+    <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+    Escríbeme
+  </a>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ---------------------------------------------------------------
+       Empezar siempre por arriba.
+       El grueso del trabajo lo hace el script de la cabecera; esto son
+       los refuerzos, para los momentos en que el navegador recoloca la
+       página después de cargar.
+       --------------------------------------------------------------- */
+    function alPrincipio() {
+      var raiz = document.documentElement;
+      var previo = raiz.style.scrollBehavior;
+      raiz.style.scrollBehavior = 'auto';   // sin esto se vería el viaje hasta arriba
+      window.scrollTo(0, 0);
+      raiz.style.scrollBehavior = previo;
+    }
+
+    alPrincipio();
+    window.addEventListener('load', alPrincipio);
+    // Al volver desde otra aplicación, iOS restaura la página tal cual estaba.
+    window.addEventListener('pageshow', function (e) { if (e.persisted) alPrincipio(); });
+
+    /* ===============================================================
+       ENLACES  ·  ✎ ESTO ES LO ÚNICO QUE TIENES QUE EDITAR
+
+       Pega tus URLs entre las comillas. Los que dejes vacíos seguirán
+       llevando a la sección correspondiente de esta misma página,
+       así que nunca se queda un botón roto.
+       =============================================================== */
+    var ENLACES = {
+      whatsapp:     '',   // TU NÚMERO, p. ej. 'https://wa.me/34600000000'
+      cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
+      video:        '',   // vídeo de bienvenida (YouTube, Vimeo, Loom...)
+      videoApp:     '',   // vídeo explicando cómo funciona la app
+      ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
+      android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
+      comunidad:    'https://www.skool.com/metodo-f90-4470/about',
+      instagram:    'https://www.instagram.com/_alvarotrainer/'
+    };
+    /* =============================================================== */
+
+    Object.keys(ENLACES).forEach(function (key) {
+      var url = (ENLACES[key] || '').trim();
+      var targets = document.querySelectorAll('[data-link="' + key + '"]');
+
+      Array.prototype.forEach.call(targets, function (el) {
+        if (!url) {
+          // Sin configurar: el icono social se oculta, el resto mantiene su ancla interna.
+          if (key === 'instagram') el.remove();
+          return;
+        }
+        el.setAttribute('href', url);
+        if (/^https?:/i.test(url)) {
+          el.setAttribute('target', '_blank');
+          el.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+    });
+
+    /* ---------------------------------------------------------------
+       Lo que todavía no tiene URL se anuncia como pendiente en vez de
+       quedarse muerto. En cuanto se rellena arriba, todo vuelve solo.
+       --------------------------------------------------------------- */
+    // Cada reproductor sin URL se anuncia por su cuenta.
+    Array.prototype.forEach.call(document.querySelectorAll('.video-frame[data-link]'), function (marco) {
+      if ((ENLACES[marco.getAttribute('data-link')] || '').trim()) return;
+      marco.classList.add('is-pending');
+      marco.removeAttribute('href');
+      marco.setAttribute('aria-label', 'Este vídeo estará disponible muy pronto');
+      var chapa = marco.querySelector('.video-badge');
+      if (chapa) chapa.textContent = 'Disponible muy pronto';
+    });
+
+    // El paso 1 depende sólo del vídeo de bienvenida.
+    if (!(ENLACES.video || '').trim()) {
+      var paso1 = document.getElementById('paso-1');
+      if (paso1) {
+        // No se puede completar lo que aún no existe: fuera del recuento.
+        var frase = paso1.querySelector('[data-cuando-listo]');
+        if (frase) frase.textContent = 'Te aviso en cuanto esté listo; mientras tanto, sigue con el paso 2.';
+
+        var casilla = paso1.querySelector('[data-check]');
+        if (casilla) {
+          casilla.setAttribute('data-pending', '');
+          var etiqueta = casilla.closest('.done-toggle');
+          if (etiqueta) etiqueta.hidden = true;
+        }
+      }
+
+      var espejo1 = document.querySelector('[data-mirror="1"]');
+      if (espejo1) {
+        espejo1.classList.add('is-pending');
+        var dur = espejo1.querySelector('.dur');
+        if (dur) dur.textContent = 'Muy pronto';
+      }
+    }
+
+    if (!(ENLACES.whatsapp || '').trim()) {
+      // Sin número todavía: el correo pasa a ser el canal principal y se
+      // retira el botón duplicado, en lugar de prometer un WhatsApp que no hay.
+      // Ojo: el botón de WhatsApp ya apunta a mailto como respaldo, así que
+      // hay que excluirlo al buscar el de email o se esconde a sí mismo.
+      var botonWa = document.querySelector('.support-actions [data-link="whatsapp"]');
+      var botonMail = document.querySelector('.support-actions a[href^="mailto:"]:not([data-link])');
+      if (botonWa && botonMail) {
+        botonWa.className = 'btn btn--primary';
+        botonWa.setAttribute('href', botonMail.getAttribute('href'));
+        botonWa.innerHTML = '<svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg> Escríbeme por email';
+        botonMail.hidden = true;
+      }
+      var avatar = document.querySelector('.support-avatar use');
+      if (avatar) {
+        avatar.setAttribute('href', '#i-mail');
+        avatar.parentNode.classList.remove('ico--fill');
+      }
+    }
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------------------------------------------------------------
+       0. Destello del logo, una sola vez al abrir la página
+       --------------------------------------------------------------- */
+    var heroLogo = document.getElementById('heroLogo');
+    if (heroLogo && !reduced) {
+      window.requestAnimationFrame(function () { heroLogo.classList.add('is-lit'); });
+    }
+
+    /* ---------------------------------------------------------------
+       1. Revelado al hacer scroll
+       --------------------------------------------------------------- */
+    var revealables = document.querySelectorAll('.reveal');
+    if (reduced || !('IntersectionObserver' in window)) {
+      revealables.forEach(function (el) { el.classList.add('is-visible'); });
+    } else {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      revealables.forEach(function (el) { revealObserver.observe(el); });
+    }
+
+    /* ---------------------------------------------------------------
+       2. Cabecera: estado al hacer scroll, barra de progreso y botón flotante
+       --------------------------------------------------------------- */
+    var header = document.getElementById('header');
+    var progress = document.getElementById('scrollProgress');
+    var fab = document.getElementById('fab');
+    var supportInView = false;
+    var ticking = false;
+
+    function onScroll() {
+      var y = window.scrollY || window.pageYOffset;
+
+      header.classList.toggle('is-scrolled', y > 12);
+
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.setProperty('--p', (max > 0 ? (y / max) * 100 : 0) + '%');
+
+      if (fab) fab.classList.toggle('is-visible', y > window.innerHeight * 0.7 && !supportInView);
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(onScroll);
+    }, { passive: true });
+    onScroll();
+
+    // Cuando el bloque de soporte está en pantalla, el botón flotante sobra.
+    var supportSection = document.getElementById('soporte');
+    if (fab && supportSection && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        supportInView = entries[0].isIntersecting;
+        onScroll();
+      }, { threshold: 0.25 }).observe(supportSection);
+    }
+
+    /* ---------------------------------------------------------------
+       3. Menú móvil
+       --------------------------------------------------------------- */
+    var navToggle = document.getElementById('navToggle');
+    var mobileMenu = document.getElementById('mobileMenu');
+
+    function setMenu(open) {
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      mobileMenu.classList.toggle('is-open', open);
+    }
+
+    navToggle.addEventListener('click', function () {
+      setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        navToggle.focus();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 860) setMenu(false);
+    });
+
+    /* ---------------------------------------------------------------
+       4. Enlace activo en la navegación
+       --------------------------------------------------------------- */
+    var navAnchors = Array.prototype.slice.call(document.querySelectorAll('#navLinks a'));
+    var watched = navAnchors
+      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+      .filter(Boolean);
+
+    if (watched.length && 'IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          navAnchors.forEach(function (a) {
+            a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      watched.forEach(function (el) { spy.observe(el); });
+    }
+
+    /* ---------------------------------------------------------------
+       5. Progreso de los primeros pasos (persistente en el dispositivo)
+       --------------------------------------------------------------- */
+    var STORE = 'ac-bienvenida-pasos-preview';
+    var checkboxes = Array.prototype.slice.call(document.querySelectorAll('[data-check]:not([data-pending])'));
+    var mirrors = Array.prototype.slice.call(document.querySelectorAll('[data-mirror]')); // vacío desde que el panel se fusionó con los pasos
+    var panel = document.getElementById('panel');
+    var ring = document.getElementById('ring');
+    var ringPct = document.getElementById('ringPct');
+    var panelCount = document.getElementById('panelCount');
+
+    function readState() {
+      try {
+        var raw = window.localStorage.getItem(STORE);
+        return raw ? JSON.parse(raw) : {};
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function writeState(state) {
+      try {
+        window.localStorage.setItem(STORE, JSON.stringify(state));
+      } catch (err) {
+        /* Modo privado o almacenamiento bloqueado: la página sigue funcionando. */
+      }
+    }
+
+    var ringVisto = false;
+
+    function animaAnillo(pct) {
+      if (reduced || !ringPct) { if (ringPct) ringPct.textContent = pct + '%'; return; }
+      var desde = parseInt(ringPct.textContent, 10) || 0;
+      var t0 = null;
+      function paso(t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min((t - t0) / 650, 1);
+        k = 1 - Math.pow(1 - k, 3);
+        ringPct.textContent = Math.round(desde + (pct - desde) * k) + '%';
+        if (k < 1) window.requestAnimationFrame(paso);
+      }
+      window.requestAnimationFrame(paso);
+    }
+
+    function render(anima) {
+      var total = checkboxes.length;
+      var done = 0;
+
+      checkboxes.forEach(function (input) {
+        var step = input.closest('.step');
+        var id = input.getAttribute('data-check');
+        if (input.checked) done++;
+        if (step) step.classList.toggle('is-done', input.checked);
+
+        var label = input.closest('.done-toggle');
+        if (label) {
+          var text = label.lastChild;
+          if (text && text.nodeType === 3) {
+            text.nodeValue = input.checked ? ' Hecho' : ' Marcar como hecho';
+          }
+        }
+
+        mirrors.forEach(function (m) {
+          if (m.getAttribute('data-mirror') === id) m.classList.toggle('is-done', input.checked);
+        });
+      });
+
+      var pct = total ? Math.round((done / total) * 100) : 0;
+      if (ring) ring.style.setProperty('--pct', ringVisto ? pct : 0);
+      if (anima) animaAnillo(pct); else if (ringPct) ringPct.textContent = pct + '%';
+      if (panelCount) panelCount.textContent = done + ' de ' + total + ' completados';
+      if (panel) panel.classList.toggle('is-complete', done === total && total > 0);
+    }
+
+    var saved = readState();
+    checkboxes.forEach(function (input) {
+      var id = input.getAttribute('data-check');
+      input.checked = saved[id] === true;
+      input.addEventListener('change', function () {
+        var state = readState();
+        state[id] = input.checked;
+        writeState(state);
+        // Si se marca un paso sin haber pasado por el panel (por ejemplo al
+        // abrir la página con un ancla), el anillo debe rellenarse igualmente.
+        ringVisto = true;
+        render(true);
+
+        var step = input.closest('.step');
+        if (step && input.checked && !reduced) {
+          step.classList.remove('just-done');
+          void step.offsetWidth;              // reinicia la animación
+          step.classList.add('just-done');
+        }
+      });
+    });
+    render(false);
+
+    // El anillo se rellena cuando el panel entra en pantalla, no antes.
+    if (panel && 'IntersectionObserver' in window) {
+      var obsRing = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        obsRing.disconnect();
+        ringVisto = true;
+        render(true);
+      }, { threshold: 0.35 });
+      obsRing.observe(panel);
+    } else {
+      ringVisto = true;
+      render(false);
+    }
+
+    /* ---------------------------------------------------------------
+       6. Acordeón de dudas frecuentes
+       --------------------------------------------------------------- */
+    var questions = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
+    questions.forEach(function (btn, index) {
+      var item = btn.closest('.faq-item');
+      var answer = item.querySelector('.faq-a');
+      var qId = 'faq-q-' + (index + 1);
+      var aId = 'faq-a-' + (index + 1);
+
+      btn.id = qId;
+      answer.id = aId;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', qId);
+      btn.setAttribute('aria-controls', aId);
+
+      btn.addEventListener('click', function () {
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        questions.forEach(function (other) {
+          other.setAttribute('aria-expanded', 'false');
+          other.closest('.faq-item').classList.remove('is-open');
+        });
+
+        if (!isOpen) {
+          btn.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-open');
+        }
+      });
+    });
+
+    /* ---------------------------------------------------------------
+       7. Halo que sigue al puntero en los bloques destacados
+       --------------------------------------------------------------- */
+    if (!reduced && window.matchMedia('(hover: hover)').matches) {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-glow]'), function (el) {
+        el.addEventListener('pointermove', function (e) {
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+    }
+
+    /* ---------------------------------------------------------------
+       8. Cierra el menú móvil al pulsar un ancla interno de la página
+       --------------------------------------------------------------- */
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (link && link.getAttribute('href').length > 1) setMenu(false);
+    });
+  })();
+  </script>
+</body>
+</html>
