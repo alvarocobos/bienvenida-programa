@@ -13,17 +13,19 @@ primer segundo, qué tiene que hacer, en qué orden y qué puede esperar.
 
 ## Estructura
 
-| Sección | Para qué sirve |
+Cinco bloques. Todo lo accionable está en el segundo.
+
+| Bloque | Para qué sirve |
 |---|---|
-| Hero | Logo, bienvenida y panel con los 4 primeros pasos y su progreso |
-| Empieza aquí | Los 4 pasos en orden, con tiempo, acción y casilla de «hecho» |
-| Vídeo de bienvenida | Mensaje personal + recordatorios clave. Va justo tras los pasos porque es el paso 1 |
-| Cómo funciona | Hoy, en 48 h, la primera semana, cada viernes y el fin de semana |
-| Tu app | Todo el método vive en Fuelier: descarga para iOS y Android, más un vídeo de cómo se usa |
-| La comunidad | Acceso a la comunidad privada en Skool |
-| Cómo trabajamos juntos | Compromiso de ambas partes |
-| Dudas frecuentes | Acordeón con 9 preguntas de la primera semana |
+| Hero | Logo, bienvenida y un único botón: empezar |
+| Empieza aquí | Los 4 pasos, cada uno autosuficiente: se lee, se hace y se marca sin salir |
+| Dudas y detalles | Acordeón. Aquí vive todo el contexto que no hace falta para actuar |
 | Soporte | Contacto directo y tiempos de respuesta |
+| Cierre | Recordatorios y firma |
+
+Los pasos llevan etiqueta «PASO N» bien visible, un botón ancho con instrucción
+literal, y —en los que te sacan de la página— un aviso de «vuelve aquí al
+terminar», que es donde más gente se pierde.
 
 ## Cómo se opera la asesoría (lo que refleja la página)
 

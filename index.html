@@ -396,7 +396,7 @@
        ========================================================================== */
     .progress{
       display:flex;align-items:center;gap:15px;
-      max-width:980px;margin-bottom:18px;padding:15px 20px;
+      max-width:720px;margin:0 auto 18px;padding:15px 20px;
       border:1px solid var(--line);border-radius:var(--r-md);
       background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01) 60%);
     }
@@ -406,17 +406,20 @@
     .progress-txt span{display:block;font-size:12.5px;color:var(--text-3);margin-top:2px;line-height:1.5}
 
     /* Lo que puede esperar de mí, en una línea */
-    .promises{display:flex;flex-wrap:wrap;gap:9px;max-width:980px;margin-top:22px}
+    .promises{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;max-width:720px;margin:26px auto 0}
 
     /* ==========================================================================
        PASOS
        ========================================================================== */
-    .steps{display:grid;gap:14px;max-width:980px}
+    .steps{display:grid;gap:0;max-width:720px;margin-inline:auto}
+
+    /* Conector entre pasos: la versión sobria de la flechota del ejemplo */
+    .step-link{display:grid;place-items:center;height:42px;color:var(--text-3)}
+    .step-link .ico{width:22px;height:22px;opacity:.5}
 
     .step{
       position:relative;
-      display:grid;grid-template-columns:64px minmax(0,1fr);gap:clamp(18px,2.5vw,28px);
-      padding:clamp(22px,3vw,30px);
+      padding:clamp(24px,3vw,32px);
       border:1px solid var(--line);border-radius:var(--r-lg);
       background:linear-gradient(160deg,rgba(255,255,255,.042),rgba(255,255,255,.01) 60%);
       transition:border-color var(--mid),background var(--mid),transform var(--mid),box-shadow var(--mid);
@@ -432,26 +435,35 @@
       box-shadow:var(--sh-2);
     }
 
-    .step-num{
-      width:56px;height:56px;border-radius:16px;flex:none;
-      display:grid;place-items:center;position:relative;
-      border:1px solid var(--line-2);background:rgba(255,255,255,.03);
-      font-size:15px;font-weight:600;letter-spacing:-.02em;color:var(--text-2);
-      transition:all var(--mid);
+    .step-chip{
+      display:inline-flex;align-items:center;gap:7px;position:relative;
+      padding:7px 14px;border-radius:999px;
+      border:1px solid var(--accent-22);background:var(--accent-08);
+      font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;
+      color:var(--accent-2);transition:all var(--mid);
     }
-    .step-num span{transition:opacity var(--fast)}
-    .step-num .ico{position:absolute;opacity:0;transform:scale(.6);transition:all var(--mid)}
-    .step:hover .step-num{border-color:var(--accent-45);color:var(--accent-2)}
+    .step-chip .ico{width:14px;height:14px;stroke-width:2.6;display:none}
+    .step-chip i{display:none;font-style:normal}
 
-    .step-head{
-      display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:12px;
+    .step-top{
+      display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px;
     }
+    .step-top .pill{margin-left:auto}
+    .step h3{font-size:clamp(20px,2.4vw,25px);letter-spacing:-.028em;margin-bottom:10px}
     .step p{color:var(--text-2);font-size:15.5px;line-height:1.68;max-width:62ch}
 
 
-    .step-actions{
-      display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px;
+    .step-actions{display:grid;gap:11px;margin-top:22px}
+    .step-actions .btn{width:100%;min-height:56px;font-size:15.5px}
+    .step-actions .done-toggle{width:100%;justify-content:center;min-height:50px}
+
+    /* "Vuelve aquí cuando lo hagas": lo mejor que tenía el ejemplo */
+    .step-return{
+      display:flex;align-items:center;justify-content:center;gap:9px;
+      margin-top:2px;font-size:13.5px;color:var(--text-3);line-height:1.5;
+      text-align:center;text-wrap:balance;
     }
+    .step-return .ico{width:15px;height:15px;flex:none;color:var(--accent);transform:rotate(90deg)}
 
     /* Reproductor dentro de un paso: más contenido, sin salir del paso */
     .step .video-frame{
@@ -489,11 +501,10 @@
 
     .step.is-done{border-color:var(--accent-22);background:linear-gradient(160deg,rgba(255,90,0,.055),rgba(255,255,255,.008) 60%)}
     .step.is-done::after{opacity:1}
-    .step.is-done .step-num{
-      background:var(--accent);border-color:var(--accent);color:var(--ink);
-    }
-    .step.is-done .step-num span{opacity:0}
-    .step.is-done .step-num .ico{opacity:1;transform:scale(1);color:var(--ink)}
+    .step.is-done .step-chip{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+    .step.is-done .step-chip .ico{display:block}
+    .step.is-done .step-chip b{display:none}
+    .step.is-done .step-chip i{display:inline}
     .step.is-done .done-toggle{
       border-style:solid;border-color:var(--accent-45);color:var(--accent-2);background:var(--accent-08);
     }
@@ -800,11 +811,11 @@
     .timeline::before{transform:scaleX(0);transform-origin:left center;transition:transform 1.1s var(--ease) .1s}
 
     /* Confirmación al marcar un paso */
-    .step-num::before{
-      content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
+    .step-chip::before{
+      content:"";position:absolute;inset:-3px;border-radius:inherit;pointer-events:none;
       border:1.5px solid var(--accent);opacity:0;
     }
-    .step.just-done .step-num::before{animation:confirm .75s var(--ease) 1}
+    .step.just-done .step-chip::before{animation:confirm .75s var(--ease) 1}
     @keyframes confirm{
       0%{opacity:.85;transform:scale(1)}
       100%{opacity:0;transform:scale(1.55)}
@@ -844,11 +855,8 @@
       .hero-actions .btn{width:100%}
 
 
-      .step{grid-template-columns:1fr;gap:16px;padding:22px 18px}
-      .step-num{width:44px;height:44px;border-radius:13px;font-size:14px}
-      .step-head{margin-bottom:10px}
-      .step-actions{flex-direction:column;align-items:stretch}
-      .step-actions .btn,.step-actions .done-toggle{width:100%;justify-content:center}
+      .step{padding:22px 18px}
+      .step-top{margin-bottom:13px}
       .step p{font-size:15px}
 
       .stores{flex-direction:column}
@@ -1044,20 +1052,19 @@
         </p>
 
         <div class="steps">
-          <!-- Paso 1 -->
           <article class="step reveal" id="paso-1" data-step="1">
-            <div class="step-num" aria-hidden="true">
-              <span>01</span>
-              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
-            </div>
             <div>
-              <div class="step-head">
-                <h3>Mira el vídeo de bienvenida</h3>
+              <div class="step-top">
+                <span class="step-chip" aria-hidden="true">
+                  <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+                  <b>Paso 1</b><i>Hecho</i>
+                </span>
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 2 min</span>
               </div>
+              <h3>Mira el vídeo de bienvenida</h3>
               <p>
-                Dos minutos: cómo trabajo, qué vamos a hacer cada semana y qué necesito de ti.
-                <span data-cuando-listo>Empieza por aquí y el resto se entiende solo.</span>
+                Cómo trabajo, qué hacemos cada semana y qué necesito de ti.
+                <span data-cuando-listo>Empieza por aquí.</span>
               </p>
 
               <a class="video-frame" href="#empieza" data-link="video" aria-label="Reproducir el vídeo de bienvenida">
@@ -1078,29 +1085,33 @@
             </div>
           </article>
 
-          <!-- Paso 2 -->
+          <div class="step-link reveal" aria-hidden="true">
+            <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </div>
+
           <article class="step reveal" id="paso-2" data-step="2">
-            <div class="step-num" aria-hidden="true">
-              <span>02</span>
-              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
-            </div>
             <div>
-              <div class="step-head">
-                <h3>Completa el cuestionario</h3>
+              <div class="step-top">
+                <span class="step-chip" aria-hidden="true">
+                  <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+                  <b>Paso 2</b><i>Hecho</i>
+                </span>
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 10 min</span>
-                <span class="pill pill--accent"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg> El más importante</span>
               </div>
-              <p>
-                Tu historial, tus horarios, lo que te gusta comer y tu objetivo real.
-                De aquí sale todo tu plan, así que sé sincero: no hay respuestas malas.
-              </p>
+              <h3>Rellena el cuestionario</h3>
+              <p>De aquí sale todo tu plan. Tómate un rato tranquilo y sé sincero: no hay respuestas malas.</p>
+
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://forms.gle/TtWAcpyBurS5vMw39" target="_blank" rel="noopener noreferrer" data-link="cuestionario">
                   <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clipboard"/></svg>
-                  Abrir el cuestionario
+                  Toca aquí para rellenarlo
                 </a>
+                <p class="step-return">
+                  <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  Se abre fuera. Vuelve aquí al terminar.
+                </p>
                 <label class="done-toggle">
-                  <input type="checkbox" data-check="2" aria-label="Marcar como hecho: completar el cuestionario" />
+                  <input type="checkbox" data-check="2" aria-label="Marcar como hecho: rellenar el cuestionario" />
                   <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
                   Marcar como hecho
                 </label>
@@ -1108,24 +1119,23 @@
             </div>
           </article>
 
-          <!-- Paso 3 -->
-          <article class="step reveal" id="paso-3" data-step="3">
-            <div class="step-num" aria-hidden="true">
-              <span>03</span>
-              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
-            </div>
-            <div>
-              <div class="step-head">
-                <h3>Instala la app y entra</h3>
-                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 5 min</span>
-                <span class="pill pill--accent"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Aquí pasa todo</span>
-              </div>
-              <p>
-                Tu plan, tus entrenos y tus revisiones viven dentro de la app. También subes
-                ahí tus fotos, tus medidas y tu peso.
-              </p>
+          <div class="step-link reveal" aria-hidden="true">
+            <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </div>
 
-              <div class="stores" style="margin-top:18px">
+          <article class="step reveal" id="paso-3" data-step="3">
+            <div>
+              <div class="step-top">
+                <span class="step-chip" aria-hidden="true">
+                  <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+                  <b>Paso 3</b><i>Hecho</i>
+                </span>
+                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 5 min</span>
+              </div>
+              <h3>Instala la app y entra</h3>
+              <p>Tu plan, tus entrenos y tus revisiones viven aquí dentro. También subes ahí tus fotos y medidas.</p>
+
+              <div class="stores" style="margin-top:20px">
                 <a class="store" href="https://apps.apple.com/es/app/fuelier/id6766125388" target="_blank" rel="noopener noreferrer" data-link="ios">
                   <svg class="ico ico--fill" aria-hidden="true"><use href="#i-apple"/></svg>
                   <div><span>Descargar en</span><b>App Store</b></div>
@@ -1138,8 +1148,8 @@
 
               <p class="note" style="margin-top:16px">
                 <svg class="ico" aria-hidden="true"><use href="#i-key"/></svg>
-                <span><b>Entra con las credenciales que te mando por WhatsApp.</b> Si no te
-                han llegado, escríbeme y te las paso al momento.</span>
+                <span><b>Entra con las credenciales que te mando por WhatsApp.</b> No te
+                registres por tu cuenta: tu perfil ya está creado esperándote.</span>
               </p>
 
               <span class="step-media-label">Cómo se usa, en vídeo</span>
@@ -1154,8 +1164,12 @@
               <div class="step-actions">
                 <a class="btn" href="#soporte" data-link="whatsapp">
                   <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-                  Pedirme mis credenciales
+                  No tengo mis credenciales
                 </a>
+                <p class="step-return">
+                  <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  Vuelve aquí cuando hayas entrado.
+                </p>
                 <label class="done-toggle">
                   <input type="checkbox" data-check="3" aria-label="Marcar como hecho: instalar la app y entrar" />
                   <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
@@ -1165,26 +1179,31 @@
             </div>
           </article>
 
-          <!-- Paso 4 -->
+          <div class="step-link reveal" aria-hidden="true">
+            <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </div>
+
           <article class="step reveal" id="paso-4" data-step="4">
-            <div class="step-num" aria-hidden="true">
-              <span>04</span>
-              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-check"/></svg>
-            </div>
             <div>
-              <div class="step-head">
-                <h3>Entra en la comunidad</h3>
+              <div class="step-top">
+                <span class="step-chip" aria-hidden="true">
+                  <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+                  <b>Paso 4</b><i>Hecho</i>
+                </span>
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 2 min</span>
               </div>
-              <p>
-                El resto del equipo F90: dudas ya resueltas, recursos y avances de otros.
-                Está incluida en tu asesoría. Entra y preséntate.
-              </p>
+              <h3>Entra en la comunidad</h3>
+              <p>El resto del equipo F90: dudas ya resueltas, recursos y avances de otros. Entra y preséntate.</p>
+
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad">
                   <svg class="ico ico--sm" aria-hidden="true"><use href="#i-users"/></svg>
-                  Entrar en la comunidad
+                  Toca aquí para entrar
                 </a>
+                <p class="step-return">
+                  <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  Apruebo tu acceso en menos de 24 h.
+                </p>
                 <label class="done-toggle">
                   <input type="checkbox" data-check="4" aria-label="Marcar como hecho: entrar en la comunidad" />
                   <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
