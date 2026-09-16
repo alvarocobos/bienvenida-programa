@@ -18,14 +18,28 @@ Cinco bloques. Todo lo accionable está en el segundo.
 | Bloque | Para qué sirve |
 |---|---|
 | Hero | Logo, bienvenida y un único botón: empezar |
-| Empieza aquí | Los 4 pasos, cada uno autosuficiente: se lee, se hace y se marca sin salir |
+| Empieza aquí | Los 7 pasos, cada uno autosuficiente: se lee, se hace y se marca sin salir |
 | Dudas y detalles | Acordeón. Aquí vive todo el contexto que no hace falta para actuar |
 | Soporte | Contacto directo y tiempos de respuesta |
 | Cierre | Recordatorios y firma |
 
-Los pasos llevan etiqueta «PASO N» bien visible, un botón ancho con instrucción
-literal, y —en los que te sacan de la página— un aviso de «vuelve aquí al
-terminar», que es donde más gente se pierde.
+Los siete pasos alternan vídeo y acción:
+
+1. Vídeo de bienvenida
+2. Rellenar el cuestionario
+3. Vídeo de cómo funciona la app
+4. Descargar la app y registrarse — con el aviso ⚠️ de volver
+5. Vídeo de cómo funciona la comunidad
+6. Entrar en la comunidad
+7. Vídeo de cómo será el seguimiento
+
+Llevan etiqueta «PASO N» bien visible, un botón ancho con instrucción literal
+y —en los que te sacan de la página— un aviso de «vuelve aquí al terminar»,
+que es donde más gente se pierde.
+
+Los pasos de vídeo declaran `data-needs="<clave>"`. Mientras esa clave de
+`ENLACES` esté vacía, el paso se anuncia y sale del recuento, de modo que el
+progreso puede llegar al 100 % con los pasos que sí se pueden hacer.
 
 ## Cómo se opera la asesoría (lo que refleja la página)
 
@@ -45,8 +59,10 @@ Los enlaces se configuran en el objeto `ENLACES`, al principio del `<script>`:
 var ENLACES = {
   whatsapp:     '',   // ← PENDIENTE: 'https://wa.me/34600000000'
   cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
-  video:        '',   // ← PENDIENTE: vídeo de bienvenida
-  videoApp:     '',   // ← PENDIENTE: vídeo de cómo funciona la app
+  video:            '',   // ← PENDIENTE: vídeo de bienvenida
+  videoApp:         '',   // ← PENDIENTE: vídeo de cómo funciona la app
+  videoComunidad:   '',   // ← PENDIENTE: vídeo de cómo funciona la comunidad
+  videoSeguimiento: '',   // ← PENDIENTE: vídeo de cómo será el seguimiento
   ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
   android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
   comunidad:    'https://www.skool.com/metodo-f90-4470/about',
@@ -60,12 +76,9 @@ funcionan aunque el JavaScript falle.
 **La página se adapta a lo que esté configurado.** Mientras un enlace siga vacío,
 en vez de dejar un botón muerto se anuncia el estado:
 
-- **Sin `video` o sin `videoApp`:** ese reproductor muestra «Disponible muy
-  pronto» y deja de ser pulsable. Cada uno va por su cuenta: se puede publicar
-  uno y dejar el otro pendiente.
-- **Sin `video`** además: el paso 1 se marca como pendiente, pierde su casilla
-  y sale del recuento, de forma que el progreso puede llegar igualmente al
-  100 % con los otros tres pasos.
+- **Sin la URL de un vídeo:** ese reproductor muestra «Disponible muy pronto»
+  y deja de ser pulsable, y su paso sale del recuento. Cada uno va por su
+  cuenta: se pueden publicar unos y dejar otros pendientes.
 - **Sin `whatsapp`:** el bloque de soporte pasa a ofrecer el email como canal
   principal, en lugar de un botón que promete WhatsApp y abre el correo.
 
