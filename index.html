@@ -457,6 +457,20 @@
     .step-actions .btn{width:100%;min-height:56px;font-size:15.5px}
     .step-actions .done-toggle{width:100%;justify-content:center;min-height:50px}
 
+    /* Distintivo de marca del destino externo. Va sobre fondo claro porque
+       el wordmark de Skool es multicolor y la "s" azul se pierde en negro. */
+    .marca{
+      display:inline-flex;align-items:center;gap:12px;
+      margin-top:18px;padding:10px 16px;border-radius:12px;
+      background:rgba(255,255,255,.93);
+      box-shadow:0 8px 24px -14px rgba(0,0,0,.9);
+    }
+    .marca img{display:block;height:22px;width:auto}
+    .marca span{
+      font-size:12.5px;font-weight:600;color:#3a3a3a;letter-spacing:-.005em;
+      padding-left:12px;border-left:1px solid rgba(0,0,0,.14);
+    }
+
     /* Aviso fuerte para el paso que más gente abandona: el que te saca
        a la tienda de aplicaciones y ya no vuelve. */
     .alerta{
@@ -1260,6 +1274,14 @@
               </div>
               <h3>Entra en la comunidad</h3>
               <p>El resto del equipo F90: dudas ya resueltas, recursos y avances de otros. Entra y preséntate.</p>
+
+              <span class="marca">
+                <picture>
+                  <source srcset="assets/skool.webp" type="image/webp" />
+                  <img src="assets/skool.png" alt="Skool" width="300" height="101" loading="lazy" decoding="async" />
+                </picture>
+                <span>Nuestra comunidad está aquí</span>
+              </span>
 
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad">

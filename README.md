@@ -91,7 +91,12 @@ que hay justo encima.
 
 ## El logo
 
-Está en `assets/`, en dos versiones y dos formatos:
+En `assets/` hay también `skool.webp` / `.png`: el wordmark de Skool que
+acompaña al botón del paso 6. Venía con transparencia, así que sólo se recortó
+a su contenido; va sobre un distintivo claro porque es multicolor y la «s»
+azul se pierde sobre negro.
+
+El logotipo del Método F90 está en `assets/`, en dos versiones y dos formatos:
 
 - `logo-f90.webp` / `.png` — lockup completo (hero).
 - `logo-f90-mark.webp` / `.png` — sólo «F90», recortado para que se lea en la
