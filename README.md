@@ -91,10 +91,15 @@ que hay justo encima.
 
 ## El logo
 
-En `assets/` hay también `skool.webp` / `.png`: el wordmark de Skool que
-acompaña al botón del paso 6. Venía con transparencia, así que sólo se recortó
-a su contenido; va sobre un distintivo claro porque es multicolor y la «s»
-azul se pierde sobre negro.
+En `assets/` hay también el wordmark de Skool en dos versiones:
+`skool.*` con sus colores originales, y `skool-ink.*` teñido del color del
+texto del botón. La que se usa es la segunda, dentro del botón del paso 6:
+así se integra como un icono más en vez de parecer un logo pegado encima.
+
+Titulares y botones van en versales por `text-transform`, no en el HTML: el
+texto se mantiene legible en el código y el cambio es reversible desde el CSS.
+Las preguntas del acordeón se quedan en caja baja a propósito: diez preguntas
+en versales serían un muro.
 
 El logotipo del Método F90 está en `assets/`, en dos versiones y dos formatos:
 

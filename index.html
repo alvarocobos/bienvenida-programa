@@ -170,11 +170,19 @@
     /* Tipografía */
     h1,h2,h3,h4{font-weight:600;letter-spacing:-.025em;line-height:1.15;text-wrap:balance}
     h1{
-      font-size:clamp(34px,7.4vw,72px);
-      line-height:1.02;letter-spacing:-.038em;font-weight:600;
+      font-size:clamp(32px,6.8vw,66px);
+      line-height:1.06;font-weight:700;
+      text-transform:uppercase;letter-spacing:-.018em;
     }
-    h2{font-size:clamp(27px,3.6vw,40px);line-height:1.1;letter-spacing:-.032em}
+    h2{
+      font-size:clamp(25px,3.3vw,37px);line-height:1.14;font-weight:700;
+      text-transform:uppercase;letter-spacing:-.012em;
+    }
     h3{font-size:19px;letter-spacing:-.015em}
+
+    /* Las preguntas del acordeón se quedan en caja baja: diez preguntas en
+       versales serían un muro. Son letra pequeña, no titulares. */
+    .faq-q{text-transform:none;letter-spacing:-.012em;font-weight:500}
     p{text-wrap:pretty}
 
     .eyebrow{
@@ -202,7 +210,7 @@
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       min-height:50px;padding:0 22px;border-radius:var(--r-sm);
       border:1px solid var(--line-2);
-      font-size:14.5px;font-weight:600;letter-spacing:-.005em;
+      font-size:13.5px;font-weight:700;letter-spacing:.055em;text-transform:uppercase;
       color:var(--text);background:rgba(255,255,255,.03);
       transition:background var(--fast),border-color var(--fast),color var(--fast),transform var(--fast),box-shadow var(--fast);
       cursor:pointer;text-align:center;
@@ -449,27 +457,21 @@
       display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px;
     }
     .step-top .pill:first-of-type{margin-left:auto}   /* sólo la primera empuja; las demás van pegadas */
-    .step h3{font-size:clamp(20px,2.4vw,25px);letter-spacing:-.028em;margin-bottom:10px}
+    .step h3{
+      font-size:clamp(19px,2.2vw,23px);margin-bottom:10px;font-weight:700;
+      text-transform:uppercase;letter-spacing:-.008em;
+    }
     .step p{color:var(--text-2);font-size:15.5px;line-height:1.68;max-width:62ch}
 
 
     .step-actions{display:grid;gap:11px;margin-top:22px}
-    .step-actions .btn{width:100%;min-height:56px;font-size:15.5px}
+    .step-actions .btn{width:100%;min-height:56px;font-size:14px}
     .step-actions .done-toggle{width:100%;justify-content:center;min-height:50px}
 
-    /* Distintivo de marca del destino externo. Va sobre fondo claro porque
-       el wordmark de Skool es multicolor y la "s" azul se pierde en negro. */
-    .marca{
-      display:inline-flex;align-items:center;gap:12px;
-      margin-top:18px;padding:10px 16px;border-radius:12px;
-      background:rgba(255,255,255,.93);
-      box-shadow:0 8px 24px -14px rgba(0,0,0,.9);
-    }
-    .marca img{display:block;height:22px;width:auto}
-    .marca span{
-      font-size:12.5px;font-weight:600;color:#3a3a3a;letter-spacing:-.005em;
-      padding-left:12px;border-left:1px solid rgba(0,0,0,.14);
-    }
+    /* Wordmark de Skool dentro del botón, teñido del color del texto:
+       así se integra como un icono más, en vez de parecer pegado encima. */
+    .btn picture{display:block;flex:none}
+    .btn-logo{display:block;height:17px;width:auto}
 
     /* Aviso fuerte para el paso que más gente abandona: el que te saca
        a la tienda de aplicaciones y ya no vuelve. */
@@ -790,7 +792,7 @@
     .store:active{transform:translateY(0)}
     .store .ico{width:24px;height:24px;color:var(--text)}
     .store span{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);line-height:1.2}
-    .store b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.015em;margin-top:2px}
+    .store b{display:block;font-size:15px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;margin-top:2px}
 
     /* ==========================================================================
        AVISOS
@@ -1275,17 +1277,12 @@
               <h3>Entra en la comunidad</h3>
               <p>El resto del equipo F90: dudas ya resueltas, recursos y avances de otros. Entra y preséntate.</p>
 
-              <span class="marca">
-                <picture>
-                  <source srcset="assets/skool.webp" type="image/webp" />
-                  <img src="assets/skool.png" alt="Skool" width="300" height="101" loading="lazy" decoding="async" />
-                </picture>
-                <span>Nuestra comunidad está aquí</span>
-              </span>
-
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad">
-                  <svg class="ico ico--sm" aria-hidden="true"><use href="#i-users"/></svg>
+                  <picture>
+                    <source srcset="assets/skool-ink.webp" type="image/webp" />
+                    <img class="btn-logo" src="assets/skool-ink.png" alt="Skool" width="300" height="101" decoding="async" />
+                  </picture>
                   Toca aquí para entrar
                 </a>
                 <p class="step-return">
