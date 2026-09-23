@@ -108,6 +108,20 @@ siempre (medido: 3,4:1 en el peor caso, por encima del 3:1 que pide la norma).
 Si algún vídeo se aloja fuera de YouTube, ese reproductor se queda como enlace
 normal y se abre fuera; no hay que tocar nada.
 
+## El retrato del hero
+
+`assets/alvaro.webp` / `.jpg` — 400 × 400, recortado del original de Drive
+(`alvaro.jpg`, 1024 × 1536) a un encuadre de retrato: cara centrada y algo de
+hombro. Se muestra en círculo dentro del hero, entre el logotipo y el cintillo,
+justo encima de un texto que habla en primera persona.
+
+Al meterlo, el hero creció unos 120 px y el botón de empezar se salía de
+pantalla en móviles pequeños y en portátil. En vez de encoger la foto se
+recompactó el hero —el logotipo iba muy grande y la marca ya está en la
+cabecera fija— y se añadió un `@media (max-height:740px)` para pantallas bajas.
+Resultado: el botón se ve igual o mejor que antes de añadir la foto, en los
+cinco tamaños medidos.
+
 ## El logo
 
 En `assets/` hay también el wordmark de Skool en dos versiones:
