@@ -60,7 +60,7 @@ var ENLACES = {
   whatsapp:     '',   // ← PENDIENTE: 'https://wa.me/34600000000'
   cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
   video:            '',   // ← PENDIENTE: vídeo de bienvenida
-  videoApp:         '',   // ← PENDIENTE: vídeo de cómo funciona la app
+  videoApp:         'https://youtu.be/7YInicFZphg',
   videoComunidad:   '',   // ← PENDIENTE: vídeo de cómo funciona la comunidad
   videoSeguimiento: '',   // ← PENDIENTE: vídeo de cómo será el seguimiento
   ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
@@ -85,9 +85,28 @@ en vez de dejar un botón muerto se anuncia el estado:
 En cuanto se pega la URL, todo vuelve solo a su estado normal. No hay que tocar
 nada más.
 
-Para incrustar el vídeo dentro de la página en vez de abrirlo fuera, sustituye
-el bloque `<a class="video-frame">` por el `<iframe>` que indica el comentario
-que hay justo encima.
+## Los vídeos se ven dentro de la página
+
+Basta con pegar la URL en `ENLACES`. Si es de YouTube —en cualquiera de sus
+formas: `youtu.be/ID`, `watch?v=ID`, `embed/ID`, `shorts/ID`— la página lo
+detecta sola y monta el reproductor ella misma:
+
+- Pinta la **portada real** del vídeo (`maxresdefault`, y si ese vídeo no la
+  tiene, `hqdefault`). La imagen es diferida: no se descarga hasta que el paso
+  entra en pantalla, así los cuatro vídeos no pesan al abrir.
+- Al pulsar, **el vídeo se reproduce ahí mismo**, sin salir de la guía. Esto es
+  deliberado: mandar al cliente a YouTube a mitad del proceso es perderlo entre
+  vídeos sugeridos. Se usa `youtube-nocookie.com` y el reproductor sólo se carga
+  en ese momento, no antes.
+- Con ctrl/cmd o rueda sigue abriéndose en otra pestaña, como cualquier enlace,
+  y si el JavaScript falla el `href` original sigue llevando al vídeo.
+
+Sobre la portada va un velo y el botón de play lleva halo propio, porque la
+miniatura la elige el vídeo y puede venir clarísima: así el botón se recorta
+siempre (medido: 3,4:1 en el peor caso, por encima del 3:1 que pide la norma).
+
+Si algún vídeo se aloja fuera de YouTube, ese reproductor se queda como enlace
+normal y se abre fuera; no hay que tocar nada.
 
 ## El logo
 

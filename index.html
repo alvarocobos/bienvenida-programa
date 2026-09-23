@@ -500,7 +500,7 @@
     /* Reproductor dentro de un paso: más contenido, sin salir del paso */
     .step .video-frame{
       max-width:440px;margin-top:18px;border-radius:var(--r-sm);
-      border:1px solid var(--line);
+      border:1px solid var(--line);overflow:hidden;
     }
     /* En los pasos que SON un vídeo, ocupa todo el ancho del paso */
     .step[data-needs] .video-frame{max-width:none}
@@ -571,6 +571,38 @@
       transition:filter var(--mid);
     }
     .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    /* Miniatura real del vídeo. Se atenúa para que el botón de play y la
+       chapa se lean siempre, sea cual sea el fotograma de portada. */
+    .video-thumb{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;border-radius:inherit;
+      filter:brightness(.8) saturate(.95);
+      transition:filter var(--mid);
+    }
+    .video-frame:hover .video-thumb{filter:brightness(.95) saturate(1.03)}
+    /* Velo sobre la portada: la miniatura de YouTube la elige el propio vídeo
+       y puede venir clarísima. El velo la asienta en el tono oscuro de la
+       página y garantiza que el play y la chapa se lean siempre. */
+    .video-frame.is-yt::after{
+      content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+      background:
+        radial-gradient(56% 56% at 50% 50%,rgba(10,9,8,.52),rgba(10,9,8,.18) 74%),
+        linear-gradient(180deg,rgba(10,9,8,.30),rgba(10,9,8,.50));
+    }
+    /* El velo es hermano de los controles: éstos van por encima. */
+    .video-frame .video-badge,
+    .video-frame .play{z-index:1}
+    /* Halo propio: el botón se recorta sobre cualquier fotograma, por claro
+       que venga, sin depender del velo. */
+    .video-frame.is-yt .play{
+      box-shadow:0 0 0 7px rgba(10,9,8,.42),0 14px 40px -12px rgba(255,90,0,.85);
+    }
+    .video-frame.is-yt:hover .play{
+      box-shadow:0 0 0 7px rgba(10,9,8,.42),0 18px 50px -12px rgba(255,90,0,.95);
+    }
+    /* Ya reproduciéndose: deja de comportarse como botón. */
+    .video-frame.is-playing{cursor:default;background:#0C0B0A}
+    .video-frame.is-playing:hover{filter:none}
     .video-frame:hover{filter:brightness(1.08)}
     .play{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
@@ -1577,7 +1609,7 @@
       whatsapp:     '',   // TU NÚMERO, p. ej. 'https://wa.me/34600000000'
       cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
       video:        '',   // vídeo de bienvenida (YouTube, Vimeo, Loom...)
-      videoApp:     '',   // vídeo explicando cómo funciona la app
+      videoApp:     'https://youtu.be/7YInicFZphg',
       videoComunidad:   '', // vídeo explicando cómo funciona la comunidad
       videoSeguimiento: '', // vídeo explicando cómo será el seguimiento
       ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
@@ -1617,6 +1649,64 @@
       marco.setAttribute('aria-label', 'Este vídeo estará disponible muy pronto');
       var chapa = marco.querySelector('.video-badge');
       if (chapa) chapa.textContent = 'Disponible muy pronto';
+    });
+
+    /* ---------------------------------------------------------------
+       Los vídeos se ven AQUÍ DENTRO. Mandar al cliente a YouTube a mitad
+       de la guía es perderlo: se queda entre vídeos sugeridos y no vuelve.
+       Se pinta la miniatura real del vídeo y el reproductor sólo se carga
+       cuando pulsa, así la página no paga su peso de entrada.
+       --------------------------------------------------------------- */
+    function idYouTube(url) {
+      var m = String(url).match(
+        /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{6,})/
+      );
+      return m ? m[1] : null;
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('.video-frame[data-link]'), function (marco) {
+      var id = idYouTube((ENLACES[marco.getAttribute('data-link')] || '').trim());
+      // Sin URL todavía, o alojado en otro sitio: se queda como enlace normal.
+      if (!id) return;
+      marco.classList.add('is-yt');
+
+      // Portada real. Si el vídeo no tiene versión grande se cae a la normal;
+      // si tampoco carga, queda el fondo de siempre y no se nota nada.
+      var mini = new Image();
+      mini.className = 'video-thumb';
+      mini.alt = '';
+      mini.loading = 'lazy';
+      mini.decoding = 'async';
+      mini.onerror = function () {
+        if (mini.getAttribute('data-alt')) { mini.remove(); return; }
+        mini.setAttribute('data-alt', '1');
+        mini.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+      };
+      mini.src = 'https://i.ytimg.com/vi/' + id + '/maxresdefault.jpg';
+      marco.insertBefore(mini, marco.firstChild);
+
+      marco.addEventListener('click', function (ev) {
+        // Con ctrl/cmd o rueda sigue abriéndose en otra pestaña, como cualquier enlace.
+        if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+        ev.preventDefault();
+
+        var chapaTexto = marco.querySelector('.video-badge');
+        var caja = document.createElement('div');
+        caja.className = 'video-frame is-playing';
+        caja.setAttribute('data-link', marco.getAttribute('data-link'));
+
+        var player = document.createElement('iframe');
+        player.src = 'https://www.youtube-nocookie.com/embed/' + id +
+                     '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+        player.title = chapaTexto ? chapaTexto.textContent.trim() : 'Vídeo';
+        player.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share');
+        player.setAttribute('allowfullscreen', '');
+        player.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        caja.appendChild(player);
+
+        marco.parentNode.replaceChild(caja, marco);
+        try { player.focus(); } catch (e) { }
+      });
     });
 
     // Un paso cuyo contenido es un vídeo que aún no existe no se puede
