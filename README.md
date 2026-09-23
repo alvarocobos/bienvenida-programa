@@ -110,17 +110,19 @@ normal y se abre fuera; no hay que tocar nada.
 
 ## El retrato del hero
 
-`assets/alvaro.webp` / `.jpg` — 400 × 400, recortado del original de Drive
-(`alvaro.jpg`, 1024 × 1536) a un encuadre de retrato: cara centrada y algo de
-hombro. Se muestra en círculo dentro del hero, entre el logotipo y el cintillo,
-justo encima de un texto que habla en primera persona.
+`assets/alvaro.webp` / `.jpg` — 480 × 480, recortado del original de Drive
+(`alvaro.jpg`, 1024 × 1536) por la caja `(0, 70, 1024, 1094)`: de la cabeza a
+los brazos cruzados, aprovechando todo el ancho del original. Se muestra en
+círculo dentro del hero, entre el logotipo y el cintillo, justo encima de un
+texto que habla en primera persona.
 
 Al meterlo, el hero creció unos 120 px y el botón de empezar se salía de
 pantalla en móviles pequeños y en portátil. En vez de encoger la foto se
 recompactó el hero —el logotipo iba muy grande y la marca ya está en la
-cabecera fija— y se añadió un `@media (max-height:740px)` para pantallas bajas.
-Resultado: el botón se ve igual o mejor que antes de añadir la foto, en los
-cinco tamaños medidos.
+cabecera fija— y se añadió un `@media (max-height:800px)` para pantallas bajas.
+Resultado: el botón se ve igual o mejor que antes de añadir la foto en los seis
+tamaños medidos, y el portátil de 13" (1366 × 768), donde antes quedaba
+cortado, ahora lo muestra entero.
 
 ## El logo
 

@@ -802,7 +802,7 @@
     /* Retrato de Álvaro. La bienvenida la firma una persona, no un logotipo:
        justo debajo el texto habla en primera persona y ahora tiene cara. */
     .hero-foto{
-      display:block;width:clamp(92px,25vw,120px);aspect-ratio:1;
+      display:block;width:clamp(116px,30vw,148px);aspect-ratio:1;
       margin:16px 0 11px;border-radius:50%;overflow:hidden;
       border:2px solid var(--accent-45);
       box-shadow:0 0 0 7px var(--accent-08),0 20px 44px -20px rgba(0,0,0,.95);
@@ -812,12 +812,12 @@
 
     /* Pantallas bajas (móviles antiguos, portátiles de 13"): el hero se
        compacta para que el botón de empezar siga estando a la vista. */
-    @media (max-height:740px){
-      .hero{padding-top:calc(var(--header-h) + 26px);padding-bottom:28px}
+    @media (max-height:800px){
+      .hero{padding-top:calc(var(--header-h) + 18px);padding-bottom:24px}
       .logo--hero{width:min(178px,42vw)}
-      .hero-foto{width:clamp(76px,21vw,90px);margin:12px 0 4px}
-      .hero h1{margin:12px 0 16px}
-      .hero-actions{margin-top:22px}
+      .hero-foto{width:clamp(88px,24vw,108px);margin:10px 0 4px}
+      .hero h1{margin:10px 0 12px}
+      .hero-actions{margin-top:18px}
     }
 
     /* Destello metálico: recorre el logo al entrar y al pasar por encima */
@@ -1077,7 +1077,7 @@
           <span class="hero-foto">
             <picture>
               <source srcset="assets/alvaro.webp" type="image/webp" />
-              <img src="assets/alvaro.jpg" alt="Álvaro Cobos" width="400" height="400" fetchpriority="high" />
+              <img src="assets/alvaro.jpg" alt="Álvaro Cobos" width="480" height="480" fetchpriority="high" />
             </picture>
           </span>
 
