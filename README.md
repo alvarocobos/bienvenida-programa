@@ -57,9 +57,9 @@ Los enlaces se configuran en el objeto `ENLACES`, al principio del `<script>`:
 
 ```js
 var ENLACES = {
-  whatsapp:     '',   // ← PENDIENTE: 'https://wa.me/34600000000'
+  whatsapp:     'https://wa.me/34633164871',
   cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
-  video:            '',   // ← PENDIENTE: vídeo de bienvenida
+  video:            'https://youtu.be/htR5N6o_WoI',
   videoApp:         'https://youtu.be/7YInicFZphg',
   videoComunidad:   '',   // ← PENDIENTE: vídeo de cómo funciona la comunidad
   videoSeguimiento: '',   // ← PENDIENTE: vídeo de cómo será el seguimiento
@@ -77,8 +77,11 @@ funcionan aunque el JavaScript falle.
 en vez de dejar un botón muerto se anuncia el estado:
 
 - **Sin la URL de un vídeo:** ese reproductor muestra «Disponible muy pronto»
-  y deja de ser pulsable, y su paso sale del recuento. Cada uno va por su
-  cuenta: se pueden publicar unos y dejar otros pendientes.
+  y deja de ser pulsable, su paso sale del recuento y el texto del paso pasa a
+  decir qué hacer mientras tanto (ese hueco es el `<span data-cuando-listo>`
+  que llevan los cuatro pasos de vídeo; en el último se adapta, porque ahí no
+  hay «siguiente paso» al que mandar a nadie). Cada uno va por su cuenta: se
+  pueden publicar unos y dejar otros pendientes.
 - **Sin `whatsapp`:** el bloque de soporte pasa a ofrecer el email como canal
   principal, en lugar de un botón que promete WhatsApp y abre el correo.
 
