@@ -59,10 +59,10 @@ Los enlaces se configuran en el objeto `ENLACES`, al principio del `<script>`:
 var ENLACES = {
   whatsapp:     'https://wa.me/34633164871',
   cuestionario: 'https://forms.gle/TtWAcpyBurS5vMw39',
-  video:            'https://youtu.be/htR5N6o_WoI',
+  video:            'https://youtu.be/5Rv5zhMal58',
   videoApp:         'https://youtu.be/7YInicFZphg',
   videoComunidad:   '',   // ← PENDIENTE: vídeo de cómo funciona la comunidad
-  videoSeguimiento: '',   // ← PENDIENTE: vídeo de cómo será el seguimiento
+  videoSeguimiento: 'https://youtu.be/JJ4iA-hEy8Y',
   ios:          'https://apps.apple.com/es/app/fuelier/id6766125388',
   android:      'https://play.google.com/store/apps/details?id=com.fuelier.app',
   comunidad:    'https://www.skool.com/metodo-f90-4470/about',
