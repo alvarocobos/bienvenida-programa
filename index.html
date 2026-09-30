@@ -1700,19 +1700,26 @@
       if (!id) return;
       marco.classList.add('is-yt');
 
-      // Portada real. Si el vídeo no tiene versión grande se cae a la normal;
-      // si tampoco carga, queda el fondo de siempre y no se nota nada.
+      // Portada real. YouTube no genera todos los tamaños para todos los vídeos,
+      // y la grande tarda un rato en aparecer después de subirlo, así que se
+      // prueban por orden de calidad hasta que una carga de verdad.
+      var PORTADAS = ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault'];
       var mini = new Image();
       mini.className = 'video-thumb';
       mini.alt = '';
       mini.loading = 'lazy';
       mini.decoding = 'async';
-      mini.onerror = function () {
-        if (mini.getAttribute('data-alt')) { mini.remove(); return; }
-        mini.setAttribute('data-alt', '1');
-        mini.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
-      };
-      mini.src = 'https://i.ytimg.com/vi/' + id + '/maxresdefault.jpg';
+      var intento = 0;
+      function siguientePortada() {
+        // Agotadas todas: queda el fondo oscuro de siempre y no se nota nada.
+        if (intento >= PORTADAS.length) { mini.remove(); return; }
+        mini.src = 'https://i.ytimg.com/vi/' + id + '/' + PORTADAS[intento++] + '.jpg';
+      }
+      mini.onerror = siguientePortada;
+      // Cuando a un vídeo le falta un tamaño, YouTube no siempre da un 404: a
+      // veces responde con una imagen gris de 120x90. Eso no es una miniatura.
+      mini.onload = function () { if (mini.naturalWidth <= 120) siguientePortada(); };
+      siguientePortada();
       marco.insertBefore(mini, marco.firstChild);
 
       marco.addEventListener('click', function (ev) {

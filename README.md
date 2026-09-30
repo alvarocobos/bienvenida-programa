@@ -94,9 +94,15 @@ Basta con pegar la URL en `ENLACES`. Si es de YouTube —en cualquiera de sus
 formas: `youtu.be/ID`, `watch?v=ID`, `embed/ID`, `shorts/ID`— la página lo
 detecta sola y monta el reproductor ella misma:
 
-- Pinta la **portada real** del vídeo (`maxresdefault`, y si ese vídeo no la
-  tiene, `hqdefault`). La imagen es diferida: no se descarga hasta que el paso
-  entra en pantalla, así los cuatro vídeos no pesan al abrir.
+- Pinta la **portada real** del vídeo. YouTube no genera todos los tamaños para
+  todos los vídeos —y el grande tarda un rato en aparecer tras subirlo—, así que
+  se prueban por orden de calidad hasta que una carga:
+  `maxresdefault` → `sddefault` → `hqdefault` → `mqdefault`. Cuando falta un
+  tamaño, YouTube no siempre responde 404: a veces devuelve una imagen gris de
+  120 × 90, que se descarta por tamaño y no llega a verse. Si no carga ninguna,
+  queda el fondo oscuro de siempre con su botón de play. La imagen es diferida:
+  no se descarga hasta que el paso entra en pantalla, así los cuatro vídeos no
+  pesan al abrir.
 - Al pulsar, **el vídeo se reproduce ahí mismo**, sin salir de la guía. Esto es
   deliberado: mandar al cliente a YouTube a mitad del proceso es perderlo entre
   vídeos sugeridos. Se usa `youtube-nocookie.com` y el reproductor sólo se carga
