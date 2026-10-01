@@ -169,3 +169,38 @@ el fondo oscuro en lugar de dejar un recuadro gris.
   restauración de scroll del navegador y limpia el ancla heredada de la visita
   anterior; tiene que seguir en `<head>`, porque al final del documento el
   navegador ya ha restaurado la posición y llega tarde.
+
+
+## Páginas legales
+
+En `legal/` hay cinco páginas (`aviso-legal`, `privacidad`, `cookies`,
+`condiciones`, `reembolsos`) que comparten `legal/legal.css`. Están enlazadas
+desde el pie de la bienvenida. Asumen **legislación española** (LSSI-CE, RGPD,
+LOPDGDD y RDL 1/2007 de consumidores).
+
+**Quedan dos datos por rellenar**, marcados con `<mark>POR COMPLETAR</mark>` en
+`aviso-legal.html` y `privacidad.html`: el **NIF** y el **domicilio** del
+titular. Sin ellos el aviso legal no cumple el artículo 10 de la LSSI.
+
+Lo que se verificó de la propia web, no supuesto:
+
+- **No instala ninguna cookie.** Lo único que guarda es el progreso de los pasos,
+  en `localStorage`, en el dispositivo, sin salir nunca del navegador.
+- **No hay analítica ni píxeles de seguimiento** de ningún tipo.
+- **No hay formularios propios**: sólo las casillas de «hecho», que no recogen
+  datos personales.
+- **No hay reseñas ni testimonios**, así que no hay nada falso que retirar.
+- **No hay afirmaciones sin respaldo**: ni garantías, ni kilos, ni plazos de
+  resultado, ni superlativos, ni urgencia artificial.
+
+## Tipografías alojadas aquí
+
+Inter e Instrument Serif se sirven desde `assets/fonts/` (sólo el subconjunto
+latino, lo único que usa la página). Antes se cargaban desde `fonts.googleapis.com`,
+lo que envía la IP de cada visitante a Google antes de que consienta nada —el
+supuesto de las reclamaciones por Google Fonts—. Ambas son SIL Open Font License,
+que permite expresamente alojarlas.
+
+Tras el cambio, lo único que la página pide a un tercero antes de que el usuario
+pulse algo son las portadas de los vídeos (`i.ytimg.com`). Se elimina también
+poniendo portadas propias: ver la sección de los vídeos.

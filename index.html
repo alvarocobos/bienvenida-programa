@@ -48,9 +48,29 @@
   <link rel="preload" as="image" href="assets/logo-f90.webp" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/logo-f90-mark.webp" type="image/webp" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Instrument+Serif:ital@0;1&display=swap" />
+  <!-- Tipografías alojadas aquí mismo, no en los servidores de Google.
+       Cargarlas desde Google envía la IP del visitante a un tercero antes de
+       que haya consentido nada. Ambas son SIL Open Font License, que permite
+       expresamente alojarlas. Sólo el subconjunto latino: es lo único que usa
+       esta página. -->
+  <style>
+    @font-face{
+      font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;
+      src:url(assets/fonts/inter-latin.woff2) format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face{
+      font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;
+      src:url(assets/fonts/instrument-serif-latin.woff2) format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face{
+      font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;
+      src:url(assets/fonts/instrument-serif-italic-latin.woff2) format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+  </style>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <style>
     /* ==========================================================================
@@ -758,6 +778,18 @@
       transition:all var(--fast);
     }
     .footer-social a:hover{color:var(--text);border-color:var(--line-3);background:rgba(255,255,255,.05)}
+    /* Enlaces legales: presentes y accesibles, pero sin pelearse con el pie. */
+    .footer-legal{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:0 20px;
+      margin-top:2px;
+    }
+    .footer-legal a{
+      color:var(--text-3);font-size:13px;text-decoration:none;
+      /* Área táctil cómoda: el texto es pequeño, el objetivo no debe serlo. */
+      display:inline-flex;align-items:center;min-height:40px;padding:0 2px;
+      border-bottom:1px solid transparent;transition:color var(--fast),border-color var(--fast);
+    }
+    .footer-legal a:hover{color:var(--text-2);border-bottom-color:var(--line-3)}
     .footer-copy{color:var(--text-3);font-size:13px}
 
     /* ==========================================================================
@@ -1178,7 +1210,8 @@
               <p>De aquí sale todo tu plan. Tómate un rato tranquilo y sé sincero: no hay respuestas malas.</p>
 
               <div class="step-actions">
-                <a class="btn btn--primary" href="https://forms.gle/TtWAcpyBurS5vMw39" target="_blank" rel="noopener noreferrer" data-link="cuestionario">
+                <a class="btn btn--primary" href="https://forms.gle/TtWAcpyBurS5vMw39" target="_blank" rel="noopener noreferrer" data-link="cuestionario"
+                   aria-label="Rellenar el cuestionario de bienvenida (se abre en otra pestaña)">
                   <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clipboard"/></svg>
                   Toca aquí para rellenarlo
                 </a>
@@ -1339,7 +1372,8 @@
               <p>El resto del equipo F90: dudas ya resueltas, recursos y avances de otros. Entra y preséntate.</p>
 
               <div class="step-actions">
-                <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad">
+                <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad"
+                   aria-label="Entrar en la comunidad de Skool (se abre en otra pestaña)">
                   <picture>
                     <source srcset="assets/skool-ink.webp" type="image/webp" />
                     <img class="btn-logo" src="assets/skool-ink.png" alt="Skool" width="300" height="101" decoding="async" />
@@ -1596,6 +1630,14 @@
         <a href="mailto:alvarocobos1995@gmail.com" aria-label="Email"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></a>
       </div>
 
+      <nav class="footer-legal" aria-label="Información legal">
+        <a href="legal/aviso-legal.html">Aviso legal</a>
+        <a href="legal/privacidad.html">Privacidad</a>
+        <a href="legal/cookies.html">Cookies</a>
+        <a href="legal/condiciones.html">Condiciones</a>
+        <a href="legal/reembolsos.html">Reembolsos</a>
+      </nav>
+
       <p class="footer-copy">© 2026 Método F90 · Álvaro Cobos · Área privada de clientes</p>
     </div>
   </footer>
@@ -1703,7 +1745,14 @@
       // Portada real. YouTube no genera todos los tamaños para todos los vídeos,
       // y la grande tarda un rato en aparecer después de subirlo, así que se
       // prueban por orden de calidad hasta que una carga de verdad.
-      var PORTADAS = ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault'];
+      // Primero una portada propia, si existe: assets/portada-<clave>.jpg.
+      // Con ella, la página no contacta con ningún servidor ajeno hasta que el
+      // cliente pulsa play. Si no está, se recurre a la de YouTube.
+      var PORTADAS = ['assets/portada-' + marco.getAttribute('data-link') + '.jpg'].concat(
+        ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault'].map(function (tam) {
+          return 'https://i.ytimg.com/vi/' + id + '/' + tam + '.jpg';
+        })
+      );
       var mini = new Image();
       mini.className = 'video-thumb';
       mini.alt = '';
@@ -1713,7 +1762,7 @@
       function siguientePortada() {
         // Agotadas todas: queda el fondo oscuro de siempre y no se nota nada.
         if (intento >= PORTADAS.length) { mini.remove(); return; }
-        mini.src = 'https://i.ytimg.com/vi/' + id + '/' + PORTADAS[intento++] + '.jpg';
+        mini.src = PORTADAS[intento++];
       }
       mini.onerror = siguientePortada;
       // Cuando a un vídeo le falta un tamaño, YouTube no siempre da un 404: a
