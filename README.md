@@ -173,14 +173,21 @@ el fondo oscuro en lugar de dejar un recuadro gris.
 
 ## Páginas legales
 
-En `legal/` hay cinco páginas (`aviso-legal`, `privacidad`, `cookies`,
-`condiciones`, `reembolsos`) que comparten `legal/legal.css`. Están enlazadas
+En `legal/` hay cuatro páginas (`aviso-legal`, `privacidad`, `cookies`,
+`condiciones`) que comparten `legal/legal.css`. Están enlazadas
 desde el pie de la bienvenida. Asumen **legislación española** (LSSI-CE, RGPD,
 LOPDGDD y RDL 1/2007 de consumidores).
 
-**Quedan dos datos por rellenar**, marcados con `<mark>POR COMPLETAR</mark>` en
-`aviso-legal.html` y `privacidad.html`: el **NIF** y el **domicilio** del
-titular. Sin ellos el aviso legal no cumple el artículo 10 de la LSSI.
+Titular: Álvaro Cobos, persona física (profesional autónomo), NIF 50625004A.
+**Queda un dato por rellenar**, marcado con `<mark>POR COMPLETAR</mark>` en
+`aviso-legal.html` y `privacidad.html`: el **domicilio**. Sin él el aviso legal
+no cumple el artículo 10 de la LSSI.
+
+No hay página de reembolsos: esta web no vende nada. El derecho de
+desistimiento de 14 días, que existe igualmente por ley, se explica en el
+punto 9 de `condiciones.html`. Donde se contrate el servicio hay que informar
+de él **antes** de la compra: si no se informa, el plazo para desistir se
+alarga a 12 meses más (art. 105 RDL 1/2007).
 
 Lo que se verificó de la propia web, no supuesto:
 
