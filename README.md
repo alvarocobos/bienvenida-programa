@@ -211,3 +211,42 @@ que permite expresamente alojarlas.
 Tras el cambio, lo único que la página pide a un tercero antes de que el usuario
 pulse algo son las portadas de los vídeos (`i.ytimg.com`). Se elimina también
 poniendo portadas propias: ver la sección de los vídeos.
+
+
+## Un solo camino (simplificación de octubre)
+
+Regla: **en cada momento, una sola cosa que hacer**, y la siguiente aparece al
+bajar. Se quitó todo lo que competía con los pasos o repetía lo ya dicho.
+
+| Antes | Ahora |
+|---|---|
+| 9,1 pantallas de móvil, 1.250 palabras | 6,9 pantallas, 610 palabras |
+| 12 llamadas a la acción | 5: una por paso que pide hacer algo, y una de ayuda |
+| El paso 1 empezaba a más de una pantalla | Su título se ve al abrir, en los 6 tamaños medidos |
+
+Fuera:
+
+- **Cabecera completa** (logo repetido, menú y botón «Escríbeme»). El logo ya
+  está en el hero; el menú no tiene sentido en una página que se recorre de
+  arriba abajo.
+- **Botón flotante de WhatsApp**: perseguía al usuario por toda la página.
+- **Segunda introducción** («Empieza aquí · Hazlos en este orden»), que repetía
+  el hero, y el botón «Empezar por el paso 1», que hacía lo mismo que bajar.
+- **Píldoras de promesas**, repetidas en los pasos y en el FAQ.
+- **Cuatro preguntas frecuentes** que repetían los vídeos, el primer FAQ o el
+  bloque de soporte. Quedan seis.
+- **Párrafo y lista del cierre**: queda el titular y la firma.
+- **Iconos de WhatsApp y email del pie**, que duplicaban el soporte justo encima.
+
+Cambios de comportamiento:
+
+- **Hacer el paso lo marca como hecho.** Pulsar el vídeo, el botón del paso o una
+  de las tiendas marca la casilla sola. Antes cada paso pedía dos acciones. La
+  casilla sigue ahí como indicador y se puede desmarcar. Pedir ayuda («¿No te han
+  llegado? Escríbeme») no marca nada.
+- «No tengo mis credenciales» y «Escribir un email» pasan de botón a **enlace
+  discreto**: siguen ahí, pero no compiten con la acción principal.
+- Lo que asoma en la primera pantalla se muestra sin esperar al scroll; antes
+  la animación de entrada lo ocultaba y el final de la pantalla parecía vacío.
+
+Corregido de paso: el FAQ decía «terminas los **cuatro** pasos» y son siete.

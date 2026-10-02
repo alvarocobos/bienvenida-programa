@@ -111,7 +111,7 @@
       --max:1160px;
       --gutter:clamp(20px,5vw,40px);
       --sect:clamp(76px,9vw,128px);
-      --header-h:74px;
+      --header-h:0px;   /* ya no hay cabecera fija */
 
       /* Sombras */
       --sh-2:0 12px 32px -12px rgba(0,0,0,.7);
@@ -165,6 +165,25 @@
       border-radius:0 0 var(--r-sm) 0;font-weight:600;font-size:14px;
     }
     .skip:focus{left:0}
+
+    /* Título sólo para lectores de pantalla: mantiene la jerarquía de
+       encabezados sin repetir en pantalla lo que ya dice el hero. */
+    .skip-h{
+      position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+      overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+    }
+
+    /* Alternativa discreta junto a la acción principal: está ahí si hace
+       falta, pero no compite con el botón. */
+    .ayuda{
+      display:inline-flex;align-items:center;min-height:40px;
+      font-size:14px;font-weight:500;color:var(--text-3);
+      text-decoration:underline;text-decoration-color:var(--line-3);
+      text-underline-offset:4px;transition:color var(--fast),text-decoration-color var(--fast);
+    }
+    .ayuda:hover{color:var(--text);text-decoration-color:var(--accent)}
+
+    .faq-title{text-align:center;margin:0 0 26px}
 
 
     /* ==========================================================================
@@ -220,6 +239,9 @@
     /* Secciones */
     .section{padding-block:var(--sect);position:relative}
     .section + .section{padding-top:0}
+    /* Los pasos arrancan pegados al hero: la primera pantalla tiene que
+       enseñar el principio del paso 1, o parece que la página acaba ahí. */
+    #empieza{padding-top:0}
 
     .section-head{margin-bottom:clamp(34px,4.5vw,54px);max-width:660px}
     .section-head .eyebrow{margin-bottom:18px}
@@ -271,93 +293,12 @@
     /* Superficie base de tarjetas */
 
     /* ==========================================================================
-       CABECERA
-       ========================================================================== */
-    .site-header{
-      position:fixed;top:0;left:0;right:0;z-index:70;
-      background:rgba(10,9,8,.72);
-      border-bottom:1px solid transparent;
-      transition:background var(--mid),border-color var(--mid),box-shadow var(--mid);
-    }
-    @supports (backdrop-filter:blur(1px)){
-      .site-header{background:rgba(10,9,8,.55);backdrop-filter:blur(20px) saturate(140%)}
-    }
-    .site-header.is-scrolled{
-      background:rgba(10,9,8,.86);
-      border-bottom-color:var(--line);
-      box-shadow:0 8px 30px -20px rgba(0,0,0,.9);
-    }
-    @supports (backdrop-filter:blur(1px)){
-      .site-header.is-scrolled{background:rgba(10,9,8,.74)}
-    }
-
-    .progressbar{
-      position:absolute;left:0;bottom:-1px;height:2px;width:100%;
-      background:transparent;pointer-events:none;
-    }
-    .progressbar i{
-      display:block;height:100%;width:var(--p,0%);
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      transition:width .1s linear;
-    }
-
-    .nav{
-      height:var(--header-h);
-      display:flex;align-items:center;justify-content:space-between;gap:24px;
-    }
-
-    .nav-links{display:flex;align-items:center;gap:4px}
-    .nav-links a{
-      position:relative;padding:8px 13px;border-radius:8px;
-      font-size:14px;font-weight:500;color:var(--text-3);
-      transition:color var(--fast),background var(--fast);
-    }
-    .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.05)}
-    .nav-links a.is-active{color:var(--text)}
-    .nav-links a.is-active::after{
-      content:"";position:absolute;left:13px;right:13px;bottom:2px;height:1.5px;
-      background:var(--accent);border-radius:2px;
-    }
-
-    .nav-actions{display:flex;align-items:center;gap:10px}
-
-    .nav-toggle{
-      display:none;width:42px;height:42px;border-radius:10px;
-      border:1px solid var(--line-2);place-items:center;color:var(--text);
-      transition:background var(--fast),border-color var(--fast);
-    }
-    .nav-toggle:hover{background:rgba(255,255,255,.05)}
-    .nav-toggle .ico--close{display:none}
-    .nav-toggle[aria-expanded="true"] .ico--menu{display:none}
-    .nav-toggle[aria-expanded="true"] .ico--close{display:block}
-
-    .mobile-menu{
-      display:none;overflow:hidden;
-      border-top:1px solid var(--line);
-      background:rgba(10,9,8,.96);
-      max-height:0;opacity:0;
-      transition:max-height var(--mid),opacity var(--fast);
-    }
-    .mobile-menu.is-open{max-height:520px;opacity:1}
-    .mobile-menu ul{padding:10px 0 8px}
-    /* Acotado a la lista: si no, pisa los estilos del botón que va debajo. */
-    .mobile-menu ul a{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;font-size:16px;font-weight:500;color:var(--text-2);
-      border-bottom:1px solid var(--line);
-    }
-    .mobile-menu ul a:active{color:var(--text)}
-    .mobile-menu li:last-child a{border-bottom:0}
-    .mobile-menu ul a .ico{color:var(--text-3);width:16px;height:16px}
-    .mobile-menu .btn{width:100%;margin:12px 0 20px}
-
-    /* ==========================================================================
        HERO
        ========================================================================== */
     .hero{
       position:relative;overflow:hidden;
-      padding-top:calc(var(--header-h) + clamp(38px,5.5vw,72px));
-      padding-bottom:clamp(40px,5vw,72px);
+      padding-top:calc(var(--header-h) + clamp(32px,4vw,52px));
+      padding-bottom:clamp(28px,3.4vw,40px);
     }
     .hero::before{
       content:"";position:absolute;z-index:0;pointer-events:none;
@@ -376,13 +317,11 @@
     .hero .container{max-width:780px;text-align:center}
     .hero-intro{display:flex;flex-direction:column;align-items:center}
     .hero-copy{margin-inline:auto}
-    .hero-actions{justify-content:center}
 
     .hero h1{margin:18px 0 22px}
     .hero h1 span{display:block;color:var(--accent)}
     .hero-copy{max-width:52ch}
 
-    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 
 
     /* Panel de progreso */
@@ -402,7 +341,7 @@
     }
     .ring b{
       position:absolute;inset:0;display:grid;place-items:center;
-      font-size:13px;font-weight:600;letter-spacing:-.02em;
+      font-size:11px;font-weight:650;letter-spacing:-.03em;
     }
 
 
@@ -424,17 +363,16 @@
        ========================================================================== */
     .progress{
       display:flex;align-items:center;gap:15px;
-      max-width:720px;margin:0 auto 18px;padding:15px 20px;
+      max-width:720px;margin:0 auto 14px;padding:11px 18px;
       border:1px solid var(--line);border-radius:var(--r-md);
       background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01) 60%);
     }
-    .progress .ring,.progress .ring svg{width:46px;height:46px}
+    .progress .ring,.progress .ring svg{width:42px;height:42px}
     .progress-txt{min-width:0}
     .progress-txt strong{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.012em}
     .progress-txt span{display:block;font-size:12.5px;color:var(--text-3);margin-top:2px;line-height:1.5}
 
     /* Lo que puede esperar de mí, en una línea */
-    .promises{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;max-width:720px;margin:26px auto 0}
 
     /* ==========================================================================
        PASOS
@@ -743,15 +681,6 @@
       color:var(--accent);letter-spacing:-.01em;
     }
     .closing p{color:var(--text-2);font-size:clamp(16px,1.7vw,18px);line-height:1.72;margin:24px auto 0;max-width:56ch}
-    .closing-checks{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 26px;
-      max-width:660px;margin:34px auto 0;text-align:left;
-    }
-    .closing-checks li{display:flex;gap:11px;font-size:14.5px;color:var(--text-2);line-height:1.5}
-    .closing-checks li .ico{
-      width:19px;height:19px;flex:none;margin-top:2px;padding:3px;
-      border-radius:50%;background:var(--accent);color:var(--ink);stroke-width:3;
-    }
 
     .signature{
       display:inline-flex;align-items:center;gap:14px;margin-top:38px;
@@ -795,16 +724,6 @@
     /* ==========================================================================
        BOTÓN FLOTANTE (MÓVIL)
        ========================================================================== */
-    .fab{
-      display:none;position:fixed;right:16px;z-index:65;
-      bottom:calc(16px + env(safe-area-inset-bottom));
-      align-items:center;gap:9px;height:50px;padding:0 20px;border-radius:999px;
-      background:var(--accent);color:var(--ink);font-size:14.5px;font-weight:600;
-      box-shadow:0 12px 34px -10px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.06);
-      opacity:0;transform:translateY(14px) scale(.94);pointer-events:none;
-      transition:opacity var(--mid),transform var(--mid);
-    }
-    .fab.is-visible{opacity:1;transform:none;pointer-events:auto}
 
     /* ==========================================================================
        REVELADO
@@ -827,7 +746,6 @@
     .logo picture{display:block;width:100%;height:100%}
     .logo img{display:block;width:100%;height:100%;object-fit:contain}
 
-    .logo--nav{width:70px;height:41px}
     .logo--hero{width:min(232px,53vw);height:auto;aspect-ratio:760/605;margin-bottom:4px}
     .logo--foot{width:60px;height:35px}
 
@@ -845,11 +763,11 @@
     /* Pantallas bajas (móviles antiguos, portátiles de 13"): el hero se
        compacta para que el botón de empezar siga estando a la vista. */
     @media (max-height:800px){
-      .hero{padding-top:calc(var(--header-h) + 18px);padding-bottom:24px}
+      .hero{padding-top:calc(var(--header-h) + 18px);padding-bottom:14px}
+      .progress{padding:9px 16px;margin-bottom:12px}
       .logo--hero{width:min(178px,42vw)}
       .hero-foto{width:clamp(88px,24vw,108px);margin:10px 0 4px}
       .hero h1{margin:10px 0 12px}
-      .hero-actions{margin-top:18px}
     }
 
     /* Destello metálico: recorre el logo al entrar y al pasar por encima */
@@ -940,11 +858,6 @@
        RESPONSIVE
        ========================================================================== */
     @media (max-width:860px){
-      :root{--header-h:66px}
-      .nav-links,.nav-actions .btn{display:none}
-      .nav-toggle{display:grid}
-      .mobile-menu{display:block}
-      .fab{display:inline-flex}
       .support-actions{width:100%}
     }
 
@@ -954,8 +867,6 @@
       .eyebrow{font-size:10.5px;letter-spacing:.16em}
       .eyebrow::before{width:16px}
       .hero{padding-top:calc(var(--header-h) + 40px)}
-      .hero-actions{flex-direction:column;align-items:stretch}
-      .hero-actions .btn{width:100%}
 
 
       .step{padding:22px 18px}
@@ -964,7 +875,6 @@
 
       .stores{flex-direction:column}
       .store{width:100%;min-height:58px}
-      .logo--nav{width:62px;height:36px}
       .faq-q{font-size:15.5px;gap:12px;padding:19px 2px}
       .faq-a p{padding-right:26px;font-size:15px}
 
@@ -974,11 +884,9 @@
       .support-actions{gap:9px}
 
       .footer-inner{flex-direction:column;align-items:flex-start;gap:18px}
-      .fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
     }
 
     @media (max-width:400px){
-      .logo--nav{width:58px;height:34px}
     }
 
     /* Accesibilidad: movimiento reducido */
@@ -992,7 +900,7 @@
     }
 
     @media print{
-      .site-header,.fab,.grain,.mobile-menu{display:none !important}
+      .grain{display:none !important}
       body{background:#fff;color:#000}
     }
   </style>
@@ -1047,53 +955,6 @@
   </svg>
 
   <!-- ============================ CABECERA ============================ -->
-  <header class="site-header" id="header">
-    <div class="container">
-      <nav class="nav" aria-label="Navegación principal">
-        <a class="logo-link" href="#top" aria-label="Método F90 · Volver arriba">
-          <span class="logo logo--nav">
-            <picture>
-              <source srcset="assets/logo-f90-mark.webp" type="image/webp" />
-              <img src="assets/logo-f90-mark.png" alt="Método F90" width="420" height="245" decoding="async" />
-            </picture>
-          </span>
-        </a>
-
-        <div class="nav-links" id="navLinks">
-          <a href="#empieza">Empieza aquí</a>
-          <a href="#faq">Dudas</a>
-        </div>
-
-        <div class="nav-actions">
-          <a class="btn btn--sm btn--ghost" href="#soporte" data-link="whatsapp">
-            <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-            Escríbeme
-          </a>
-          <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
-            <svg class="ico ico--menu" aria-hidden="true"><use href="#i-menu"/></svg>
-            <svg class="ico ico--close" aria-hidden="true"><use href="#i-close"/></svg>
-          </button>
-        </div>
-      </nav>
-    </div>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <div class="container">
-        <ul>
-          <li><a href="#empieza">Empieza aquí <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#faq">Dudas y detalles <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-          <li><a href="#soporte">Escríbeme <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        </ul>
-        <a class="btn btn--primary" href="#soporte" data-link="whatsapp">
-          <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-          Escríbeme por WhatsApp
-        </a>
-      </div>
-    </div>
-
-    <div class="progressbar" aria-hidden="true"><i id="scrollProgress"></i></div>
-  </header>
-
   <main id="top">
     <!-- ============================== HERO ============================== -->
     <section class="hero">
@@ -1113,21 +974,13 @@
             </picture>
           </span>
 
-          <span class="eyebrow">Bienvenida · Método F90</span>
-
           <h1>Ya estás dentro.<span>Empezamos aquí.</span></h1>
 
           <p class="lead hero-copy">
-            Gracias por confiar en mí. Abajo tienes, en orden, lo único que necesitas
-            hacer ahora. Poco más de media hora y tu parte está hecha.
+            Gracias por confiar en mí. Baja y ve haciendo los pasos en orden: en poco
+            más de media hora tu parte está hecha.
           </p>
 
-          <div class="hero-actions">
-            <a class="btn btn--primary" href="#empieza">
-              Empezar por el paso 1
-              <svg class="ico ico--sm ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -1135,11 +988,8 @@
     <!-- ============================= PASOS ============================= -->
     <section class="section" id="empieza">
       <div class="container">
-        <header class="section-head reveal">
-          <span class="eyebrow">Empieza aquí</span>
-          <h2>Haz esto y tu plan se pone en marcha</h2>
-          <p>Hazlos en este orden. Cuando termines, me encargo yo del resto.</p>
-        </header>
+
+        <h2 class="skip-h">Tus pasos</h2>
 
         <div class="progress reveal" id="panel">
           <div class="ring" id="ring" style="--pct:0">
@@ -1151,7 +1001,6 @@
           </div>
           <div class="progress-txt">
             <strong id="panelCount" role="status" aria-live="polite">0 de 4 completados</strong>
-            <span>Se guarda en este móvil. Puedes cerrar y volver cuando quieras.</span>
           </div>
         </div>
 
@@ -1172,14 +1021,14 @@
               </div>
               <h3>Mira el vídeo de bienvenida</h3>
               <p>
-                Cómo trabajo, qué vamos a hacer cada semana y qué necesito de ti.
-                <span data-cuando-listo>Empieza por aquí.</span>
+                Cómo trabajo, qué vamos a hacer y qué necesito de ti.
+                <span data-cuando-listo></span>
               </p>
 
               <a class="video-frame" href="#empieza" data-link="video" aria-label="Reproducir el vídeo">
                 <span class="video-badge">
                   <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-play"/></svg>
-                  2 min · Bienvenida
+                  Bienvenida
                 </span>
                 <span class="play" aria-hidden="true"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-play"/></svg></span>
               </a>
@@ -1207,7 +1056,7 @@
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 10 min</span>
               </div>
               <h3>Rellena el cuestionario</h3>
-              <p>De aquí sale todo tu plan. Tómate un rato tranquilo y sé sincero: no hay respuestas malas.</p>
+              <p>De aquí sale tu plan. Sé sincero: no hay respuestas malas.</p>
 
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://forms.gle/TtWAcpyBurS5vMw39" target="_blank" rel="noopener noreferrer" data-link="cuestionario"
@@ -1217,7 +1066,7 @@
                 </a>
                 <p class="step-return">
                   <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
-                  Se abre fuera. Vuelve aquí al terminar.
+                  Vuelve aquí al terminar.
                 </p>
                 <label class="done-toggle">
                   <input type="checkbox" data-check="2" aria-label="Marcar como hecho: rellenar el cuestionario" />
@@ -1242,9 +1091,8 @@
               </div>
               <h3>Cómo funciona la app</h3>
               <p>
-                Te la enseño por dentro antes de que la instales: dónde está tu plan, cómo
-                registrar los entrenos y cómo subir tu revisión de los viernes.
-                <span data-cuando-listo>Míralo antes de instalarla.</span>
+                Dónde está tu plan, cómo registrar tus entrenos y cómo subir la revisión
+                de los viernes. <span data-cuando-listo></span>
               </p>
 
               <a class="video-frame" href="#empieza" data-link="videoApp" aria-label="Reproducir el vídeo">
@@ -1276,10 +1124,9 @@
                   <b>Paso 4</b><i>Hecho</i>
                 </span>
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 5 min</span>
-                <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Aquí pasa todo</span>
               </div>
               <h3>Descarga la app y regístrate</h3>
-              <p>Tu plan, tus entrenos y tus revisiones viven aquí dentro. También subes ahí tus fotos y medidas.</p>
+              <p>Tu plan, tus entrenos y tus revisiones están aquí.</p>
 
               <div class="stores" style="margin-top:20px">
                 <a class="store" href="https://apps.apple.com/es/app/fuelier/id6766125388" target="_blank" rel="noopener noreferrer" data-link="ios">
@@ -1295,7 +1142,7 @@
               <p class="note" style="margin-top:16px">
                 <svg class="ico" aria-hidden="true"><use href="#i-key"/></svg>
                 <span><b>Entra con las credenciales que te mando por WhatsApp.</b> No te
-                registres por tu cuenta: tu perfil ya está creado esperándote.</span>
+                registres por tu cuenta.</span>
               </p>
 
               <div class="alerta">
@@ -1307,10 +1154,7 @@
               </div>
 
               <div class="step-actions">
-                <a class="btn" href="#soporte" data-link="whatsapp">
-                  <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-                  No tengo mis credenciales
-                </a>
+                <a class="ayuda" href="#soporte" data-link="whatsapp">¿No te han llegado? Escríbeme</a>
                 <label class="done-toggle">
                   <input type="checkbox" data-check="4" aria-label="Marcar como hecho: descargar la app y registrarse" />
                   <span class="box" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
@@ -1334,8 +1178,8 @@
               </div>
               <h3>Cómo funciona la comunidad</h3>
               <p>
-                Qué vas a encontrar dentro de Skool, cómo moverte por ella y dónde preguntar
-                cuando te surja una duda. <span data-cuando-listo>Son tres minutos.</span>
+                Qué hay dentro de Skool y dónde preguntar tus dudas.
+                <span data-cuando-listo></span>
               </p>
 
               <a class="video-frame" href="#empieza" data-link="videoComunidad" aria-label="Reproducir el vídeo">
@@ -1369,7 +1213,7 @@
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> 2 min</span>
               </div>
               <h3>Entra en la comunidad</h3>
-              <p>El resto del equipo F90: dudas ya resueltas, recursos y avances de otros. Entra y preséntate.</p>
+              <p>Entra y preséntate al resto del equipo.</p>
 
               <div class="step-actions">
                 <a class="btn btn--primary" href="https://www.skool.com/metodo-f90-4470/about" target="_blank" rel="noopener noreferrer" data-link="comunidad"
@@ -1407,9 +1251,8 @@
               </div>
               <h3>Así será tu seguimiento</h3>
               <p>
-                <b>Mira este vídeo corto con atención.</b> Cómo funcionan las revisiones de los
-                viernes, qué me tienes que mandar y cómo ajusto tu plan cada semana.
-                <span data-cuando-listo>Con esto ya lo tienes todo.</span>
+                <b>Mira este vídeo corto con atención.</b> Así funcionan las revisiones de
+                los viernes. <span data-cuando-listo></span>
               </p>
 
               <a class="video-frame" href="#empieza" data-link="videoSeguimiento" aria-label="Reproducir el vídeo">
@@ -1431,22 +1274,13 @@
           </article>
         </div>
 
-        <div class="promises reveal">
-          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> Te respondo en menos de 24 h</span>
-          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Tu plan en la app en 48 h</span>
-          <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg> Revisión cada viernes</span>
-        </div>
       </div>
     </section>
 
     <!-- ======================= DUDAS Y DETALLES ======================= -->
     <section class="section" id="faq">
       <div class="container">
-        <header class="section-head reveal">
-          <span class="eyebrow">Si quieres saber más</span>
-          <h2>Todo lo demás, aquí dentro</h2>
-          <p>Para completar los pasos no te hace falta leer nada de esto. Ábrelo solo si te surge la duda.</p>
-        </header>
+        <h2 class="faq-title reveal">Preguntas frecuentes</h2>
 
         <div class="faq reveal">
           <div class="faq-item">
@@ -1456,34 +1290,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><ul><li><span class="cuando">Hoy</span> <span>Terminas los cuatro pasos de arriba. Desde ahí, la pelota está en mi tejado.</span></li><li><span class="cuando">En 24–48 h</span> <span>Tu plan aparece en la app: nutrición y entrenamiento hechos desde cero con lo que me has contado.</span></li><li><span class="cuando">Primera semana</span> <span>Arrancas. Registras lo que haces en la app y, si algo no encaja, me lo dices y lo ajusto.</span></li><li><span class="cuando">Cada viernes</span> <span>Subes peso, fotos y medidas desde la app, y me cuentas cómo ha ido la semana.</span></li><li><span class="cuando">Fin de semana</span> <span>Reviso tus datos y actualizo tu plan, para que el lunes empieces con todo listo.</span></li></ul></div></div>
-          </div>
-          <div class="faq-item">
-            <h3>
-              <button class="faq-q" aria-expanded="false">
-                ¿Cómo trabajamos juntos?
-                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
-              </button>
-            </h3>
-            <div class="faq-a"><div><p><b>Mi compromiso contigo:</b></p><ul><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Te respondo en menos de 24 horas, de lunes a sábado.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Tu plan es tuyo: hecho desde cero, nada de plantillas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Reviso tu revisión de cada viernes y actualizo tu plan en la app.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Te explico el porqué de cada decisión, para que aprendas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span>Si algo no está funcionando, lo cambiamos. Sin dramas.</span></li></ul><p><b>Lo que te pido:</b></p><ul><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Registra en la app lo que comes y entrenas, de verdad.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Haz tu revisión cada viernes, aunque la semana haya ido mal.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Pregunta en cuanto te surja la duda, no la guardes una semana.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Dale al proceso cuatro semanas antes de juzgarlo.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg> <span>Prioriza la constancia por encima de la perfección. Siempre.</span></li></ul></div></div>
-          </div>
-          <div class="faq-item">
-            <h3>
-              <button class="faq-q" aria-expanded="false">
-                ¿Qué voy a encontrar dentro de la app?
-                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
-              </button>
-            </h3>
-            <div class="faq-a"><div><ul><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu plan de nutrición</b>, con tus comidas, cantidades y alternativas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tus entrenamientos</b>, con series, repeticiones y registro de cargas.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu revisión de los viernes</b>: peso, fotos y medidas, todo desde ahí.</span></li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> <span><b>Tu progreso</b>, en gráficas, para ver de dónde vienes y hacia dónde vas.</span></li></ul></div></div>
-          </div>
-          <div class="faq-item">
-            <h3>
-              <button class="faq-q" aria-expanded="false">
-                ¿Cuándo recibo mi plan?
-                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
-              </button>
-            </h3>
-            <div class="faq-a"><div><p>Entre 24 y 48 horas desde que completas el cuestionario. Te aparece directamente en la app, con la nutrición y el entrenamiento ya montados. Si algún día necesito un poco más para afinar algo, te aviso antes: nunca te voy a dejar esperando sin saber nada.</p></div></div>
+            <div class="faq-a"><div><ul><li><span class="cuando">Hoy</span> <span>Terminas los pasos de arriba. Desde ahí, me toca a mí.</span></li><li><span class="cuando">En 24–48 h</span> <span>Tu plan aparece en la app: nutrición y entrenamiento hechos desde cero con lo que me has contado.</span></li><li><span class="cuando">Primera semana</span> <span>Arrancas. Registras lo que haces en la app y, si algo no encaja, me lo dices y lo ajusto.</span></li><li><span class="cuando">Cada viernes</span> <span>Subes peso, fotos y medidas desde la app, y me cuentas cómo ha ido la semana.</span></li><li><span class="cuando">Fin de semana</span> <span>Reviso tus datos y actualizo tu plan, para que el lunes empieces con todo listo.</span></li></ul></div></div>
           </div>
           <div class="faq-item">
             <h3>
@@ -1492,16 +1299,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><p>Las credenciales te las envío yo por WhatsApp, no se crean solas al descargar la app. Si no te han llegado, no las encuentras o no te funcionan, escríbeme y te las paso al momento. No intentes registrarte por tu cuenta: tu perfil ya está creado esperándote.</p></div></div>
-          </div>
-          <div class="faq-item">
-            <h3>
-              <button class="faq-q" aria-expanded="false">
-                ¿Y si me surge una duda entre semana?
-                <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
-              </button>
-            </h3>
-            <div class="faq-a"><div><p>Escríbeme por WhatsApp cuando quieras, no hace falta esperar al viernes. Respondo de lunes a sábado en menos de 24 horas. Los domingos desconecto, así que si me escribes ese día te contesto el lunes a primera hora.</p></div></div>
+            <div class="faq-a"><div><p>Las credenciales te las mando yo por WhatsApp; no se crean solas al descargar la app. Si no te han llegado o no te funcionan, escríbeme y te las paso. No te registres por tu cuenta: tu perfil ya está creado.</p></div></div>
           </div>
           <div class="faq-item">
             <h3>
@@ -1510,7 +1308,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><p>El plan se adapta a lo que tengas. En el cuestionario me dices con qué material cuentas y cuántos días puedes entrenar, y yo lo diseño sobre eso y te lo dejo montado en la app. He sacado resultados con gimnasios completos y con un par de mancuernas en un salón.</p></div></div>
+            <div class="faq-a"><div><p>El plan se adapta a lo que tengas. En el cuestionario me dices con qué material cuentas y cuántos días puedes entrenar, y lo diseño sobre eso.</p></div></div>
           </div>
           <div class="faq-item">
             <h3>
@@ -1519,7 +1317,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><p>Al principio te voy a pedir precisión, porque necesito calibrar bien tu punto de partida, y lo vas registrando en la app. A partir de ahí iremos soltando cuerda poco a poco hasta que sepas comer bien sin báscula. El objetivo final es que no me necesites.</p></div></div>
+            <div class="faq-a"><div><p>Al principio sí, para calibrar bien tu punto de partida. Después iremos soltando poco a poco hasta que sepas comer bien sin báscula.</p></div></div>
           </div>
           <div class="faq-item">
             <h3>
@@ -1528,7 +1326,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><p>Nada. Una desviación no rompe un proceso; abandonarlo sí. Retomas en la siguiente comida o al día siguiente y me lo cuentas en la revisión del viernes sin ningún problema. Prefiero mil veces que me digas la verdad a que me pintes una semana perfecta.</p></div></div>
+            <div class="faq-a"><div><p>Nada. Retomas en la siguiente comida o al día siguiente y me lo cuentas en la revisión del viernes. Prefiero que me digas la verdad a una semana perfecta.</p></div></div>
           </div>
           <div class="faq-item">
             <h3>
@@ -1537,7 +1335,7 @@
                 <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
               </button>
             </h3>
-            <div class="faq-a"><div><p>Sí. El viernes es el día estándar porque me da el fin de semana para ajustar tu plan y que el lunes lo tengas listo. Si tu semana funciona mejor con otro día, dímelo y lo fijamos. Lo importante es que sea siempre el mismo, para poder comparar datos con sentido.</p></div></div>
+            <div class="faq-a"><div><p>Sí. El viernes me da el fin de semana para ajustar tu plan, pero si te va mejor otro día, dímelo y lo fijamos. Lo importante es que sea siempre el mismo.</p></div></div>
           </div>
         </div>
       </div>
@@ -1551,10 +1349,7 @@
             <span class="support-avatar" aria-hidden="true"><svg class="ico ico--lg ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
             <div>
               <h2>¿Te queda alguna duda?</h2>
-              <p>
-                Escríbeme y la resolvemos. Literalmente es mi trabajo, y prefiero contestar
-                diez mensajes hoy a que te quedes parado una semana.
-              </p>
+              <p>Escríbeme y la resolvemos.</p>
               <div class="support-meta">
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> Respondo en menos de 24 h</span>
                 <span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg> Lunes a sábado</span>
@@ -1570,10 +1365,7 @@
               <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
               Escríbeme por WhatsApp
             </a>
-            <a class="btn btn--ghost" href="mailto:alvarocobos1995@gmail.com">
-              <svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg>
-              Escribir un email
-            </a>
+            <a class="ayuda" href="mailto:alvarocobos1995@gmail.com">o escríbeme un email</a>
             <p class="support-soon" id="waPronto" hidden>
               Estoy estrenando número de WhatsApp para las asesorías. En cuanto
               esté, este botón se activa; mientras tanto, escríbeme por email.
@@ -1586,23 +1378,11 @@
     <!-- ============================== CIERRE ============================== -->
     <section class="closing">
       <div class="container reveal">
-        <span class="eyebrow eyebrow--plain">Una última cosa</span>
         <h2>
           <span>Constancia</span>
           <em>por encima de</em>
           <span>perfección</span>
         </h2>
-        <p>
-          Esto no va solo de entrenar o de comer bien. Va de construir una forma de vivir con más
-          energía, más confianza y menos ruido en la cabeza. No te va a salir perfecto, y no hace
-          falta: solo hace falta que no lo dejes. Del resto me encargo yo.
-        </p>
-        <ul class="closing-checks">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Estás en el sitio correcto y has tomado una buena decisión.</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> No estás solo: me tienes a un mensaje de distancia.</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Una semana regular no arruina nada. Abandonar, sí.</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Tú pones el esfuerzo, yo pongo la estrategia.</li>
-        </ul>
 
         <p class="signature">
           <span class="line" aria-hidden="true"></span>
@@ -1626,8 +1406,6 @@
 
       <div class="footer-social">
         <a href="https://www.instagram.com/_alvarotrainer/" target="_blank" rel="noopener noreferrer" data-link="instagram" aria-label="Instagram"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a>
-        <a href="#soporte" data-link="whatsapp" aria-label="WhatsApp"><svg class="ico ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
-        <a href="mailto:alvarocobos1995@gmail.com" aria-label="Email"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></a>
       </div>
 
       <nav class="footer-legal" aria-label="Información legal">
@@ -1641,10 +1419,6 @@
     </div>
   </footer>
 
-  <a class="fab" id="fab" href="#soporte" data-link="whatsapp">
-    <svg class="ico ico--sm ico--fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-    Escríbeme
-  </a>
 
   <script>
   (function () {
@@ -1833,9 +1607,6 @@
       if (botonMail) botonMail.className = 'btn btn--primary';
       var aviso = document.getElementById('waPronto');
       if (aviso) aviso.hidden = false;
-      // En el pie, un icono apagado sería ruido: se retira hasta que haya número.
-      var piePie = document.querySelector('.footer-social [data-link="whatsapp"]');
-      if (piePie) piePie.remove();
     }
 
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1862,92 +1633,21 @@
           revealObserver.unobserve(entry.target);
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      revealables.forEach(function (el) { revealObserver.observe(el); });
-    }
-
-    /* ---------------------------------------------------------------
-       2. Cabecera: estado al hacer scroll, barra de progreso y botón flotante
-       --------------------------------------------------------------- */
-    var header = document.getElementById('header');
-    var progress = document.getElementById('scrollProgress');
-    var fab = document.getElementById('fab');
-    var supportInView = false;
-    var ticking = false;
-
-    function onScroll() {
-      var y = window.scrollY || window.pageYOffset;
-
-      header.classList.toggle('is-scrolled', y > 12);
-
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.setProperty('--p', (max > 0 ? (y / max) * 100 : 0) + '%');
-
-      if (fab) fab.classList.toggle('is-visible', y > window.innerHeight * 0.7 && !supportInView);
-
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(onScroll);
-    }, { passive: true });
-    onScroll();
-
-    // Cuando el bloque de soporte está en pantalla, el botón flotante sobra.
-    var supportSection = document.getElementById('soporte');
-    if (fab && supportSection && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        supportInView = entries[0].isIntersecting;
-        onScroll();
-      }, { threshold: 0.25 }).observe(supportSection);
-    }
-
-    /* ---------------------------------------------------------------
-       3. Menú móvil
-       --------------------------------------------------------------- */
-    var navToggle = document.getElementById('navToggle');
-    var mobileMenu = document.getElementById('mobileMenu');
-
-    function setMenu(open) {
-      navToggle.setAttribute('aria-expanded', String(open));
-      navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-      mobileMenu.classList.toggle('is-open', open);
-    }
-
-    navToggle.addEventListener('click', function () {
-      setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
-        setMenu(false);
-        navToggle.focus();
-      }
-    });
-
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 860) setMenu(false);
-    });
-
-    /* ---------------------------------------------------------------
-       4. Enlace activo en la navegación
-       --------------------------------------------------------------- */
-    var navAnchors = Array.prototype.slice.call(document.querySelectorAll('#navLinks a'));
-    var watched = navAnchors
-      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
-      .filter(Boolean);
-
-    if (watched.length && 'IntersectionObserver' in window) {
-      var spy = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          navAnchors.forEach(function (a) {
-            a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
-          });
+      // Lo que asoma en la primera pantalla se ve desde el principio: si se
+      // quedara oculto hasta hacer scroll, el final de la pantalla parecería
+      // vacío y nadie sabría que hay que bajar. Se comprueba al cargar y otra
+      // vez con las tipografías ya listas, que cambian la altura del texto.
+      function muestraLoQueAsoma() {
+        revealables.forEach(function (el) {
+          if (!el.classList.contains('is-visible') && el.getBoundingClientRect().top < window.innerHeight) {
+            el.classList.add('is-visible');
+            revealObserver.unobserve(el);
+          }
         });
-      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-      watched.forEach(function (el) { spy.observe(el); });
+      }
+      revealables.forEach(function (el) { revealObserver.observe(el); });
+      muestraLoQueAsoma();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(muestraLoQueAsoma);
     }
 
     /* ---------------------------------------------------------------
@@ -2048,6 +1748,20 @@
       });
     });
     render(false);
+
+    // Hacer el paso ya cuenta como hecho: pulsar el vídeo, el botón o una de
+    // las tiendas lo marca solo. Así cada paso pide una sola acción, no dos.
+    // La casilla se queda como indicador, y se puede desmarcar si hace falta.
+    Array.prototype.forEach.call(document.querySelectorAll('.step'), function (paso) {
+      var casilla = paso.querySelector('[data-check]:not([data-pending])');
+      if (!casilla) return;
+      paso.addEventListener('click', function (ev) {
+        if (casilla.checked) return;
+        if (!ev.target.closest('.video-frame:not(.is-pending), .step-actions .btn--primary, .store')) return;
+        casilla.checked = true;
+        casilla.dispatchEvent(new Event('change'));
+      });
+    });
 
     // El anillo se rellena cuando el panel entra en pantalla, no antes.
     if (panel && 'IntersectionObserver' in window) {
