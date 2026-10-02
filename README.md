@@ -250,3 +250,17 @@ Cambios de comportamiento:
   la animación de entrada lo ocultaba y el final de la pantalla parecía vacío.
 
 Corregido de paso: el FAQ decía «terminas los **cuatro** pasos» y son siete.
+
+
+## Arranque y remate
+
+- **Hero:** abre con «¡Enhorabuena! Ya estás dentro», el titular es «¡Acabas de
+  decidir transformar tu físico y tu vida!» y debajo queda «Empezamos aquí» con
+  una flecha que indica que hay que bajar. Se retiró el texto de «Gracias por
+  confiar en mí» y, con él, la promesa de «poco más de media hora».
+- **Remate:** tras el último vídeo, en versales: «Espero que estés listo…
+  porque esto empieza ya.»
+
+El titular es una frase entera, así que se dibuja más pequeño que el anterior
+para no empujar el paso 1 fuera de la primera pantalla; sigue viéndose al abrir
+en los 6 tamaños medidos.

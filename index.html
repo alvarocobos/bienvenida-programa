@@ -298,7 +298,7 @@
     .hero{
       position:relative;overflow:hidden;
       padding-top:calc(var(--header-h) + clamp(32px,4vw,52px));
-      padding-bottom:clamp(28px,3.4vw,40px);
+      padding-bottom:clamp(24px,2.4vw,32px);
     }
     .hero::before{
       content:"";position:absolute;z-index:0;pointer-events:none;
@@ -318,8 +318,25 @@
     .hero-intro{display:flex;flex-direction:column;align-items:center}
     .hero-copy{margin-inline:auto}
 
-    .hero h1{margin:18px 0 22px}
+    /* El titular es una frase entera: a tamaño de cartel ocuparía media pantalla
+       y empujaría el paso 1 fuera de la vista. */
+    .hero h1{margin:10px 0 14px;font-size:clamp(29px,4.9vw,50px);line-height:1.05}
     .hero h1 span{display:block;color:var(--accent)}
+    /* «¡Enhorabuena!» es lo primero que se lee, antes que el titular. */
+    .hero-kicker{
+      margin:12px 0 0;
+      font-size:clamp(13px,1.7vw,17px);font-weight:800;
+      letter-spacing:clamp(.1em,.9vw,.18em);text-transform:uppercase;color:var(--accent-2);
+    }
+    /* Puente hacia los pasos: dice qué hacer (bajar) sin ser un botón. */
+    .hero-baja{
+      display:flex;flex-direction:column;align-items:center;gap:0;margin:0;line-height:1.3;
+      font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--text-2);
+    }
+    .hero-baja .ico{width:20px;height:20px;color:var(--accent-2);animation:baja 1.8s var(--ease) infinite}
+    @keyframes baja{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(5px);opacity:1}}
+    @media (prefers-reduced-motion:reduce){.hero-baja .ico{animation:none}}
     .hero-copy{max-width:52ch}
 
 
@@ -382,6 +399,15 @@
     /* Conector entre pasos: la versión sobria de la flechota del ejemplo */
     .step-link{display:grid;place-items:center;height:42px;color:var(--text-3)}
     .step-link .ico{width:22px;height:22px;opacity:.5}
+
+    /* El remate del recorrido: grande, en versales y con el naranja de la marca. */
+    .arranque{
+      max-width:720px;margin:6px auto 0;text-align:center;
+      font-size:clamp(27px,5.8vw,48px);font-weight:800;line-height:1.08;
+      letter-spacing:-.015em;text-transform:uppercase;color:var(--text);
+      text-wrap:balance;
+    }
+    .arranque span{display:block;color:var(--accent);text-shadow:0 0 34px rgba(255,90,0,.35)}
 
     .step{
       position:relative;
@@ -767,7 +793,8 @@
       .progress{padding:9px 16px;margin-bottom:12px}
       .logo--hero{width:min(178px,42vw)}
       .hero-foto{width:clamp(88px,24vw,108px);margin:10px 0 4px}
-      .hero h1{margin:10px 0 12px}
+      .hero h1{margin:8px 0 12px;font-size:clamp(25px,3.9vw,38px)}
+      .hero-kicker{margin-top:12px}
     }
 
     /* Destello metálico: recorre el logo al entrar y al pasar por encima */
@@ -866,7 +893,6 @@
       .lead{line-height:1.64}
       .eyebrow{font-size:10.5px;letter-spacing:.16em}
       .eyebrow::before{width:16px}
-      .hero{padding-top:calc(var(--header-h) + 40px)}
 
 
       .step{padding:22px 18px}
@@ -974,11 +1000,13 @@
             </picture>
           </span>
 
-          <h1>Ya estás dentro.<span>Empezamos aquí.</span></h1>
+          <p class="hero-kicker">¡Enhorabuena! Ya&nbsp;estás&nbsp;dentro</p>
 
-          <p class="lead hero-copy">
-            Gracias por confiar en mí. Baja y ve haciendo los pasos en orden: en poco
-            más de media hora tu parte está hecha.
+          <h1>¡Acabas de decidir <span>transformar tu físico y tu vida!</span></h1>
+
+          <p class="hero-baja">
+            Empezamos aquí
+            <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
           </p>
 
         </div>
@@ -1273,6 +1301,15 @@
             </div>
           </article>
         </div>
+
+        <!-- Remate del recorrido, justo después del último vídeo. -->
+        <div class="step-link reveal" aria-hidden="true">
+          <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </div>
+        <p class="arranque reveal">
+          Espero que estés listo…
+          <span>porque esto empieza ya.</span>
+        </p>
 
       </div>
     </section>
